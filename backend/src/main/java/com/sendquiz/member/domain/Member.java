@@ -23,13 +23,16 @@ public class Member {
 
     private String email;
 
+    private String nickname;
+
     private String password;
 
     private int numOfProblem;
 
     @Builder
-    public Member(String email, String password, int numOfProblem) {
+    public Member(String email, String nickname, String password, int numOfProblem) {
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.numOfProblem = numOfProblem;
     }

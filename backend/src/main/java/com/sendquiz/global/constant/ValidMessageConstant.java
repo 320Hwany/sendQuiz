@@ -1,4 +1,4 @@
-package com.sendquiz.global.util;
+package com.sendquiz.global.constant;
 
 import lombok.Getter;
 
@@ -9,4 +9,6 @@ public class ValidMessageConstant {
     }
 
     public static final String EMAIL_VALID_MESSAGE = "이메일을 입력해주세요";
+
+    public static final String NICKNAME_VALID_MESSAGE = "2글자 이상 20글자 이하의 닉네임을 입력해주세요";
 }

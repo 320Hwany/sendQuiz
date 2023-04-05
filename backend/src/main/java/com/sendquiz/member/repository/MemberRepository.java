@@ -6,7 +6,13 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
+    Member getById(Long memberId);
+
     Optional<Member> findByEmail(String email);
 
-    void signup(Member member);
+    Member getByEmail(String email);
+
+    Optional<Member> findByNickname(String nickname);
+
+    void save(Member member);
 }

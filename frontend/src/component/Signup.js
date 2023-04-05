@@ -3,9 +3,11 @@ import axios from 'axios';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Signup() {
     const [email, setEmail] = useState('');
+    const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -15,7 +17,7 @@ function Signup() {
             .post('http://localhost:8080/signup', { email, password })
             .then((res) => {
                 console.log(res.data);
-                navigate('/')
+                navigate('/signup/success');
                 // 회원가입 성공 시 처리할 코드 작성
             })
             .catch((err) => {
@@ -37,6 +39,17 @@ function Signup() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="이메일을 입력하세요."
+                        />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicNickname">
+                        <Form.Label>닉네임</Form.Label>
+                        <Form.Control
+                            type="nickname"
+                            name="nickname"
+                            value={nickname}
+                            onChange={(e) => setNickname(e.target.value)}
+                            placeholder="닉네임을 입력하세요."
                         />
                     </Form.Group>
 
