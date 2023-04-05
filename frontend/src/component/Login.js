@@ -10,7 +10,7 @@ function Login() {
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('/login', { email, password })
+            .post('http://localhost:8080/login', { email, password })
             .then((res) => {
                 console.log(res.data);
                 // 로그인 성공 시 처리할 코드 작성

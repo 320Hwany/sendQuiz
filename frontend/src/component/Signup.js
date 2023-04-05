@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('/signup', { email, password })
+            .post('http://localhost:8080/signup', { email, password })
             .then((res) => {
                 console.log(res.data);
+                navigate('/')
                 // 회원가입 성공 시 처리할 코드 작성
             })
             .catch((err) => {
