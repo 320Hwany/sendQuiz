@@ -1,5 +1,8 @@
 package com.sendquiz.member.application;
 
+import com.sendquiz.certification.domain.Certification;
+import com.sendquiz.certification.exception.CertificationNotMatchException;
+import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberLogin;
@@ -14,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 import static com.sendquiz.member.domain.MemberSession.*;
@@ -26,11 +28,13 @@ import static com.sendquiz.member.dto.response.MemberResponse.*;
 public class MemberService {
 
     private final MemberRepository memberRepository;
+    private final CertificationRepository certificationRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void signup(MemberSignup memberSignup) {
         validateDuplicate(memberSignup);
+        validateCertificationNum(memberSignup);
         Member member = memberSignup.toEntity(passwordEncoder);
         memberRepository.save(member);
     }
@@ -44,7 +48,12 @@ public class MemberService {
     }
 
     protected void validateCertificationNum(MemberSignup memberSignup) {
-        String certificationNum = memberSignup.getCertificationNum();
+        Certification certification = certificationRepository.getByEmail(memberSignup.getEmail());
+        String certificationNum = certification.getCertificationNum();
+        String inputCertificationNum = memberSignup.getCertificationNum();
+        if (!certificationNum.equals(inputCertificationNum)) {
+            throw new CertificationNotMatchException();
+        }
     }
 
     public MemberResponse login(MemberLogin memberLogin, HttpServletRequest request) {

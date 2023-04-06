@@ -9,21 +9,28 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
-    const [verificationCode, setVerificationCode] = useState('');
+    const [certificationNum, setCertificationNum] = useState('');
     const navigate = useNavigate();
+
+    const [emailError, setEmailError] = useState("");
+    const [certificationNumError, setCertificationNumError] = useState("");
+    const [nicknameError, setNicknameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/signup', { email, nickname, password })
+            .post('http://localhost:8080/signup', { email, certificationNum, nickname, password })
             .then((res) => {
                 console.log(res.data);
                 navigate('/signup/success');
                 // 회원가입 성공 시 처리할 코드 작성
             })
             .catch((err) => {
-                console.error(err);
-                // 회원가입 실패 시 처리할 코드 작성
+                setEmailError(err.response.data.validation.email);
+                setCertificationNumError(err.response.data.validation.certificationNum);
+                setNicknameError(err.response.data.validation.nickname);
+                setPasswordError(err.response.data.validation.password);
             });
     };
 
@@ -56,8 +63,9 @@ function Signup() {
                             name="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder="이메일을 입력하세요."
+                            placeholder="이메일을 입력하세요"
                         />
+                        {emailError && <div className="text-danger">{emailError}</div>}
                         <Button className="my-2" variant="primary" onClick={AuthenticationEmail}>인증번호 받기</Button>
                     </Form.Group>
 
@@ -66,10 +74,11 @@ function Signup() {
                         <Form.Control
                             type="text"
                             name="verificationCode"
-                            value={verificationCode}
-                            onChange={(e) => setVerificationCode(e.target.value)}
-                            placeholder="이메일로 받은 인증번호를 입력하세요."
+                            value={certificationNum}
+                            onChange={(e) => setCertificationNum(e.target.value)}
+                            placeholder="이메일로 받은 인증번호를 입력하세요"
                         />
+                        {certificationNumError && <div className="text-danger">{certificationNumError}</div>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicNickname">
@@ -79,8 +88,9 @@ function Signup() {
                             name="nickname"
                             value={nickname}
                             onChange={(e) => setNickname(e.target.value)}
-                            placeholder="닉네임을 입력하세요."
+                            placeholder="닉네임을 입력하세요"
                         />
+                        {nicknameError && <div className="text-danger">{nicknameError}</div>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -90,8 +100,9 @@ function Signup() {
                             name="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="비밀번호를 입력하세요."
+                            placeholder="비밀번호를 입력하세요"
                         />
+                        {passwordError && <div className="text-danger">{passwordError}</div>}
                     </Form.Group>
 
                     <Button variant="primary" type="submit">

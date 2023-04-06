@@ -1,5 +1,8 @@
 package com.sendquiz.member.application;
 
+import com.sendquiz.certification.domain.Certification;
+import com.sendquiz.certification.exception.CertificationNotMatchException;
+import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
@@ -37,6 +40,9 @@ class MemberServiceTest {
     private MemberRepository memberRepository;
 
     @Mock
+    private CertificationRepository certificationRepository;
+
+    @Mock
     private PasswordEncoder passwordEncoder;
 
 
@@ -46,12 +52,20 @@ class MemberServiceTest {
         // given
         MemberSignup memberSignup = MemberSignup.builder()
                 .email("test@email.com")
+                .certificationNum("abcdefgh")
                 .nickname("test nickname")
                 .password("test password")
                 .build();
 
+        Certification certification = Certification.builder()
+                .email(memberSignup.getEmail())
+                .certificationNum(memberSignup.getCertificationNum())
+                .build();
+
+        // stub
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
 
         // when
         memberService.signup(memberSignup);
@@ -97,6 +111,53 @@ class MemberServiceTest {
         // then
         assertThrows(MemberDuplicationException.class,
                 () -> memberService.validateDuplicate(memberSignup));
+    }
+
+    @Test
+    @DisplayName("인증번호가 일치하면 메소드를 통과합니다")
+    void validateCertificationNum200() {
+        // given
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .certificationNum("abcdefgh")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        Certification certification = Certification.builder()
+                .email(memberSignup.getEmail())
+                .certificationNum(memberSignup.getCertificationNum())
+                .build();
+
+        // stub
+        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
+
+        // when
+        memberService.validateCertificationNum(memberSignup);
+    }
+
+    @Test
+    @DisplayName("인증번호가 일치하지 않으면 예외가 발생합니다")
+    void validateCertificationNum400() {
+        // given
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .certificationNum("abcdefgh")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        Certification certification = Certification.builder()
+                .email(memberSignup.getEmail())
+                .certificationNum("일치하지 않는 인증번호")
+                .build();
+
+        // stub
+        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
+
+        // when
+        assertThrows(CertificationNotMatchException.class,
+                () -> memberService.validateCertificationNum(memberSignup));
     }
 
     @Test
