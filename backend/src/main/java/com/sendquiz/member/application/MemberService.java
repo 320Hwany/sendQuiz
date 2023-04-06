@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.sendquiz.member.domain.MemberSession.*;
@@ -40,6 +41,10 @@ public class MemberService {
         if (byEmail.isPresent() || byNickname.isPresent()) {
             throw new MemberDuplicationException();
         }
+    }
+
+    protected void validateCertificationNum(MemberSignup memberSignup) {
+        String certificationNum = memberSignup.getCertificationNum();
     }
 
     public MemberResponse login(MemberLogin memberLogin, HttpServletRequest request) {

@@ -2,6 +2,7 @@ package com.sendquiz.member.repository;
 
 import com.sendquiz.member.domain.Member;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepository {
@@ -13,6 +14,8 @@ public interface MemberRepository {
     Member getByEmail(String email);
 
     Optional<Member> findByNickname(String nickname);
+
+    List<Member> findAll();
 
     void save(Member member);
 }

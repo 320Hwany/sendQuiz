@@ -9,6 +9,7 @@ function Signup() {
     const [email, setEmail] = useState('');
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
+    const [verificationCode, setVerificationCode] = useState('');
     const navigate = useNavigate();
 
     const handleSignUp = (e) => {
@@ -26,6 +27,23 @@ function Signup() {
             });
     };
 
+    function AuthenticationEmail(e) {
+        alert("인증번호가 전송되었습니다");
+        const params = new URLSearchParams();
+        params.append('email', email);
+
+        axios.post('http://localhost:8080/email/signup', params, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => {
+            })
+            .catch(error => {
+                console.error('There was a problem with the axios operation:', error);
+            });
+    }
+
     return (
         <Container className="d-flex justify-content-center align-items-center">
             <div className="col-md-4">
@@ -39,6 +57,18 @@ function Signup() {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="이메일을 입력하세요."
+                        />
+                        <Button className="my-2" variant="primary" onClick={AuthenticationEmail}>인증번호 받기</Button>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBasicVerificationCode">
+                        <Form.Label>인증번호</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name="verificationCode"
+                            value={verificationCode}
+                            onChange={(e) => setVerificationCode(e.target.value)}
+                            placeholder="이메일로 받은 인증번호를 입력하세요."
                         />
                     </Form.Group>
 

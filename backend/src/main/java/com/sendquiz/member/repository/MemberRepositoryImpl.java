@@ -5,6 +5,7 @@ import com.sendquiz.member.exception.MemberNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -33,6 +34,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public Optional<Member> findByNickname(String nickname) {
         return memberJpaRepository.findByNickname(nickname);
+    }
+
+    @Override
+    public List<Member> findAll() {
+        return memberJpaRepository.findAll();
     }
 
     @Override
