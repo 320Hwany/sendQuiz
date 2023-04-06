@@ -1,0 +1,132 @@
+package com.sendquiz.member.application;
+
+import com.sendquiz.member.domain.Member;
+import com.sendquiz.member.dto.request.MemberLogin;
+import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.response.MemberResponse;
+import com.sendquiz.member.exception.MemberDuplicationException;
+import com.sendquiz.member.repository.MemberRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
+class MemberServiceTest {
+
+    @InjectMocks
+    private MemberService memberService;
+
+    @Mock
+    private MemberRepository memberRepository;
+
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+
+    @Test
+    @DisplayName("회원가입에 성공합니다")
+    void signup() {
+        // given
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+
+        // when
+        memberService.signup(memberSignup);
+
+        // then
+        verify(memberRepository, times(1)).save(any());
+    }
+
+    @Test
+    @DisplayName("신규 회원이면 메소드를 통과합니다")
+    void validateDuplicate200() {
+        // given
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        // stub
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+
+        // then
+        memberService.validateDuplicate(memberSignup);
+    }
+
+    @Test
+    @DisplayName("이미 가입된 회원이면 예외가 발생합니다")
+    void validateDuplicate400() {
+        // given
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        Member member = memberSignup.toEntity(passwordEncoder);
+
+        // stub
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
+        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
+
+        // then
+        assertThrows(MemberDuplicationException.class,
+                () -> memberService.validateDuplicate(memberSignup));
+    }
+
+    @Test
+    @DisplayName("로그인에 성공합니다")
+    void login() {
+        // given
+        MemberLogin memberLogin = MemberLogin.builder()
+                .email("test@email.com")
+                .password("test password")
+                .build();
+
+        Member member = Member.builder()
+                .email(memberLogin.getEmail())
+                .password(memberLogin.getPassword())
+                .nickname("test nickname")
+                .numOfProblem(5)
+                .build();
+
+        ReflectionTestUtils.setField(member,"id", 1L);
+
+        // stub
+        when(memberRepository.getByEmail(anyString())).thenReturn(member);
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+
+        // when
+        MemberResponse memberResponse = memberService.login(memberLogin, new MockHttpServletRequest());
+
+        // then
+        assertThat(memberResponse.getEmail()).isEqualTo(member.getEmail());
+        assertThat(memberResponse.getNickname()).isEqualTo(member.getNickname());
+        assertThat(memberResponse.getNumOfProblem()).isEqualTo(member.getNumOfProblem());
+    }
+}
