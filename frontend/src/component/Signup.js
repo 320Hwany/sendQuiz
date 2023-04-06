@@ -14,7 +14,7 @@ function Signup() {
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/signup', { email, password })
+            .post('http://localhost:8080/signup', { email, nickname, password })
             .then((res) => {
                 console.log(res.data);
                 navigate('/signup/success');
