@@ -5,6 +5,7 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 application-prod.yml
+HiddenConstant
 
 ### STS ###
 .apt_generated

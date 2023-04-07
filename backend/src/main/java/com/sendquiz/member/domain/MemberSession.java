@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-import static com.sendquiz.global.constant.CommonConstant.MEMBER_SESSION;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberSession implements Serializable {
@@ -42,17 +40,5 @@ public class MemberSession implements Serializable {
                 .password(member.getPassword())
                 .numOfProblem(member.getNumOfProblem())
                 .build();
-    }
-
-    public void makeSession(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        session.setAttribute(MEMBER_SESSION, this);
-    }
-
-    public void invalidate(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
     }
 }

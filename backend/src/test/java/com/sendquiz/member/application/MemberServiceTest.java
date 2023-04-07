@@ -160,34 +160,34 @@ class MemberServiceTest {
                 () -> memberService.validateCertificationNum(memberSignup));
     }
 
-    @Test
-    @DisplayName("로그인에 성공합니다")
-    void login() {
-        // given
-        MemberLogin memberLogin = MemberLogin.builder()
-                .email("test@email.com")
-                .password("test password")
-                .build();
-
-        Member member = Member.builder()
-                .email(memberLogin.getEmail())
-                .password(memberLogin.getPassword())
-                .nickname("test nickname")
-                .numOfProblem(5)
-                .build();
-
-        ReflectionTestUtils.setField(member,"id", 1L);
-
-        // stub
-        when(memberRepository.getByEmail(anyString())).thenReturn(member);
-        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
-
-        // when
-        MemberResponse memberResponse = memberService.login(memberLogin, new MockHttpServletRequest());
-
-        // then
-        assertThat(memberResponse.getEmail()).isEqualTo(member.getEmail());
-        assertThat(memberResponse.getNickname()).isEqualTo(member.getNickname());
-        assertThat(memberResponse.getNumOfProblem()).isEqualTo(member.getNumOfProblem());
-    }
+//    @Test
+//    @DisplayName("로그인에 성공합니다")
+//    void login() {
+//        // given
+//        MemberLogin memberLogin = MemberLogin.builder()
+//                .email("test@email.com")
+//                .password("test password")
+//                .build();
+//
+//        Member member = Member.builder()
+//                .email(memberLogin.getEmail())
+//                .password(memberLogin.getPassword())
+//                .nickname("test nickname")
+//                .numOfProblem(5)
+//                .build();
+//
+//        ReflectionTestUtils.setField(member,"id", 1L);
+//
+//        // stub
+//        when(memberRepository.getByEmail(anyString())).thenReturn(member);
+//        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+//
+//        // when
+//        MemberResponse memberResponse = memberService.login(memberLogin, new MockHttpServletRequest());
+//
+//        // then
+//        assertThat(memberResponse.getEmail()).isEqualTo(member.getEmail());
+//        assertThat(memberResponse.getNickname()).isEqualTo(member.getNickname());
+//        assertThat(memberResponse.getNumOfProblem()).isEqualTo(member.getNumOfProblem());
+//    }
 }

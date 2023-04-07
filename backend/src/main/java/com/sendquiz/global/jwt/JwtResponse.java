@@ -1,4 +1,4 @@
-package com.sendquiz.jwt.dto;
+package com.sendquiz.global.jwt;
 
 import lombok.Getter;
 

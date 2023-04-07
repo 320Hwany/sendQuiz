@@ -4,23 +4,24 @@ import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.member.dto.response.MemberResponse;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.crypto.SecretKey;
+import java.util.Base64;
 import java.util.Optional;
 
-import static com.sendquiz.member.domain.MemberSession.*;
-import static com.sendquiz.member.dto.response.MemberResponse.*;
+import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
+
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -56,12 +57,14 @@ public class MemberService {
         }
     }
 
-    public MemberResponse login(MemberLogin memberLogin, HttpServletRequest request) {
+    public String login(MemberLogin memberLogin) {
+        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
         Member member = memberRepository.getByEmail(memberLogin.getEmail());
         if (passwordEncoder.matches(memberLogin.getPassword(), member.getPassword())) {
-            MemberSession memberSession = toMemberSession(member);
-            memberSession.makeSession(request);
-            return toMemberResponse(memberSession);
+            return Jwts.builder()
+                    .setSubject(String.valueOf(member.getId()))
+                    .signWith(key)
+                    .compact();
         }
         throw new MemberNotMatchException();
     }
