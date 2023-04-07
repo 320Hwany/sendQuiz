@@ -32,4 +32,8 @@ public class Certification {
                 .certificationNum(certificationNum)
                 .build();
     }
+
+    public void updateNum(String updateNum) {
+        this.certificationNum = updateNum;
+    }
 }

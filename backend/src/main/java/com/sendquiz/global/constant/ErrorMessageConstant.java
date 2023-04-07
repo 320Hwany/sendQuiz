@@ -19,4 +19,6 @@ public class ErrorMessageConstant {
     public static final String CERTIFICATION_NOT_MATCH_MESSAGE = "인증번호가 일치하지 않습니다";
 
     public static final String VALID_BAD_REQUEST_MESSAGE = "잘못된 요청입니다";
+
+    public static final String EMAIL_NOT_FOUND_MESSAGE = "유효하지 않은 이메일 주소입니다";
 }

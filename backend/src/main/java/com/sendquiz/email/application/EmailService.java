@@ -2,7 +2,6 @@ package com.sendquiz.email.application;
 
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
-import com.sendquiz.global.constant.CommonConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -26,20 +25,29 @@ public class EmailService {
     public void sendEmail(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         String certificationNum = makeMessage(toEmail, message);
-        Certification certification = toCertification(toEmail, certificationNum);
-        certificationRepository.save(certification);
+        saveCertificationNum(toEmail, certificationNum);
         mailSender.send(message);
     }
 
     protected String makeMessage(String toEmail, SimpleMailMessage message) {
+        String certificationNum = makeUUID();
         message.setTo(toEmail);
         message.setSubject(EMAIL_SUBJECT);
-        String certificationNum = makeUUID();
         message.setText(CERTIFICATION_MESSAGE + certificationNum);
         return certificationNum;
     }
 
     protected String makeUUID() {
         return UUID.randomUUID().toString().substring(0,8);
+    }
+
+    protected void saveCertificationNum(String toEmail, String certificationNum) {
+        if (certificationRepository.findByEmail(toEmail).isEmpty()) {
+            Certification certification = toCertification(toEmail, certificationNum);
+            certificationRepository.save(certification);
+        } else {
+            Certification psCertification = certificationRepository.getByEmail(toEmail);
+            psCertification.updateNum(certificationNum);
+        }
     }
 }

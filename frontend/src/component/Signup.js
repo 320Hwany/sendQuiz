@@ -10,12 +10,14 @@ function Signup() {
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [certificationNum, setCertificationNum] = useState('');
+    const [certificationNumMessage, setCertificationNumMessage] = useState('');
     const navigate = useNavigate();
 
     const [emailError, setEmailError] = useState("");
     const [certificationNumError, setCertificationNumError] = useState("");
     const [nicknameError, setNicknameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [emailNotFound, setEmailNotFound] = useState("");
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -27,17 +29,32 @@ function Signup() {
                 // 회원가입 성공 시 처리할 코드 작성
             })
             .catch((err) => {
-                setEmailError(err.response.data.validation.email);
-                setCertificationNumError(err.response.data.validation.certificationNum);
-                setNicknameError(err.response.data.validation.nickname);
-                setPasswordError(err.response.data.validation.password);
+                setEmailError("");
+                setNicknameError("");
+                setPasswordError("");
+                if (err.response.data.validation) {
+                    setEmailError(err.response.data.validation.email);
+                    setNicknameError(err.response.data.validation.nickname);
+                    setPasswordError(err.response.data.validation.password);
+                    setCertificationNumError(err.response.data.validation.certificationNum);
+                }
+
+                if (err.response.data.message) {
+                    setCertificationNumError(err.response.data.message);
+                }
             });
     };
 
     function AuthenticationEmail(e) {
-        alert("인증번호가 전송되었습니다");
         const params = new URLSearchParams();
         params.append('email', email);
+        if (email == null || email === "") {
+            setEmailError("이메일을 입력해주세요");
+            return;
+        }
+        setEmailError("");
+        setEmailNotFound("");
+        setCertificationNumMessage("인증번호가 전송되었습니다");
 
         axios.post('http://localhost:8080/email/signup', params, {
             headers: {
@@ -46,14 +63,15 @@ function Signup() {
         })
             .then(response => {
             })
-            .catch(error => {
-                console.error('There was a problem with the axios operation:', error);
+            .catch(err => {
+                setEmailNotFound(err.response.data.message);
+                setCertificationNumMessage("");
             });
     }
 
     return (
         <Container className="d-flex justify-content-center align-items-center">
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <h1 className="mt-5 d-flex justify-content-center align-items-center">회원가입</h1>
                 <Form className="my-3" onSubmit={handleSignUp}>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -67,6 +85,8 @@ function Signup() {
                         />
                         {emailError && <div className="text-danger">{emailError}</div>}
                         <Button className="my-2" variant="primary" onClick={AuthenticationEmail}>인증번호 받기</Button>
+                        {certificationNumMessage && <div className="text-success">{certificationNumMessage}</div>}
+                        {emailNotFound && <div className="text-danger">{emailNotFound}</div>}
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBasicVerificationCode">

@@ -5,6 +5,8 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Repository
 public class CertificationRepositoryImpl implements CertificationRepository {
@@ -20,5 +22,10 @@ public class CertificationRepositoryImpl implements CertificationRepository {
     public Certification getByEmail(String email) {
         return certificationJpaRepository.findByEmail(email)
                 .orElseThrow(CertificationNotMatchException::new);
+    }
+
+    @Override
+    public Optional<Certification> findByEmail(String email) {
+        return certificationJpaRepository.findByEmail(email);
     }
 }

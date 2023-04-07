@@ -9,4 +9,6 @@ public interface CertificationRepository {
     void save(Certification certification);
 
     Certification getByEmail(String email);
+
+    Optional<Certification> findByEmail(String email);
 }
