@@ -14,7 +14,7 @@ public class ErrorMessageConstant {
 
     public static final String MEMBER_NOT_MATCH_MESSAGE = "이메일/비밀번호가 일치하지 않습니다";
 
-    public static final String MEMBER_NOT_FOUND_MESSAGE = "회원을 찾을 수 없습니다";
+    public static final String MEMBER_NOT_FOUND_MESSAGE = "해당 이메일로 회원을 찾을 수 없습니다";
 
     public static final String CERTIFICATION_NOT_MATCH_MESSAGE = "인증번호가 일치하지 않습니다";
 

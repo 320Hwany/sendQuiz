@@ -13,18 +13,17 @@ function Signup() {
     const [certificationNumMessage, setCertificationNumMessage] = useState('');
     const navigate = useNavigate();
 
-    const [emailError, setEmailError] = useState("");
-    const [certificationNumError, setCertificationNumError] = useState("");
-    const [nicknameError, setNicknameError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [emailNotFound, setEmailNotFound] = useState("");
+    const [emailError, setEmailError] = useState('');
+    const [certificationNumError, setCertificationNumError] = useState('');
+    const [nicknameError, setNicknameError] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [emailNotFound, setEmailNotFound] = useState('');
 
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
             .post('http://localhost:8080/signup', { email, certificationNum, nickname, password })
             .then((res) => {
-                console.log(res.data);
                 navigate('/signup/success');
                 // 회원가입 성공 시 처리할 코드 작성
             })
