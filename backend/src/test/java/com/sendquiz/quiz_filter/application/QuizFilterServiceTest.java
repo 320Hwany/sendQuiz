@@ -32,7 +32,7 @@ class QuizFilterServiceTest {
     void save() {
         // given
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .isNetwork(true)
+                .network(true)
                 .build();
 
         Member member = Member.builder()

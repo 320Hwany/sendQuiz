@@ -11,41 +11,41 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizFilterSave {
 
-    private boolean isNetwork;
+    private boolean network;
 
-    private boolean isDatabase;
+    private boolean database;
 
-    private boolean isOS;
+    private boolean operatingSystem;
 
-    private boolean isDataStructure;
+    private boolean dataStructure;
 
-    private boolean isJava;
+    private boolean java;
 
-    private boolean isSpring;
+    private boolean spring;
 
     private int numOfProblem;
 
     @Builder
-    public QuizFilterSave(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
-                          boolean isJava, boolean isSpring, int numOfProblem) {
-        this.isNetwork = isNetwork;
-        this.isDatabase = isDatabase;
-        this.isOS = isOS;
-        this.isDataStructure = isDataStructure;
-        this.isJava = isJava;
-        this.isSpring = isSpring;
+    public QuizFilterSave(boolean network, boolean database, boolean operatingSystem,
+                          boolean dataStructure, boolean java, boolean spring, int numOfProblem) {
+        this.network = network;
+        this.database = database;
+        this.operatingSystem = operatingSystem;
+        this.dataStructure = dataStructure;
+        this.java = java;
+        this.spring = spring;
         this.numOfProblem = numOfProblem;
     }
 
     public QuizFilter toEntity(Member member) {
         return QuizFilter.builder()
                 .member(member)
-                .isNetwork(isNetwork)
-                .isDatabase(isDatabase)
-                .isOS(isOS)
-                .isDataStructure(isDataStructure)
-                .isJava(isJava)
-                .isSpring(isSpring)
+                .isNetwork(network)
+                .isDatabase(database)
+                .isOS(operatingSystem)
+                .isDataStructure(dataStructure)
+                .isJava(java)
+                .isSpring(spring)
                 .numOfProblem(numOfProblem)
                 .build();
     }
