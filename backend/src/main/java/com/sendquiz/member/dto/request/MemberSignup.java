@@ -23,7 +23,7 @@ public class MemberSignup {
     @NotBlank(message = CERTIFICATION_NUM_VALID_MESSAGE)
     private String certificationNum;
 
-    @Size(min = 2, max = 10, message = NICKNAME_VALID_MESSAGE)
+    @Size(min = 2, max = 16, message = NICKNAME_VALID_MESSAGE)
     private String nickname;
 
     @Size(min = 6, max = 20, message = PASSWORD_VALID_MESSAGE)

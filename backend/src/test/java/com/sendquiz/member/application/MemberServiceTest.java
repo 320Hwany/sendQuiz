@@ -6,8 +6,8 @@ import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.member.dto.response.MemberResponse;
 import com.sendquiz.member.exception.MemberDuplicationException;
+import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -160,34 +159,58 @@ class MemberServiceTest {
                 () -> memberService.validateCertificationNum(memberSignup));
     }
 
-//    @Test
-//    @DisplayName("로그인에 성공합니다")
-//    void login() {
-//        // given
-//        MemberLogin memberLogin = MemberLogin.builder()
-//                .email("test@email.com")
-//                .password("test password")
-//                .build();
-//
-//        Member member = Member.builder()
-//                .email(memberLogin.getEmail())
-//                .password(memberLogin.getPassword())
-//                .nickname("test nickname")
-//                .numOfProblem(5)
-//                .build();
-//
-//        ReflectionTestUtils.setField(member,"id", 1L);
-//
-//        // stub
-//        when(memberRepository.getByEmail(anyString())).thenReturn(member);
-//        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
-//
-//        // when
-//        MemberResponse memberResponse = memberService.login(memberLogin, new MockHttpServletRequest());
-//
-//        // then
-//        assertThat(memberResponse.getEmail()).isEqualTo(member.getEmail());
-//        assertThat(memberResponse.getNickname()).isEqualTo(member.getNickname());
-//        assertThat(memberResponse.getNumOfProblem()).isEqualTo(member.getNumOfProblem());
-//    }
+    @Test
+    @DisplayName("로그인에 성공합니다")
+    void login200() {
+        // given
+        MemberLogin memberLogin = MemberLogin.builder()
+                .email("test@email.com")
+                .password("test password")
+                .build();
+
+        Member member = Member.builder()
+                .email(memberLogin.getEmail())
+                .password(memberLogin.getPassword())
+                .nickname("test nickname")
+                .numOfProblem(5)
+                .build();
+
+        ReflectionTestUtils.setField(member,"id", 1L);
+
+        // stub
+        when(memberRepository.getByEmail(anyString())).thenReturn(member);
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
+
+        // when
+        String jws = memberService.login(memberLogin);
+
+        // then
+        assertThat(jws).isNotNull();
+    }
+
+    @Test
+    @DisplayName("이메일과 비밀번호가 일치하지 않으면 예외가 발생합니다")
+    void login400() {
+        // given
+        MemberLogin memberLogin = MemberLogin.builder()
+                .email("test@email.com")
+                .password("test password")
+                .build();
+
+        Member member = Member.builder()
+                .email(memberLogin.getEmail())
+                .password(memberLogin.getPassword())
+                .nickname("test nickname")
+                .numOfProblem(5)
+                .build();
+
+        ReflectionTestUtils.setField(member,"id", 1L);
+
+        // stub
+        when(memberRepository.getByEmail(anyString())).thenReturn(member);
+        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
+
+        // then
+        assertThrows(MemberNotMatchException.class, () -> memberService.login(memberLogin));
+    }
 }

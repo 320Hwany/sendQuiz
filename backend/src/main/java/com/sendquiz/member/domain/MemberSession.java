@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class MemberSession implements Serializable {
+public class MemberSession {
 
     private Long id;
 

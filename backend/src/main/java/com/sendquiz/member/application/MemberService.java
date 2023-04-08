@@ -58,9 +58,9 @@ public class MemberService {
     }
 
     public String login(MemberLogin memberLogin) {
-        SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
         Member member = memberRepository.getByEmail(memberLogin.getEmail());
         if (passwordEncoder.matches(memberLogin.getPassword(), member.getPassword())) {
+            SecretKey key = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
             return Jwts.builder()
                     .setSubject(String.valueOf(member.getId()))
                     .signWith(key)
