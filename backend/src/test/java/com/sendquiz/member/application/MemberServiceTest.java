@@ -28,7 +28,6 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
-
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
 
@@ -171,7 +170,6 @@ class MemberServiceTest {
                 .email(memberLogin.getEmail())
                 .password(memberLogin.getPassword())
                 .nickname("test nickname")
-                .numOfProblem(5)
                 .build();
 
         ReflectionTestUtils.setField(member,"id", 1L);
@@ -200,7 +198,6 @@ class MemberServiceTest {
                 .email(memberLogin.getEmail())
                 .password(memberLogin.getPassword())
                 .nickname("test nickname")
-                .numOfProblem(5)
                 .build();
 
         ReflectionTestUtils.setField(member,"id", 1L);

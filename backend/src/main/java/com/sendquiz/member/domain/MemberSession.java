@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberSession {
@@ -38,7 +36,6 @@ public class MemberSession {
                 .email(member.getEmail())
                 .nickname(member.getNickname())
                 .password(member.getPassword())
-                .numOfProblem(member.getNumOfProblem())
                 .build();
     }
 }
