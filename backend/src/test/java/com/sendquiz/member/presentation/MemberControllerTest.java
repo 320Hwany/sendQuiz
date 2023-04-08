@@ -1,16 +1,12 @@
 package com.sendquiz.member.presentation;
 
-import com.jayway.jsonpath.JsonPath;
 import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;

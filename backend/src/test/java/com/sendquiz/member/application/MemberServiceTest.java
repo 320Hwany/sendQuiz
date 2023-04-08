@@ -44,7 +44,6 @@ class MemberServiceTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
-
     @Test
     @DisplayName("회원가입에 성공합니다")
     void signup() {

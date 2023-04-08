@@ -1,29 +1,43 @@
-import React, {useEffect, useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import {Link, useNavigate} from 'react-router-dom';
 
 function Main() {
     const [nickname, setNickname] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/member', {
-            headers: {
-                Authorization: localStorage.getItem("Authorization")
-            }
-        })
+        axios
+            .get('http://localhost:8080/member', {
+                headers: {
+                    Authorization: localStorage.getItem('Authorization'),
+                },
+            })
             .then(response => {
                 setNickname(response.data.nickname);
             })
             .catch(error => {
-                console.error(error);
+                navigate("/");
             });
     });
 
     return (
-        <div>
-            <h1>Welcome, {nickname}!</h1>
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-lg-8 mx-auto">
+                    <div className="text-center py-5">
+                        <h1 className="display-4">{nickname}님 반갑습니다!</h1>
+                    </div>
+                    <div className="text-center my-5">
+                        <Link to="/setting" className="btn btn-lg btn-outline-primary">
+                            SendQuiz 서비스 이용하러가기
+                        </Link>
+                    </div>
+                </div>
+            </div>
         </div>
     );
+
 }
 
 export default Main;
