@@ -1,8 +1,7 @@
-package com.sendquiz.quiz_filter.domain;
+package com.sendquiz.quiz_filter.dto;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.sendquiz.member.domain.Member;
-import jakarta.persistence.*;
+import com.querydsl.core.annotations.QueryProjection;
+import com.sendquiz.quiz_filter.domain.QuizFilter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,16 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-public class QuizFilter {
-
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "quiz_filter_id")
-    private Long id;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+public class QuizFilterSearch {
 
     private boolean isNetwork;
 
@@ -36,9 +26,9 @@ public class QuizFilter {
     private int numOfProblem;
 
     @Builder
-    public QuizFilter(Member member, boolean isNetwork, boolean isDatabase, boolean isOS,
-                      boolean isDataStructure, boolean isJava, boolean isSpring, int numOfProblem) {
-        this.member = member;
+    @QueryProjection
+    public QuizFilterSearch(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
+                            boolean isJava, boolean isSpring, int numOfProblem) {
         this.isNetwork = isNetwork;
         this.isDatabase = isDatabase;
         this.isOS = isOS;

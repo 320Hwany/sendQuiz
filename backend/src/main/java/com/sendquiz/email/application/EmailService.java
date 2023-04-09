@@ -22,7 +22,7 @@ public class EmailService {
     private final CertificationRepository certificationRepository;
 
     @Transactional
-    public void sendEmail(String toEmail) {
+    public void sendCertificationNum(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         String certificationNum = makeMessage(toEmail, message);
         saveCertificationNum(toEmail, certificationNum);

@@ -114,7 +114,7 @@ function Setting() {
                     }`}
                     type="button"
                     onClick={() =>
-                        handleOptionChange({ target: { name: 'spring', checked: !options.java } })
+                        handleOptionChange({ target: { name: 'spring', checked: !options.spring } })
                     }>
                     스프링
                 </button>

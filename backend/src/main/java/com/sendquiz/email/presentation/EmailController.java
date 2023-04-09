@@ -13,10 +13,9 @@ public class EmailController {
 
     private final EmailService emailService;
 
-
     @PostMapping("/email/signup")
     public ResponseEntity<Void> emailSignup(@RequestParam("email") String toEmail) {
-        emailService.sendEmail(toEmail);
+        emailService.sendCertificationNum(toEmail);
         return ResponseEntity.ok().build();
     }
 }

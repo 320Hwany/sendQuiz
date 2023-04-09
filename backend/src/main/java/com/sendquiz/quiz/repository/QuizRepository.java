@@ -1,0 +1,11 @@
+package com.sendquiz.quiz.repository;
+
+import com.sendquiz.quiz.domain.Quiz;
+import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
+
+import java.util.List;
+
+public interface QuizRepository {
+
+    List<Quiz> getQuizList(QuizFilterSearch quizFilterSearch);
+}
