@@ -1,10 +1,7 @@
 package com.sendquiz.member.domain;
 
 import com.sendquiz.global.eumtype.Role;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +25,7 @@ public class Member {
 
     private String password;
 
+    @Enumerated(EnumType.STRING)
     private Role role;
 
     @Builder

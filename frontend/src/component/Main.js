@@ -19,7 +19,7 @@ function Main() {
             .catch(error => {
                 navigate("/");
             });
-    });
+    }, []);
 
     return (
         <div className="container-fluid">

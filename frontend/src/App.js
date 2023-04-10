@@ -6,6 +6,7 @@ import Home from "./component/Home";
 import Main from "./component/Main";
 import SignupSuccess from "./component/SignupSuccess";
 import Setting from "./component/Setting";
+import Quiz from "./component/Quiz";
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/signup/success" element={<SignupSuccess />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/hwany/quiz" element={<Quiz />} />
                 </Routes>
             </div>
         </Router>

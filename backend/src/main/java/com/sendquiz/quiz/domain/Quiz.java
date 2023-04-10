@@ -20,12 +20,13 @@ public class Quiz {
 
     private String answer;
 
+    @Enumerated(EnumType.STRING)
     private Subject subject;
 
     @Builder
-    public Quiz(String problem, String answer, Subject subject) {
+    public Quiz(Subject subject, String problem, String answer) {
+        this.subject = subject;
         this.problem = problem;
         this.answer = answer;
-        this.subject = subject;
     }
 }

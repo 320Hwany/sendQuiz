@@ -11,24 +11,24 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizSave {
 
+    private String subject;
+
     private String problem;
 
     private String answer;
 
-    private String subject;
-
     @Builder
-    public QuizSave(String problem, String answer, String subject) {
+    public QuizSave(String subject, String problem, String answer) {
+        this.subject = subject;
         this.problem = problem;
         this.answer = answer;
-        this.subject = subject;
     }
 
-    public Quiz toEntity() {
+    public Quiz toEntity(Subject subject) {
         return Quiz.builder()
+                .subject(subject)
                 .problem(problem)
                 .answer(answer)
-                .subject(Subject.valueOf(subject))
                 .build();
     }
 }

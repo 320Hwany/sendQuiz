@@ -1,9 +1,9 @@
 package com.sendquiz.global.config;
 
 import com.sendquiz.global.annotation.AdminLogin;
+import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.exception.MemberAuthenticationException;
+import com.sendquiz.member.exception.AdminAuthenticationException;
 import com.sendquiz.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -19,7 +19,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
-import static com.sendquiz.member.domain.MemberSession.toMemberSession;
+import static com.sendquiz.member.domain.AdminSession.toAdminSession;
 
 @RequiredArgsConstructor
 public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
@@ -28,9 +28,9 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        boolean isMemberSessionType = parameter.getParameterType().equals(MemberSession.class);
+        boolean isAdminSessionType = parameter.getParameterType().equals(AdminSession.class);
         boolean isAdminLoginAnnotation = parameter.hasParameterAnnotation(AdminLogin.class);
-        return isMemberSessionType && isAdminLoginAnnotation;
+        return isAdminSessionType && isAdminLoginAnnotation;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
     private static String getJws(NativeWebRequest webRequest) {
         String jws = webRequest.getHeader("Authorization");
         if (jws == null || jws.equals("")) {
-            throw new MemberAuthenticationException();
+            throw new AdminAuthenticationException();
         }
         return jws;
     }
@@ -56,15 +56,15 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
                 .parseClaimsJws(jws);
     }
 
-    private MemberSession getMemberSession(String jws, byte[] decodedKey) {
+    private AdminSession getMemberSession(String jws, byte[] decodedKey) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
-            return toMemberSession(member);
+            return toAdminSession(member);
 
         } catch (JwtException e) {
-            throw new MemberAuthenticationException();
+            throw new AdminAuthenticationException();
         }
     }
 }

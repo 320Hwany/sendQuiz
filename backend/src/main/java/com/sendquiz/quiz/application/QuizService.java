@@ -14,8 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.sendquiz.global.eumtype.Subject.validateValue;
-
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
@@ -35,9 +33,7 @@ public class QuizService {
 
     @Transactional
     public void save(QuizSave quizSave) {
-        if (!validateValue(quizSave.getSubject())) {
-            throw new SubjectNotMatchException();
-        }
-        quizRepository.save(quizSave.toEntity());
+        Subject subject = Subject.fromValue(quizSave.getSubject());
+        quizRepository.save(quizSave.toEntity(subject));
     }
 }

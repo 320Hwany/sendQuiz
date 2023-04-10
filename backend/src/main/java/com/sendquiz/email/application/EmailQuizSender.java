@@ -30,9 +30,10 @@ public class EmailQuizSender {
     protected StringBuffer makeText(List<Quiz> randomQuizList) {
         StringBuffer sb = new StringBuffer();
         for (Quiz quiz : randomQuizList) {
-            sb.append("분야 :").append(quiz.getSubject()).append("\n");
-            sb.append("문제 :").append(quiz.getProblem()).append("\n");
-            sb.append("해답 :").append(quiz.getAnswer()).append("\n").append("\n");
+            sb.append("-------------------------------------------").append("\n");
+            sb.append("분야 : ").append(quiz.getSubject()).append("\n");
+            sb.append("문제 : ").append(quiz.getProblem()).append("\n");
+            sb.append("답안").append("\n").append(quiz.getAnswer()).append("\n").append("\n");
         }
         return sb;
     }
