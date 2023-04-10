@@ -1,5 +1,6 @@
 package com.sendquiz.member.domain;
 
+import com.sendquiz.global.eumtype.Role;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,10 +28,13 @@ public class Member {
 
     private String password;
 
+    private Role role;
+
     @Builder
-    public Member(String email, String nickname, String password) {
+    public Member(String email, String nickname, String password, Role role) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
+        this.role = role;
     }
 }

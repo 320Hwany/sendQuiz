@@ -1,6 +1,6 @@
 package com.sendquiz.global.config;
 
-import com.sendquiz.global.annotation.Login;
+import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.exception.MemberAuthenticationException;
@@ -9,10 +9,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -25,20 +22,20 @@ import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @RequiredArgsConstructor
-public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
+public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     private final MemberRepository memberRepository;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean isMemberSessionType = parameter.getParameterType().equals(MemberSession.class);
-        boolean isLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        return isMemberSessionType && isLoginAnnotation;
+        boolean isAdminLoginAnnotation = parameter.hasParameterAnnotation(AdminLogin.class);
+        return isMemberSessionType && isAdminLoginAnnotation;
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         String jws = getJws(webRequest);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         return getMemberSession(jws, decodedKey);

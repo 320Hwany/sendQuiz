@@ -1,9 +1,15 @@
 package com.sendquiz.quiz.presentation;
 
+import com.sendquiz.global.annotation.AdminLogin;
+import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.quiz.application.QuizService;
+import com.sendquiz.quiz.dto.request.QuizSave;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -14,7 +20,14 @@ public class QuizController {
 
     @GetMapping("/quizList")
     public ResponseEntity<Void> getQuizList() {
-        quizService.sendQuizList();
+        quizService.sendRandomQuizList();
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/quiz")
+    public ResponseEntity<Void> save(@AdminLogin MemberSession memberSession,
+                                     @RequestBody QuizSave quizSave) {
+        quizService.save(quizSave);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -1,5 +1,6 @@
 package com.sendquiz.member.dto.request;
 
+import com.sendquiz.global.eumtype.Role;
 import com.sendquiz.member.domain.Member;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -42,6 +43,7 @@ public class MemberSignup {
                 .email(email)
                 .nickname(nickname)
                 .password(passwordEncoder.encode(password))
+                .role(Role.BASIC)
                 .build();
     }
 }

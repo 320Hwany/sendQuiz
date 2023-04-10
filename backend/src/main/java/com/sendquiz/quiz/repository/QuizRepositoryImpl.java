@@ -46,6 +46,11 @@ public class QuizRepositoryImpl implements QuizRepository {
     }
 
     @Override
+    public void save(Quiz quiz) {
+        quizJpaRepository.save(quiz);
+    }
+
+    @Override
     public void saveAll(List<Quiz> quizList) {
         quizJpaRepository.saveAll(quizList);
     }

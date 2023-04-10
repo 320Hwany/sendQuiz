@@ -9,5 +9,7 @@ public interface QuizRepository {
 
     List<Quiz> findRandomQuizList(QuizFilterSearch quizFilterSearch);
 
+    void save(Quiz quiz);
+
     void saveAll(List<Quiz> quizList);
 }
