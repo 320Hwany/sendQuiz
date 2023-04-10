@@ -9,5 +9,7 @@ public interface QuizFilterRepository {
 
     void save(QuizFilter quizFilter);
 
+    void saveAll(List<QuizFilter> quizFilterList);
+
     List<QuizFilterSearch> findAllQuizFilterSearch();
 }

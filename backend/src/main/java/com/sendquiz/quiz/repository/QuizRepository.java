@@ -8,4 +8,6 @@ import java.util.List;
 public interface QuizRepository {
 
     List<Quiz> findRandomQuizList(QuizFilterSearch quizFilterSearch);
+
+    void saveAll(List<Quiz> quizList);
 }

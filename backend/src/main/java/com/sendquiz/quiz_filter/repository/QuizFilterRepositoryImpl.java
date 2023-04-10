@@ -27,6 +27,11 @@ public class QuizFilterRepositoryImpl implements QuizFilterRepository {
     }
 
     @Override
+    public void saveAll(List<QuizFilter> quizFilterList) {
+        quizFilterJpaRepository.saveAll(quizFilterList);
+    }
+
+    @Override
     public List<QuizFilterSearch> findAllQuizFilterSearch() {
         return queryFactory.select(new QQuizFilterSearch(
                         quizFilter.isNetwork,

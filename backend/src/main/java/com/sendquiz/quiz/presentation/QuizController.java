@@ -2,6 +2,7 @@ package com.sendquiz.quiz.presentation;
 
 import com.sendquiz.quiz.application.QuizService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +13,8 @@ public class QuizController {
     private final QuizService quizService;
 
     @GetMapping("/quizList")
-    public void getQuizList() {
-        quizService.findAllQuiz();
+    public ResponseEntity<Void> getQuizList() {
+        quizService.sendQuizList();
+        return ResponseEntity.ok().build();
     }
 }

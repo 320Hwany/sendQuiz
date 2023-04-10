@@ -20,7 +20,7 @@ public class QuizService {
     private final QuizFilterRepository quizFilterRepository;
     private final EmailQuizSender emailQuizSender;
 
-    public void findAllQuiz() {
+    public void sendQuizList() {
         List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
         for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
             List<Quiz> randomQuizList = quizRepository.findRandomQuizList(quizFilterSearch);

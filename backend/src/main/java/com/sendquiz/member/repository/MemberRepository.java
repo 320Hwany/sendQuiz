@@ -18,4 +18,6 @@ public interface MemberRepository {
     List<Member> findAll();
 
     void save(Member member);
+
+    void saveAll(List<Member> memberList);
 }

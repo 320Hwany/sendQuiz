@@ -8,6 +8,7 @@ import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,25 +19,54 @@ import static java.util.stream.Collectors.toList;
 @Repository
 public class QuizRepositoryImpl implements QuizRepository {
 
+    private final QuizJpaRepository quizJpaRepository;
     private final JPAQueryFactory queryFactory;
 
     @Override
     public List<Quiz> findRandomQuizList(QuizFilterSearch quizFilterSearch) {
+        List<BooleanExpression> expressions = findExpressionList(quizFilterSearch);
+        if (expressions.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        BooleanExpression finalExpression = expressions.get(0);
+        for (int i = 1; i < expressions.size(); i++) {
+            finalExpression = finalExpression.or(expressions.get(i));
+        }
+
         List<Quiz> quizList = queryFactory.selectFrom(quiz)
-                .where(
-                        networkTrue(quizFilterSearch)
-                                .or(databaseTrue(quizFilterSearch))
-                                .or(operatingSystemTrue(quizFilterSearch))
-                                .or(dataStructureTrue(quizFilterSearch))
-                                .or(javaTrue(quizFilterSearch))
-                                .or(springTrue(quizFilterSearch))
-                ).fetch();
+                .where(finalExpression)
+                .fetch();
 
         Collections.shuffle(quizList);
 
         return quizList.stream()
                 .limit(quizFilterSearch.getNumOfProblem())
                 .collect(toList());
+    }
+
+    @Override
+    public void saveAll(List<Quiz> quizList) {
+        quizJpaRepository.saveAll(quizList);
+    }
+
+    private List<BooleanExpression> findExpressionList(QuizFilterSearch quizFilterSearch) {
+        BooleanExpression networkExpression = networkTrue(quizFilterSearch);
+        BooleanExpression databaseExpression = databaseTrue(quizFilterSearch);
+        BooleanExpression operatingSystemExpression = operatingSystemTrue(quizFilterSearch);
+        BooleanExpression dataStructureExpression = dataStructureTrue(quizFilterSearch);
+        BooleanExpression javaExpression = javaTrue(quizFilterSearch);
+        BooleanExpression springExpression = springTrue(quizFilterSearch);
+
+        List<BooleanExpression> expressions = new ArrayList<>();
+        if (networkExpression != null) expressions.add(networkExpression);
+        if (databaseExpression != null) expressions.add(databaseExpression);
+        if (operatingSystemExpression != null) expressions.add(operatingSystemExpression);
+        if (dataStructureExpression != null) expressions.add(dataStructureExpression);
+        if (javaExpression != null) expressions.add(javaExpression);
+        if (springExpression != null) expressions.add(springExpression);
+
+        return expressions;
     }
 
     private BooleanExpression networkTrue(QuizFilterSearch quizFilterSearch) {
