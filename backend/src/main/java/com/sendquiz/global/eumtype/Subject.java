@@ -10,9 +10,9 @@ import java.util.Arrays;
 public enum Subject {
 
     NETWORK("network"),
-    DATA_STRUCTURE("dataStructure"),
-    OPERATING_SYSTEM("operatingSystem"),
     DATA_BASE("database"),
+    OPERATING_SYSTEM("operatingSystem"),
+    DATA_STRUCTURE("dataStructure"),
     JAVA("java"),
     SPRING("spring");
 

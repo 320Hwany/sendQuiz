@@ -1,7 +1,6 @@
 package com.sendquiz.quiz_filter.dto;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.sendquiz.quiz_filter.domain.QuizFilter;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,10 +24,12 @@ public class QuizFilterSearch {
 
     private int numOfProblem;
 
-    @Builder
-    @QueryProjection
+    private String email;
+
+   @Builder
+   @QueryProjection
     public QuizFilterSearch(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
-                            boolean isJava, boolean isSpring, int numOfProblem) {
+                            boolean isJava, boolean isSpring, int numOfProblem, String email) {
         this.isNetwork = isNetwork;
         this.isDatabase = isDatabase;
         this.isOS = isOS;
@@ -36,5 +37,6 @@ public class QuizFilterSearch {
         this.isJava = isJava;
         this.isSpring = isSpring;
         this.numOfProblem = numOfProblem;
+        this.email = email;
     }
 }

@@ -1,6 +1,6 @@
 package com.sendquiz.email.presentation;
 
-import com.sendquiz.email.application.EmailService;
+import com.sendquiz.email.application.EmailCertificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmailController {
 
-    private final EmailService emailService;
+    private final EmailCertificationService emailCertificationService;
 
     @PostMapping("/email/signup")
     public ResponseEntity<Void> emailSignup(@RequestParam("email") String toEmail) {
-        emailService.sendCertificationNum(toEmail);
+        emailCertificationService.sendCertificationNum(toEmail);
         return ResponseEntity.ok().build();
     }
 }

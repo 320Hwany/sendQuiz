@@ -16,7 +16,7 @@ import static com.sendquiz.global.constant.CommonConstant.*;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class EmailService {
+public class EmailCertificationService {
 
     private final JavaMailSender mailSender;
     private final CertificationRepository certificationRepository;
@@ -24,12 +24,12 @@ public class EmailService {
     @Transactional
     public void sendCertificationNum(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
-        String certificationNum = makeMessage(toEmail, message);
+        String certificationNum = makeCertificationMessage(toEmail, message);
         saveCertificationNum(toEmail, certificationNum);
         mailSender.send(message);
     }
 
-    protected String makeMessage(String toEmail, SimpleMailMessage message) {
+    protected String makeCertificationMessage(String toEmail, SimpleMailMessage message) {
         String certificationNum = makeUUID();
         message.setTo(toEmail);
         message.setSubject(EMAIL_SUBJECT);

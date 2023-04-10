@@ -1,13 +1,15 @@
 package com.sendquiz.quiz.application;
 
-import com.sendquiz.global.eumtype.Subject;
-import com.sendquiz.quiz.dto.request.QuizSearchDataDto;
-import com.sendquiz.quiz.dto.request.QuizSearchInputDto;
-import com.sendquiz.quiz.exception.SubjectNotMatchException;
+import com.sendquiz.email.application.EmailQuizSender;
+import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.repository.QuizRepository;
+import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
+import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -15,12 +17,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class QuizService {
 
     private final QuizRepository quizRepository;
+    private final QuizFilterRepository quizFilterRepository;
+    private final EmailQuizSender emailQuizSender;
 
-    public void getQuizList(QuizSearchInputDto quizSearchInputDto) {
-        if (!Subject.validateValue(quizSearchInputDto.getSubject())) {
-            throw new SubjectNotMatchException();
+    public void findAllQuiz() {
+        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
+        for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
+            List<Quiz> randomQuizList = quizRepository.findRandomQuizList(quizFilterSearch);
+            emailQuizSender.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
         }
-        QuizSearchDataDto dataDto = quizSearchInputDto.toDataDto();
-//        quizRepository.getQuizList(dataDto);
     }
 }

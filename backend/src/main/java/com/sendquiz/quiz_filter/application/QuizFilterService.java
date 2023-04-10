@@ -5,13 +5,11 @@ import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.dto.QuizFilterSave;
-import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -26,12 +24,5 @@ public class QuizFilterService {
         Member member = memberRepository.getById(memberSession.getId());
         QuizFilter quizFilter = quizFilterSave.toEntity(member);
         quizFilterRepository.save(quizFilter);
-    }
-
-    public void findAll() {
-        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
-        for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
-
-        }
     }
 }

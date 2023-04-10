@@ -13,8 +13,8 @@ public class QQuizFilterSearch extends ConstructorExpression<QuizFilterSearch> {
 
     private static final long serialVersionUID = -1788981740L;
 
-    public QQuizFilterSearch(com.querydsl.core.types.Expression<Boolean> isNetwork, com.querydsl.core.types.Expression<Boolean> isDatabase, com.querydsl.core.types.Expression<Boolean> isOS, com.querydsl.core.types.Expression<Boolean> isDataStructure, com.querydsl.core.types.Expression<Boolean> isJava, com.querydsl.core.types.Expression<Boolean> isSpring, com.querydsl.core.types.Expression<Integer> numOfProblem) {
-        super(QuizFilterSearch.class, new Class<?>[]{boolean.class, boolean.class, boolean.class, boolean.class, boolean.class, boolean.class, int.class}, isNetwork, isDatabase, isOS, isDataStructure, isJava, isSpring, numOfProblem);
+    public QQuizFilterSearch(com.querydsl.core.types.Expression<Boolean> isNetwork, com.querydsl.core.types.Expression<Boolean> isDatabase, com.querydsl.core.types.Expression<Boolean> isOS, com.querydsl.core.types.Expression<Boolean> isDataStructure, com.querydsl.core.types.Expression<Boolean> isJava, com.querydsl.core.types.Expression<Boolean> isSpring, com.querydsl.core.types.Expression<Integer> numOfProblem, com.querydsl.core.types.Expression<String> email) {
+        super(QuizFilterSearch.class, new Class<?>[]{boolean.class, boolean.class, boolean.class, boolean.class, boolean.class, boolean.class, int.class, String.class}, isNetwork, isDatabase, isOS, isDataStructure, isJava, isSpring, numOfProblem, email);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.sendquiz.quiz_filter.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sendquiz.member.domain.QMember;
 import com.sendquiz.quiz_filter.domain.QQuizFilter;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.dto.QQuizFilterSearch;
@@ -34,9 +35,11 @@ public class QuizFilterRepositoryImpl implements QuizFilterRepository {
                         quizFilter.isDataStructure,
                         quizFilter.isJava,
                         quizFilter.isSpring,
-                        quizFilter.numOfProblem
+                        quizFilter.numOfProblem,
+                        member.email
                 ))
                 .from(quizFilter)
+                .innerJoin(quizFilter.member, member)
                 .fetch();
     }
 }
