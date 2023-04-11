@@ -18,7 +18,7 @@ function Home() {
             })
             .catch(error => {
             });
-    });
+    }, []);
 
     return (
         <div className="container my-5">
