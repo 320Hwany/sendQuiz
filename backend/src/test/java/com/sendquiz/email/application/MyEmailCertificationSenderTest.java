@@ -2,6 +2,7 @@ package com.sendquiz.email.application;
 
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.email.application.test.EmailCertificationSenderTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,6 +27,25 @@ public class MyEmailCertificationSenderTest {
 
     @Mock
     private CertificationRepository certificationRepository;
+
+    @Test
+    @DisplayName("인증번호에 대한 메일을 생성하고 testMailSender에 저장되는지를 확인합니다")
+    void sendCertificationNum() {
+        // given
+        String toMail = "test email";
+
+        // stub
+        when(certificationRepository.findByEmail(any())).thenReturn(Optional.empty());
+
+        // when
+        emailCertificationSenderTest.sendCertificationNum(toMail);
+
+        // then
+        ThreadLocal<SimpleMailMessage> testMailSender = emailCertificationSenderTest.getTestMailSender();
+        SimpleMailMessage message = testMailSender.get();
+        assertThat(message.getSubject()).isEqualTo(EMAIL_SUBJECT_TEST);
+        assertThat(message.getText()).isEqualTo(CERTIFICATION_MESSAGE_TEST);
+    }
 
     @Test
     @DisplayName("인증번호에 대한 메일을 생성하고 인증번호를 반환합니다")

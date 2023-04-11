@@ -1,11 +1,11 @@
-package com.sendquiz.email.application;
+package com.sendquiz.email.application.test;
 
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.email.application.EmailCertificationSender;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Primary;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,27 +15,27 @@ import static com.sendquiz.certification.domain.Certification.toCertification;
 import static com.sendquiz.global.constant.CommonConstant.*;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
-@Primary
+@Getter
 @Service
-public class EmailCertificationSenderProd implements EmailCertificationSender {
+public class EmailCertificationSenderTest implements EmailCertificationSender {
 
-    private final JavaMailSender mailSender;
     private final CertificationRepository certificationRepository;
+
+    private ThreadLocal<SimpleMailMessage> testMailSender = new ThreadLocal<>();
 
     @Transactional
     public void sendCertificationNum(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         String certificationNum = makeCertificationMessage(toEmail, message);
         saveCertificationNum(toEmail, certificationNum);
-        mailSender.send(message);
+        testMailSender.set(message);
     }
 
     public String makeCertificationMessage(String toEmail, SimpleMailMessage message) {
         String certificationNum = makeUUID();
         message.setTo(toEmail);
-        message.setSubject(EMAIL_SUBJECT);
-        message.setText(CERTIFICATION_MESSAGE + certificationNum);
+        message.setSubject(EMAIL_SUBJECT_TEST);
+        message.setText(CERTIFICATION_MESSAGE_TEST);
         return certificationNum;
     }
 

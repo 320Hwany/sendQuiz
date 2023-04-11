@@ -1,6 +1,6 @@
 package com.sendquiz.quiz.application;
 
-import com.sendquiz.email.application.EmailQuizSenderProd;
+import com.sendquiz.email.application.prod.EmailQuizSenderProd;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.dto.request.QuizSave;

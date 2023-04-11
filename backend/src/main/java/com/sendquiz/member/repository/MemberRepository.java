@@ -15,8 +15,6 @@ public interface MemberRepository {
 
     Optional<Member> findByNickname(String nickname);
 
-    List<Member> findAll();
-
     void save(Member member);
 
     void saveAll(List<Member> memberList);

@@ -37,11 +37,6 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public List<Member> findAll() {
-        return memberJpaRepository.findAll();
-    }
-
-    @Override
     public void save(Member member) {
         memberJpaRepository.save(member);
     }

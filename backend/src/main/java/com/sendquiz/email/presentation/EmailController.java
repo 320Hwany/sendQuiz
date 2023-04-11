@@ -1,6 +1,6 @@
 package com.sendquiz.email.presentation;
 
-import com.sendquiz.email.application.EmailCertificationSenderProd;
+import com.sendquiz.email.application.prod.EmailCertificationSenderProd;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

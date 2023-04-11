@@ -1,5 +1,6 @@
-package com.sendquiz.email.application;
+package com.sendquiz.email.application.prod;
 
+import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.quiz.domain.Quiz;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
