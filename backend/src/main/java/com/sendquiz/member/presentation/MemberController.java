@@ -1,12 +1,13 @@
 package com.sendquiz.member.presentation;
 
 import com.sendquiz.global.annotation.Login;
-import com.sendquiz.global.jwt.JwtResponse;
+import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.application.MemberService;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.dto.response.MemberResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,16 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody MemberLogin memberLogin) {
-        String jws = memberService.login(memberLogin);
-        return ResponseEntity.ok(new JwtResponse(jws));
+    public ResponseEntity<JwtResponse> login(@RequestBody MemberLogin memberLogin,
+                                             HttpServletResponse response) {
+        JwtResponse jwtResponse = memberService.login(memberLogin, response);
+        return ResponseEntity.ok(jwtResponse);
     }
+
+//    @PostMapping("/refresh/login")
+//    public ResponseEntity<JwtResponse> refreshLogin() {
+//
+//    }
 
     @GetMapping("/member")
     public ResponseEntity<MemberResponse> get(@Login MemberSession memberSession) {

@@ -16,11 +16,9 @@ import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_MESSAGE_
 import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(MockitoExtension.class)
 public class MyEmailQuizSenderTest {
 
-    @InjectMocks
-    private EmailQuizSenderTest emailQuizSenderTest;
+    private EmailQuizSenderTest emailQuizSenderTest = new EmailQuizSenderTest();
 
     @Test
     @DisplayName("랜덤 퀴즈 리스트가 testEmailSender에 저장되는지를 확입합니다")

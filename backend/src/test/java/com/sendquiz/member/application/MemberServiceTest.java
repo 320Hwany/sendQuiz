@@ -3,6 +3,7 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -179,10 +181,10 @@ class MemberServiceTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
 
         // when
-        String jws = memberService.login(memberLogin);
+        JwtResponse jwtResponse = memberService.login(memberLogin, new MockHttpServletResponse());
 
         // then
-        assertThat(jws).isNotNull();
+        assertThat(jwtResponse.getAccessToken()).isNotBlank();
     }
 
     @Test
@@ -207,6 +209,7 @@ class MemberServiceTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         // then
-        assertThrows(MemberNotMatchException.class, () -> memberService.login(memberLogin));
+        assertThrows(MemberNotMatchException.class, () ->
+                memberService.login(memberLogin, new MockHttpServletResponse()));
     }
 }

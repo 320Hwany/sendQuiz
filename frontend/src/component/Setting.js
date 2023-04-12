@@ -1,10 +1,24 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from "react-router-dom";
 
 function Setting() {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/member', {
+                headers: {
+                    Authorization: localStorage.getItem('Authorization'),
+                },
+            })
+            .then(response => {
+            })
+            .catch(error => {
+                navigate("/");
+            });
+    }, []);
 
     const [options,
         setOptions] = useState({

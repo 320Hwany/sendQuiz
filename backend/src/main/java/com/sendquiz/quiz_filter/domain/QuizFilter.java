@@ -1,7 +1,7 @@
 package com.sendquiz.quiz_filter.domain;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.sendquiz.member.domain.Member;
+import com.sendquiz.quiz_filter.dto.QuizFilterSave;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -46,5 +46,15 @@ public class QuizFilter {
         this.isJava = isJava;
         this.isSpring = isSpring;
         this.numOfProblem = numOfProblem;
+    }
+
+    public void update(QuizFilterSave quizFilterSave) {
+        this.isNetwork = quizFilterSave.isNetwork();
+        this.isDatabase = quizFilterSave.isDatabase();
+        this.isOS = quizFilterSave.isOperatingSystem();
+        this.isDataStructure = quizFilterSave.isDataStructure();
+        this.isJava = quizFilterSave.isJava();
+        this.isSpring = quizFilterSave.isSpring();
+        this.numOfProblem = quizFilterSave.getNumOfProblem();
     }
 }

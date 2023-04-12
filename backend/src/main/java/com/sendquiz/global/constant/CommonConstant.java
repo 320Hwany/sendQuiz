@@ -15,4 +15,8 @@ public class CommonConstant {
     public static final String CERTIFICATION_MESSAGE = "이메일 확인 인증 번호입니다 : ";
 
     public static final String CERTIFICATION_MESSAGE_TEST = "테스트 이메일 메세지";
+
+    public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
+
+    public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
 }

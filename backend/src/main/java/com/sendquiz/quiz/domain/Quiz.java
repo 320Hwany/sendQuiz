@@ -18,6 +18,7 @@ public class Quiz {
 
     private String problem;
 
+    @Lob
     private String answer;
 
     @Enumerated(EnumType.STRING)

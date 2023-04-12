@@ -9,10 +9,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -21,7 +20,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
+import static com.sendquiz.global.constant.HiddenConstant.*;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @RequiredArgsConstructor
@@ -39,27 +38,24 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
-        String jws = getJws(webRequest);
+        String accessJws = webRequest.getHeader("Authorization");
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        return getMemberSession(jws, decodedKey);
-    }
-
-    private static String getJws(NativeWebRequest webRequest) {
-        String jws = webRequest.getHeader("Authorization");
-        if (jws == null || jws.equals("")) {
-            throw new MemberAuthenticationException();
+        if (accessJws == null || accessJws.equals("")) {
+            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+            Cookie[] cookies = request.getCookies();
+            if (cookies == null) {
+                throw new MemberAuthenticationException();
+            }
+            String refreshJws = cookies[0].getAttribute("refreshToken");
+            if (refreshJws == null || refreshJws.equals("")) {
+                throw new MemberAuthenticationException();
+            }
+            return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
-        return jws;
+        return getMemberSessionFromAccessJws(accessJws, decodedKey);
     }
 
-    private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
-        return Jwts.parserBuilder()
-                .setSigningKey(decodedKey)
-                .build()
-                .parseClaimsJws(jws);
-    }
-
-    private MemberSession getMemberSession(String jws, byte[] decodedKey) {
+    private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
@@ -69,5 +65,26 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         } catch (JwtException e) {
             throw new MemberAuthenticationException();
         }
+    }
+
+    private MemberSession getMemberSessionFromRefreshJws(String jws, byte[] decodedKey) {
+        try {
+            Jws<Claims> claims = getClaims(jws, decodedKey);
+            String memberId = claims.getBody().getSubject();
+            Member member = memberRepository.getById(Long.valueOf(memberId));
+            if (jws.equals(member.getRefreshToken())) {
+                return toMemberSession(member);
+            }
+            throw new MemberAuthenticationException();
+        } catch (JwtException e) {
+            throw new MemberAuthenticationException();
+        }
+    }
+
+    private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
+        return Jwts.parserBuilder()
+                .setSigningKey(decodedKey)
+                .build()
+                .parseClaimsJws(jws);
     }
 }

@@ -1,8 +1,6 @@
 package com.sendquiz.quiz_filter.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.sendquiz.member.domain.QMember;
-import com.sendquiz.quiz_filter.domain.QQuizFilter;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.dto.QQuizFilterSearch;
 import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
@@ -10,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.sendquiz.member.domain.QMember.member;
 import static com.sendquiz.quiz_filter.domain.QQuizFilter.quizFilter;
@@ -29,6 +28,16 @@ public class QuizFilterRepositoryImpl implements QuizFilterRepository {
     @Override
     public void saveAll(List<QuizFilter> quizFilterList) {
         quizFilterJpaRepository.saveAll(quizFilterList);
+    }
+
+    @Override
+    public Optional<QuizFilter> findByMemberId(Long memberId) {
+        return Optional.ofNullable(
+                queryFactory
+                        .selectFrom(quizFilter)
+                        .innerJoin(quizFilter.member, member).fetchJoin()
+                        .where(member.id.eq(memberId))
+                        .fetchOne());
     }
 
     @Override

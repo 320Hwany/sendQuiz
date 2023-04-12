@@ -28,11 +28,18 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String refreshToken;
+
     @Builder
-    public Member(String email, String nickname, String password, Role role) {
+    public Member(String email, String nickname, String password, Role role, String refreshToken) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.role = role;
+        this.refreshToken = refreshToken;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
