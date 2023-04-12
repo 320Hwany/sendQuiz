@@ -14,7 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import static com.sendquiz.member.dto.response.MemberResponse.*;
+import static com.sendquiz.jwt.application.JwtService.getMemberResponse;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -35,14 +36,9 @@ public class MemberController {
         return ResponseEntity.ok(jwtResponse);
     }
 
-//    @PostMapping("/refresh/login")
-//    public ResponseEntity<JwtResponse> refreshLogin() {
-//
-//    }
-
     @GetMapping("/member")
     public ResponseEntity<MemberResponse> get(@Login MemberSession memberSession) {
-        MemberResponse memberResponse = toMemberResponse(memberSession);
+        MemberResponse memberResponse = getMemberResponse(memberSession);
         return ResponseEntity.ok(memberResponse);
     }
 }

@@ -14,6 +14,9 @@ function Main() {
                 },
             })
             .then(response => {
+                if (response.data.accessToken != null) {
+                    localStorage.setItem("Authorization", response.data.accessToken);
+                }
                 setNickname(response.data.nickname);
             })
             .catch(error => {
@@ -28,16 +31,15 @@ function Main() {
                     <div className="text-center py-5">
                         <h1 className="display-4">{nickname}님 반갑습니다!</h1>
                     </div>
-                    <div className="text-center my-5">
+                    <div className="text-center my-3">
                         <Link to="/setting" className="btn btn-lg btn-outline-primary">
-                            SendQuiz 서비스 이용하러가기
+                            SendQuiz 서비스 신청하기
                         </Link>
                     </div>
                 </div>
             </div>
         </div>
     );
-
 }
 
 export default Main;

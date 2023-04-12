@@ -16,6 +16,10 @@ public class CommonConstant {
 
     public static final String CERTIFICATION_MESSAGE_TEST = "테스트 이메일 메세지";
 
+    public static final String AUTHORIZATION = "Authorization";
+
+    public static final String REFRESH_TOKEN = "refreshToken";
+
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
 
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;

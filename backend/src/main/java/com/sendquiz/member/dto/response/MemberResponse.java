@@ -18,12 +18,25 @@ public class MemberResponse {
 
     private int numOfProblem;
 
+    private String accessToken;
+
     @Builder
-    public MemberResponse(Long id, String email, String nickname, int numOfProblem) {
+    public MemberResponse(Long id, String email, String nickname, int numOfProblem, String accessToken) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;
         this.numOfProblem = numOfProblem;
+        this.accessToken = accessToken;
+    }
+
+    public static MemberResponse toMemberResponse(MemberSession memberSession, String accessToken) {
+        return MemberResponse.builder()
+                .id(memberSession.getId())
+                .email(memberSession.getEmail())
+                .nickname(memberSession.getNickname())
+                .numOfProblem(memberSession.getNumOfProblem())
+                .accessToken(accessToken)
+                .build();
     }
 
     public static MemberResponse toMemberResponse(MemberSession memberSession) {

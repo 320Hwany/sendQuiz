@@ -20,6 +20,8 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Base64;
 
+import static com.sendquiz.global.constant.CommonConstant.AUTHORIZATION;
+import static com.sendquiz.global.constant.CommonConstant.REFRESH_TOKEN;
 import static com.sendquiz.global.constant.HiddenConstant.*;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
@@ -38,21 +40,31 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
-        String accessJws = webRequest.getHeader("Authorization");
+        String accessJws = webRequest.getHeader(AUTHORIZATION);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         if (accessJws == null || accessJws.equals("")) {
             HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-            Cookie[] cookies = request.getCookies();
-            if (cookies == null) {
-                throw new MemberAuthenticationException();
-            }
-            String refreshJws = cookies[0].getAttribute("refreshToken");
-            if (refreshJws == null || refreshJws.equals("")) {
-                throw new MemberAuthenticationException();
-            }
+            Cookie[] cookies = getCookies(request);
+            String refreshJws = getRefreshJws(cookies);
             return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
         return getMemberSessionFromAccessJws(accessJws, decodedKey);
+    }
+
+    private static Cookie[] getCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            throw new MemberAuthenticationException();
+        }
+        return cookies;
+    }
+
+    private static String getRefreshJws(Cookie[] cookies) {
+        String refreshJws = cookies[0].getAttribute(REFRESH_TOKEN);
+        if (refreshJws == null || refreshJws.equals("")) {
+            throw new MemberAuthenticationException();
+        }
+        return refreshJws;
     }
 
     private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey) {
@@ -60,7 +72,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
-            return toMemberSession(member);
+            return toMemberSession(member, false);
 
         } catch (JwtException e) {
             throw new MemberAuthenticationException();
@@ -73,7 +85,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
             if (jws.equals(member.getRefreshToken())) {
-                return toMemberSession(member);
+                return toMemberSession(member, true);
             }
             throw new MemberAuthenticationException();
         } catch (JwtException e) {

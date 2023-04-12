@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -56,6 +56,9 @@ function Login() {
                     <Button variant="primary" type="submit">
                         로그인
                     </Button>
+                    <Link to="/main" className="btn btn-success mx-3">
+                        홈으로
+                    </Link>
                 </Form>
             </div>
         </Container>
