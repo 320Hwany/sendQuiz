@@ -21,7 +21,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.AUTHORIZATION;
-import static com.sendquiz.global.constant.CommonConstant.REFRESH_TOKEN;
 import static com.sendquiz.global.constant.HiddenConstant.*;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
@@ -48,6 +47,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             String refreshJws = getRefreshJws(cookies);
             return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
+
         return getMemberSessionFromAccessJws(accessJws, decodedKey);
     }
 
@@ -60,7 +60,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private static String getRefreshJws(Cookie[] cookies) {
-        String refreshJws = cookies[0].getAttribute(REFRESH_TOKEN);
+        String refreshJws = cookies[0].getValue();
         if (refreshJws == null || refreshJws.equals("")) {
             throw new MemberAuthenticationException();
         }
@@ -89,6 +89,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             }
             throw new MemberAuthenticationException();
         } catch (JwtException e) {
+            System.out.println(666666);
             throw new MemberAuthenticationException();
         }
     }

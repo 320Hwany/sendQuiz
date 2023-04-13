@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
+import java.util.UUID;
 
-import static com.sendquiz.global.constant.CommonConstant.AFTER_ONE_HOUR;
-import static com.sendquiz.global.constant.CommonConstant.AFTER_ONE_MONTH;
+import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
 import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
 
@@ -23,6 +23,7 @@ public class JwtService {
     public static String getAccessToken(Long memberId) {
         SecretKey accessTokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
         return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
                 .setExpiration(new Date(AFTER_ONE_HOUR))
                 .signWith(accessTokenKey)
@@ -32,6 +33,7 @@ public class JwtService {
     public static String getRefreshToken(Long memberId) {
         SecretKey refreshTokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
         return Jwts.builder()
+                .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
                 .setExpiration(new Date(AFTER_ONE_MONTH))
                 .signWith(refreshTokenKey)
@@ -39,7 +41,7 @@ public class JwtService {
     }
 
     public static void makeCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        Cookie cookie = new Cookie(REFRESH_TOKEN, refreshToken);
         cookie.setMaxAge(7 * 24 * 60 * 60 * 4);
         cookie.setPath("/");
         cookie.setHttpOnly(true);

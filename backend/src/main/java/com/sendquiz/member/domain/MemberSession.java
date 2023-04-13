@@ -1,6 +1,5 @@
 package com.sendquiz.member.domain;
 
-import com.sendquiz.member.dto.response.MemberResponse;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

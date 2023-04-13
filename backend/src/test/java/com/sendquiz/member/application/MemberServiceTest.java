@@ -5,6 +5,7 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.domain.Member;
+import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.exception.MemberDuplicationException;
@@ -174,7 +175,7 @@ class MemberServiceTest {
                 .nickname("test nickname")
                 .build();
 
-        ReflectionTestUtils.setField(member,"id", 1L);
+        ReflectionTestUtils.setField(member, "id", 1L);
 
         // stub
         when(memberRepository.getByEmail(anyString())).thenReturn(member);
@@ -202,7 +203,7 @@ class MemberServiceTest {
                 .nickname("test nickname")
                 .build();
 
-        ReflectionTestUtils.setField(member,"id", 1L);
+        ReflectionTestUtils.setField(member, "id", 1L);
 
         // stub
         when(memberRepository.getByEmail(anyString())).thenReturn(member);
@@ -211,5 +212,25 @@ class MemberServiceTest {
         // then
         assertThrows(MemberNotMatchException.class, () ->
                 memberService.login(memberLogin, new MockHttpServletResponse()));
+    }
+
+    @Test
+    @DisplayName("로그아웃을 하면 회원의 refreshToken이 삭제됩니다")
+    void logout() {
+        // given
+        MemberSession memberSession = MemberSession.builder().build();
+
+        Member member = Member.builder()
+                .refreshToken("refreshToken")
+                .build();
+
+        // stub
+        when(memberRepository.getById(any())).thenReturn(member);
+
+        // when
+        memberService.logout(memberSession);
+
+        // then
+        assertThat(member.getRefreshToken()).isNull();
     }
 }

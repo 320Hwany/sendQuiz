@@ -24,6 +24,17 @@ function Main() {
             });
     }, []);
 
+    const handleLogout = () => {
+        axios.post('http://localhost:8080/logout')
+            .then(response => {
+                localStorage.removeItem('Authorization');
+                navigate("/");
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    };
+
     return (
         <div className="container-fluid">
             <div className="row">
@@ -35,6 +46,9 @@ function Main() {
                         <Link to="/setting" className="btn btn-lg btn-outline-primary">
                             SendQuiz 서비스 신청하기
                         </Link>
+                        <button onClick={handleLogout} className="btn btn-lg btn-outline-secondary mx-2">
+                            로그아웃
+                        </button>
                     </div>
                 </div>
             </div>
