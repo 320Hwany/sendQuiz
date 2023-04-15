@@ -89,7 +89,6 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             }
             throw new MemberAuthenticationException();
         } catch (JwtException e) {
-            System.out.println(666666);
             throw new MemberAuthenticationException();
         }
     }

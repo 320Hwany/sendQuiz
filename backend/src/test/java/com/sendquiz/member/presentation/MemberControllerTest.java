@@ -207,23 +207,23 @@ class MemberControllerTest extends ControllerTest {
                 .andExpect(jsonPath("$.message").value(MEMBER_NOT_FOUND_MESSAGE));
     }
 
-//    @Test
-//    @DisplayName("로그인한 회원의 정보를 가져옵니다")
-//    void get200() throws Exception {
-//        // given 1
-//        MemberSignup memberSignup = saveMemberInRepository();
-//
-//        // given 2
-//        String accessToken = getAccessToken(memberSignup);
-//
-//        // expected
-//        mockMvc.perform(get("/member")
-//                        .header("Authorization", accessToken))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").value(1L))
-//                .andExpect(jsonPath("$.email").value(memberSignup.getEmail()))
-//                .andExpect(jsonPath("$.nickname").value(memberSignup.getNickname()));
-//    }
+    @Test
+    @DisplayName("로그인한 회원의 정보를 가져옵니다")
+    void get200() throws Exception {
+        // given 1
+        MemberSignup memberSignup = saveMemberInRepository();
+
+        // given 2
+        String accessToken = getAccessToken(memberSignup);
+
+        // expected
+        mockMvc.perform(get("/member")
+                        .header("Authorization", accessToken))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.email").value(memberSignup.getEmail()))
+                .andExpect(jsonPath("$.nickname").value(memberSignup.getNickname()));
+    }
 
     @Test
     @DisplayName("accessToken과 refreshToken이 모두 없으면 회원을 가져올 수 없습니다")
@@ -235,23 +235,6 @@ class MemberControllerTest extends ControllerTest {
         mockMvc.perform(get("/member"))
                 .andExpect(status().isUnauthorized());
     }
-
-//    @Test
-//    @DisplayName("accessToken이 없어도 refreshToken이 있으면 회원정보를 가져올 수 있습니다")
-//    void getWithRefreshToken() throws Exception {
-//        // given 1
-//        Member member = Member.builder()
-//                .refreshToken("refreshToken")
-//                .build();
-//
-//        memberRepository.save(member);
-//        MockCookie cookie = new MockCookie(REFRESH_TOKEN, member.getRefreshToken());
-//
-//        // expected
-//        mockMvc.perform(get("/member")
-//                        .cookie(cookie))
-//                .andExpect(status().isOk());
-//    }
 
     @Test
     @DisplayName("회원 로그아웃을 진행합니다")

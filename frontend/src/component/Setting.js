@@ -16,7 +16,7 @@ function Setting() {
             .then(response => {
             })
             .catch(error => {
-                // navigate("/");
+                navigate("/");
             });
     }, []);
 
@@ -51,7 +51,7 @@ function Setting() {
                     },
                 }
             );
-            // navigate("/");
+            navigate("/main");
         } catch (error) {
             console.error(error);
         }

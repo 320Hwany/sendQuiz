@@ -6,7 +6,6 @@ import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.dto.QuizFilterSave;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
