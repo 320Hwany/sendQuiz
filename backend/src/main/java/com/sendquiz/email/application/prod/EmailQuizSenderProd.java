@@ -34,7 +34,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
         StringBuffer sb = new StringBuffer();
         for (Quiz quiz : randomQuizList) {
             sb.append("-------------------------------------------").append("\n");
-            sb.append("분야 : ").append(quiz.getSubject()).append("\n");
+            sb.append("분야 : ").append(quiz.getSubject().getValue()).append("\n");
             sb.append("문제 : ").append(quiz.getProblem()).append("\n");
             sb.append("답안").append("\n").append(quiz.getAnswer()).append("\n").append("\n");
         }

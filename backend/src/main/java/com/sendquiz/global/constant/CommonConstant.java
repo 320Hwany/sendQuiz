@@ -23,4 +23,12 @@ public class CommonConstant {
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
 
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
+
+    public static final int ONE_DAY = 86400000;
+
+    public static final String QUIZ_CACHE = "quizCache";
+
+    public static final String QUIZ_LIST_KEY = "'quizList'";
+
+    public static final String QUIZ_LIST = "quizList";
 }

@@ -2,7 +2,6 @@ package com.sendquiz.quiz.presentation;
 
 import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.AdminSession;
-import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.quiz.application.QuizService;
 import com.sendquiz.quiz.dto.request.QuizSave;
 import lombok.RequiredArgsConstructor;
