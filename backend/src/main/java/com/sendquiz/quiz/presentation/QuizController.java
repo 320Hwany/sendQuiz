@@ -30,4 +30,9 @@ public class QuizController {
         quizService.save(quizSave);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/test")
+    public void test() {
+        quizService.sendRandomQuizList();
+    }
 }

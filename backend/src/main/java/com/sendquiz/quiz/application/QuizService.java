@@ -1,5 +1,6 @@
 package com.sendquiz.quiz.application;
 
+import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.email.application.prod.EmailQuizSenderProd;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
@@ -31,8 +32,29 @@ public class QuizService {
 
     private final QuizRepository quizRepository;
     private final QuizFilterRepository quizFilterRepository;
-    private final EmailQuizSenderProd emailQuizSenderProd;
+    private final EmailQuizSender emailQuizSender;
     private final CacheManager cacheManager;
+
+    public void sendRandomQuizList() {
+        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
+        for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
+            List<Quiz> filteredQuizList = getFilteredQuizList(quizFilterSearch);
+
+            Collections.shuffle(filteredQuizList);
+            List<Quiz> randomQuizList = filteredQuizList.stream()
+                    .limit(quizFilterSearch.getNumOfProblem())
+                    .toList();
+
+            emailQuizSender.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
+        }
+    }
+
+    protected List<Quiz> getFilteredQuizList(QuizFilterSearch quizFilterSearch) {
+        return new ArrayList<>(findAll()
+                .stream()
+                .filter(q -> q.filterQuizList(quizFilterSearch))
+                .toList());
+    }
 
     @Scheduled(fixedRate = ONE_DAY)
     @CacheEvict(value = QUIZ_CACHE, allEntries = true)
@@ -51,47 +73,6 @@ public class QuizService {
         }
 
         return quizList;
-    }
-
-    public void sendRandomQuizList() {
-        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
-        for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
-            List<Quiz> filteredQuizList = getFilteredQuizList(quizFilterSearch);
-
-            Collections.shuffle(filteredQuizList);
-            List<Quiz> randomQuizList = filteredQuizList.stream()
-                    .limit(quizFilterSearch.getNumOfProblem())
-                    .toList();
-
-            emailQuizSenderProd.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
-        }
-    }
-
-    private List<Quiz> getFilteredQuizList(QuizFilterSearch quizFilterSearch) {
-        return new ArrayList<>(findAll()
-                .stream()
-                .filter(q -> {
-                    if (quizFilterSearch.isNetwork() && q.getSubject() == Subject.NETWORK) {
-                        return true;
-                    }
-                    if (quizFilterSearch.isDatabase() && q.getSubject() == Subject.DATA_BASE) {
-                        return true;
-                    }
-                    if (quizFilterSearch.isOS() && q.getSubject() == Subject.OPERATING_SYSTEM) {
-                        return true;
-                    }
-                    if (quizFilterSearch.isDataStructure() && q.getSubject() == Subject.DATA_STRUCTURE) {
-                        return true;
-                    }
-                    if (quizFilterSearch.isJava() && q.getSubject() == Subject.JAVA) {
-                        return true;
-                    }
-                    if (quizFilterSearch.isSpring() && q.getSubject() == Subject.SPRING) {
-                        return true;
-                    }
-                    return false;
-                })
-                .toList());
     }
 
     // todo 성능 테스트로 비교해보기

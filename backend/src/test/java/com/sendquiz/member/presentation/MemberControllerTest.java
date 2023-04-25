@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockCookie;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.sendquiz.global.constant.CommonConstant.REFRESH_TOKEN;
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;
