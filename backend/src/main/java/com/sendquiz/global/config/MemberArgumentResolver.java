@@ -21,7 +21,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.AUTHORIZATION;
-import static com.sendquiz.global.constant.HiddenConstant.*;
+import static com.sendquiz.global.constant.HiddenConstant.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @RequiredArgsConstructor

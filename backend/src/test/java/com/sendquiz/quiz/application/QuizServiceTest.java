@@ -38,12 +38,12 @@ class QuizServiceTest {
     @Mock
     private QuizFilterRepository quizFilterRepository;
 
-    @Test
-    @DisplayName("")
-    void sendRandomQuizList() {
-        // given
-
-    }
+//    @Test
+//    @DisplayName("")
+//    void sendRandomQuizList() {
+//        // given
+//
+//    }
 
     @Test
     @DisplayName("퀴즈를 퀴즈 필터 조건에 맞는 퀴즈만 있도록 필터링합니다")
