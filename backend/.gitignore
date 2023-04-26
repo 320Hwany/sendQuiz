@@ -6,7 +6,6 @@ build/
 !**/src/test/**/build/
 application-prod.yml
 application-dev.yml
-HiddenConstant.java
 src/main/generated/*
 
 ### STS ###
