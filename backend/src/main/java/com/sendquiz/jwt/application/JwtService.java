@@ -18,7 +18,6 @@ import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.jwt.dto.JwtKey.JWT_KEY;
 import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
 
-@Primary
 @Service
 public class JwtService {
 
