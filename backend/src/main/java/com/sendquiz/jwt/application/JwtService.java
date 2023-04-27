@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
@@ -17,6 +18,7 @@ import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.jwt.dto.JwtKey.JWT_KEY;
 import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
 
+@Primary
 @Service
 public class JwtService {
 

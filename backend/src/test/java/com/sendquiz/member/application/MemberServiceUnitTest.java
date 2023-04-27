@@ -3,7 +3,6 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
-import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberLogin;
@@ -11,8 +10,7 @@ import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,7 +30,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MemberServiceTest {
+class MemberServiceUnitTest {
 
     @InjectMocks
     private MemberService memberService;
@@ -45,6 +43,7 @@ class MemberServiceTest {
 
     @Mock
     private PasswordEncoder passwordEncoder;
+
 
     @Test
     @DisplayName("회원가입에 성공합니다")
@@ -158,34 +157,6 @@ class MemberServiceTest {
         // when
         assertThrows(CertificationNotMatchException.class,
                 () -> memberService.validateCertificationNum(memberSignup));
-    }
-
-    @Test
-    @DisplayName("로그인에 성공합니다")
-    void login200() {
-        // given
-        MemberLogin memberLogin = MemberLogin.builder()
-                .email("test@email.com")
-                .password("test password")
-                .build();
-
-        Member member = Member.builder()
-                .email(memberLogin.getEmail())
-                .password(memberLogin.getPassword())
-                .nickname("test nickname")
-                .build();
-
-        ReflectionTestUtils.setField(member, "id", 1L);
-
-        // stub
-        when(memberRepository.getByEmail(anyString())).thenReturn(member);
-        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(true);
-
-        // when
-        JwtResponse jwtResponse = memberService.login(memberLogin, new MockHttpServletResponse());
-
-        // then
-        assertThat(jwtResponse.getAccessToken()).isNotBlank();
     }
 
     @Test

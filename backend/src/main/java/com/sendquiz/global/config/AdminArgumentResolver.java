@@ -18,6 +18,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import java.util.Base64;
 
+import static com.sendquiz.global.constant.CommonConstant.AUTHORIZATION;
 import static com.sendquiz.jwt.dto.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.AdminSession.toAdminSession;
 
@@ -42,7 +43,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private static String getJws(NativeWebRequest webRequest) {
-        String jws = webRequest.getHeader("Authorization");
+        String jws = webRequest.getHeader(AUTHORIZATION);
         if (jws == null || jws.equals("")) {
             throw new AdminAuthenticationException();
         }
