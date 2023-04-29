@@ -3,6 +3,7 @@ package com.sendquiz.quiz_filter.domain;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.quiz_filter.dto.QuizFilterSave;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,6 +26,8 @@ public class QuizFilter {
 
     private boolean isDatabase;
 
+    @Column(name = "is_os")
+    @NotNull
     private boolean isOS;
 
     private boolean isDataStructure;

@@ -10,7 +10,6 @@ import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
 @AcceptanceTest
