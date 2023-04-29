@@ -6,10 +6,12 @@ import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
+import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
+import com.sendquiz.member.exception.PasswordNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -74,5 +76,14 @@ public class MemberService {
     public void logout(MemberSession memberSession) {
         Member member = memberRepository.getById(memberSession.getId());
         member.deleteRefreshToken();
+    }
+
+    @Transactional
+    public void delete(MemberSession memberSession, MemberDelete memberDelete) {
+        Member member = memberRepository.getById(memberSession.getId());
+        if (!passwordEncoder.matches(memberDelete.getPassword(), member.getPassword())) {
+            throw new PasswordNotMatchException();
+        }
+        memberRepository.delete(member);
     }
 }

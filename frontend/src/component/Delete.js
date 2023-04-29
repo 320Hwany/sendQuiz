@@ -1,0 +1,102 @@
+import {useEffect, useState} from 'react';
+import axios from "axios";
+import {useNavigate} from "react-router-dom";
+
+function Delete() {
+    const navigate = useNavigate();
+
+    const [password, setPassword] = useState('');
+    const [passwordCheck, setPasswordCheck] = useState('');
+    const [notMatchError, setNotMatchError] = useState('');
+
+    useEffect(() => {
+        axios
+            .get('http://localhost:8080/member', {
+                headers: {
+                    Authorization: localStorage.getItem('Authorization'),
+                },
+            })
+            .then(response => {
+            })
+            .catch(error => {
+                navigate("/");
+            });
+    }, []);
+
+    const handlePasswordChange = (event) => {
+        setPassword(event.target.value);
+    };
+
+    const handlePasswordCheckChange = (event) => {
+        setPasswordCheck(event.target.value);
+    };
+
+    const handleDeleteClick = () => {
+        axios.post('http://localhost:8080/member', { password, passwordCheck }, {
+                headers: {
+                    Authorization: localStorage.getItem('Authorization'),
+                },
+            })
+            .then((response) => {
+                alert("회원탈퇴가 되었습니다.");
+                setTimeout(() => {
+                    navigate("/");
+                }, 2000);
+            })
+            .catch((error) => {
+                if (error.response.data.message) {
+                    setNotMatchError(error.response.data.message);
+                }
+            });
+    };
+
+    const alertStyle = {
+        backgroundColor: 'red',
+        color: 'white',
+        padding: '10px',
+        borderRadius: '5px',
+        marginBottom: '10px',
+    };
+
+
+
+    return (
+        <div className="container my-5">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <div className="card">
+                        <div className="card-body">
+                            <h1 className="card-title text-center mb-4" style={{ color: 'navy' }}>회원 탈퇴</h1>
+                            <form>
+                                <div className="form-group">
+                                    <label htmlFor="password">비밀번호</label>
+                                    <input type="password" className="form-control" id="password" value={password}
+                                           onChange={handlePasswordChange} />
+                                </div>
+
+                                <div className="form-group">
+                                    <label htmlFor="passwordCheck">비밀번호 확인</label>
+                                    <input type="password" className="form-control" id="passwordCheck" value={passwordCheck}
+                                           onChange={handlePasswordCheckChange} />
+                                </div>
+
+                                {notMatchError && (
+                                    <div className="alert" role="alert" style={alertStyle}>
+                                        {notMatchError}
+                                    </div>
+                                )}
+
+                                <div className="text-center mt-4">
+                                    <button type="button" className="btn btn-danger"
+                                            onClick={handleDeleteClick}>회원 탈퇴</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export default Delete;

@@ -45,4 +45,9 @@ public class MemberRepositoryImpl implements MemberRepository {
     public void saveAll(List<Member> memberList) {
         memberJpaRepository.saveAll(memberList);
     }
+
+    @Override
+    public void delete(Member member) {
+        memberJpaRepository.delete(member);
+    }
 }

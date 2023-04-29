@@ -4,6 +4,7 @@ import com.sendquiz.global.annotation.Login;
 import com.sendquiz.jwt.dto.JwtResponse;
 import com.sendquiz.member.application.MemberService;
 import com.sendquiz.member.domain.MemberSession;
+import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.dto.response.MemberResponse;
@@ -45,6 +46,13 @@ public class MemberController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@Login MemberSession memberSession) {
         memberService.logout(memberSession);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/member")
+    public ResponseEntity<Void> delete(@Login MemberSession memberSession,
+                                       @RequestBody MemberDelete memberDelete) {
+        memberService.delete(memberSession, memberDelete);
         return ResponseEntity.ok().build();
     }
 }

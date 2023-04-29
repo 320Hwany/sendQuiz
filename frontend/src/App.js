@@ -7,6 +7,8 @@ import Main from "./component/Main";
 import SignupSuccess from "./component/SignupSuccess";
 import Setting from "./component/Setting";
 import Quiz from "./component/Quiz";
+import Manage from "./component/Manage";
+import Delete from "./component/Delete";
 
 function App() {
     return (
@@ -20,6 +22,8 @@ function App() {
                     <Route path="/signup/success" element={<SignupSuccess />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/hwany/quiz" element={<Quiz />} />
+                    <Route path="/manage" element={<Manage />} />
+                    <Route path="/delete" element={<Delete />} />
                 </Routes>
             </div>
         </Router>

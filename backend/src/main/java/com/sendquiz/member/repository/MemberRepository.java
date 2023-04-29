@@ -18,4 +18,6 @@ public interface MemberRepository {
     void save(Member member);
 
     void saveAll(List<Member> memberList);
+
+    void delete(Member member);
 }

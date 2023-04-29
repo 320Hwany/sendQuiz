@@ -5,6 +5,7 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
+import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.exception.MemberDuplicationException;
@@ -203,5 +204,19 @@ class MemberServiceUnitTest {
 
         // then
         assertThat(member.getRefreshToken()).isNull();
+    }
+
+    @Test
+    @DisplayName("memberSession 정보로 회원을 삭제합니다")
+    void delete() {
+        // stub
+        when(memberRepository.getById(any())).thenReturn(Member.builder().build());
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+
+        // when
+        memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
+
+        // then
+        verify(memberRepository, times(1)).delete(any());
     }
 }
