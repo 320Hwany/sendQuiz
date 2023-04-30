@@ -1,5 +1,6 @@
 package com.sendquiz.quiz_filter.domain;
 
+import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.quiz_filter.dto.QuizFilterSave;
 import jakarta.persistence.*;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class QuizFilter {
+public class QuizFilter extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_filter_id")

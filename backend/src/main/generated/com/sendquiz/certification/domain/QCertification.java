@@ -19,11 +19,19 @@ public class QCertification extends EntityPathBase<Certification> {
 
     public static final QCertification certification = new QCertification("certification");
 
+    public final com.sendquiz.global.QBaseTimeEntity _super = new com.sendquiz.global.QBaseTimeEntity(this);
+
     public final StringPath certificationNum = createString("certificationNum");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createDateTime = _super.createDateTime;
 
     public final StringPath email = createString("email");
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> lastModifiedDateTime = _super.lastModifiedDateTime;
 
     public QCertification(String variable) {
         super(Certification.class, forVariable(variable));

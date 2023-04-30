@@ -22,6 +22,11 @@ public class QQuizFilter extends EntityPathBase<QuizFilter> {
 
     public static final QQuizFilter quizFilter = new QQuizFilter("quizFilter");
 
+    public final com.sendquiz.global.QBaseTimeEntity _super = new com.sendquiz.global.QBaseTimeEntity(this);
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> createDateTime = _super.createDateTime;
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final BooleanPath isDatabase = createBoolean("isDatabase");
@@ -35,6 +40,9 @@ public class QQuizFilter extends EntityPathBase<QuizFilter> {
     public final BooleanPath isOS = createBoolean("isOS");
 
     public final BooleanPath isSpring = createBoolean("isSpring");
+
+    //inherited
+    public final DateTimePath<java.time.LocalDateTime> lastModifiedDateTime = _super.lastModifiedDateTime;
 
     public final com.sendquiz.member.domain.QMember member;
 

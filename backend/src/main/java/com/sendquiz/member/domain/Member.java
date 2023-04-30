@@ -1,5 +1,6 @@
 package com.sendquiz.member.domain;
 
+import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.global.eumtype.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -12,7 +13,7 @@ import static jakarta.persistence.GenerationType.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Member {
+public class Member extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
