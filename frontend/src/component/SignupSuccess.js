@@ -13,7 +13,7 @@ function SignupSuccess() {
                                 회원가입이 완료되었습니다
                             </h1>
                             <div className="text-center">
-                                <Link to="/login" className="btn btn-primary btn-lg mx-3">
+                                <Link to="/login" className="btn btn-success btn-lg mx-3">
                                     로그인 하러가기
                                 </Link>
                             </div>

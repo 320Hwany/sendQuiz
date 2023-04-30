@@ -10,7 +10,10 @@ import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
+import com.sendquiz.member.exception.PasswordNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
+import com.sendquiz.quiz_filter.domain.QuizFilter;
+import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,6 +44,9 @@ class MemberServiceUnitTest {
 
     @Mock
     private CertificationRepository certificationRepository;
+
+    @Mock
+    private QuizFilterRepository quizFilterRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -207,7 +213,7 @@ class MemberServiceUnitTest {
     }
 
     @Test
-    @DisplayName("memberSession 정보로 회원을 삭제합니다")
+    @DisplayName("비밀번호가 일치하면 회원을 삭제합니다")
     void delete() {
         // stub
         when(memberRepository.getById(any())).thenReturn(Member.builder().build());
@@ -217,6 +223,35 @@ class MemberServiceUnitTest {
         memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
 
         // then
+        verify(memberRepository, times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("비밀번호가 일치하지 않으면 예외가 발생합니다")
+    void deleteFail() {
+        // stub
+        when(memberRepository.getById(any())).thenReturn(Member.builder().build());
+        when(passwordEncoder.matches(any(), any())).thenReturn(false);
+
+        // expected
+        assertThrows(PasswordNotMatchException.class,
+                () -> memberService.delete(MemberSession.builder().build(),
+                        MemberDelete.builder().build()));
+    }
+
+    @Test
+    @DisplayName("회원의 퀴즈 필터가 등록되어 있으면 퀴즈 필터도 같이 삭제됩니다")
+    void deleteWithQuizFilter() {
+        // stub
+        when(memberRepository.getById(any())).thenReturn(Member.builder().build());
+        when(passwordEncoder.matches(any(), any())).thenReturn(true);
+        when(quizFilterRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(QuizFilter.builder().build()));
+
+        // when
+        memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
+
+        // then
+        verify(quizFilterRepository, times(1)).delete(any());
         verify(memberRepository, times(1)).delete(any());
     }
 }

@@ -95,12 +95,12 @@ function Main() {
                         <Link to="/setting" className="btn btn-lg btn-outline-success">
                             SendQuiz 서비스 신청하기
                         </Link>
+                        <Link to="/manage" className="btn btn-lg btn-outline-primary mx-2">
+                            회원정보 관리
+                        </Link>
                         <button onClick={handleLogout} className="btn btn-lg btn-outline-secondary mx-2">
                             로그아웃
                         </button>
-                        <Link to="/manage" className="btn btn-lg btn-outline-primary">
-                            회원정보 관리
-                        </Link>
                     </div>
                 </div>
             </div>

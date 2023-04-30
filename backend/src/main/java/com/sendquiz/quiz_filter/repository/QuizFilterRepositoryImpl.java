@@ -56,4 +56,9 @@ public class QuizFilterRepositoryImpl implements QuizFilterRepository {
                 .innerJoin(quizFilter.member, member)
                 .fetch();
     }
+
+    @Override
+    public void delete(QuizFilter quizFilter) {
+        quizFilterJpaRepository.delete(quizFilter);
+    }
 }

@@ -53,10 +53,10 @@ function Login() {
                         />
                         {loginError && <div className="text-danger">{loginError}</div>}
                     </Form.Group>
-                    <Button variant="primary" type="submit">
+                    <Button className="btn-success" type="submit">
                         로그인
                     </Button>
-                    <Link to="/main" className="btn btn-success mx-3">
+                    <Link to="/main" className="btn btn-primary mx-3">
                         홈으로
                     </Link>
                 </Form>

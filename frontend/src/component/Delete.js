@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {Alert} from "react-bootstrap";
 
 function Delete() {
     const navigate = useNavigate();
@@ -31,17 +32,19 @@ function Delete() {
         setPasswordCheck(event.target.value);
     };
 
+    const [showAlert, setShowAlert] = useState(false);
+
     const handleDeleteClick = () => {
         axios.post('http://localhost:8080/member', { password, passwordCheck }, {
-                headers: {
-                    Authorization: localStorage.getItem('Authorization'),
-                },
-            })
+            headers: {
+                Authorization: localStorage.getItem('Authorization'),
+            },
+        })
             .then((response) => {
-                alert("회원탈퇴가 되었습니다.");
+                setShowAlert(true);
                 setTimeout(() => {
                     navigate("/");
-                }, 2000);
+                }, 1700);
             })
             .catch((error) => {
                 if (error.response.data.message) {
@@ -49,16 +52,6 @@ function Delete() {
                 }
             });
     };
-
-    const alertStyle = {
-        backgroundColor: 'red',
-        color: 'white',
-        padding: '10px',
-        borderRadius: '5px',
-        marginBottom: '10px',
-    };
-
-
 
     return (
         <div className="container my-5">
@@ -81,7 +74,7 @@ function Delete() {
                                 </div>
 
                                 {notMatchError && (
-                                    <div className="alert" role="alert" style={alertStyle}>
+                                    <div className="alert alert-danger custom-alert" role="alert">
                                         {notMatchError}
                                     </div>
                                 )}
@@ -91,6 +84,10 @@ function Delete() {
                                             onClick={handleDeleteClick}>회원 탈퇴</button>
                                 </div>
                             </form>
+                            <Alert variant="success" show={showAlert}
+                                   onClose={() => setShowAlert(false)} dismissible>
+                                회원탈퇴가 되었습니다.
+                            </Alert>
                         </div>
                     </div>
                 </div>

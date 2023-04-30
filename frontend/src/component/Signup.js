@@ -124,10 +124,10 @@ function Signup() {
                         {passwordError && <div className="text-danger">{passwordError}</div>}
                     </Form.Group>
 
-                    <Button variant="primary" type="submit">
+                    <Button className="btn-success" type="submit">
                         회원가입
                     </Button>
-                    <Link to="/main" className="btn btn-success mx-3">
+                    <Link to="/main" className="btn btn-primary mx-3">
                         홈으로
                     </Link>
                 </Form>

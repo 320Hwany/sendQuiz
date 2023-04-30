@@ -13,6 +13,8 @@ import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.exception.PasswordNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
+import com.sendquiz.quiz_filter.domain.QuizFilter;
+import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,6 +34,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final CertificationRepository certificationRepository;
+    private final QuizFilterRepository quizFilterRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -81,9 +84,17 @@ public class MemberService {
     @Transactional
     public void delete(MemberSession memberSession, MemberDelete memberDelete) {
         Member member = memberRepository.getById(memberSession.getId());
-        if (!passwordEncoder.matches(memberDelete.getPassword(), member.getPassword())) {
+        if (!passwordEncoder.matches(memberDelete.getPassword(), member.getPassword()) ||
+                !passwordEncoder.matches(memberDelete.getPasswordCheck(), member.getPassword())) {
             throw new PasswordNotMatchException();
         }
+
+        Optional<QuizFilter> optionalQuizFilter = quizFilterRepository.findByMemberId(member.getId());
+        if (optionalQuizFilter.isPresent()) {
+            QuizFilter quizFilter = optionalQuizFilter.get();
+            quizFilterRepository.delete(quizFilter);
+        }
         memberRepository.delete(member);
+        member.deleteRefreshToken();
     }
 }

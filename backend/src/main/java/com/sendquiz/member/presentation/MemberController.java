@@ -49,7 +49,7 @@ public class MemberController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/member")
+    @PostMapping("/withdrawal")
     public ResponseEntity<Void> delete(@Login MemberSession memberSession,
                                        @RequestBody MemberDelete memberDelete) {
         memberService.delete(memberSession, memberDelete);

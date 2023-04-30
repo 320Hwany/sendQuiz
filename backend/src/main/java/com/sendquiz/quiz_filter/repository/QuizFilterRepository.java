@@ -15,4 +15,6 @@ public interface QuizFilterRepository {
     Optional<QuizFilter> findByMemberId(Long memberId);
 
     List<QuizFilterSearch> findAllQuizFilterSearch();
+
+    void delete(QuizFilter quizFilter);
 }
