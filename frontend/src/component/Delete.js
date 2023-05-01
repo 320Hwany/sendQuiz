@@ -1,6 +1,6 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {Alert} from "react-bootstrap";
 
 function Delete() {
@@ -35,7 +35,7 @@ function Delete() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleDeleteClick = () => {
-        axios.post('http://localhost:8080/member', { password, passwordCheck }, {
+        axios.post('http://localhost:8080/withdrawal', { password, passwordCheck }, {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },
@@ -79,9 +79,12 @@ function Delete() {
                                     </div>
                                 )}
 
-                                <div className="text-center mt-4">
+                                <div className="d-flex text-center mt-4">
                                     <button type="button" className="btn btn-danger"
                                             onClick={handleDeleteClick}>회원 탈퇴</button>
+                                    <Link to="/main" className="btn btn-success mx-3">
+                                        홈으로
+                                    </Link>
                                 </div>
                             </form>
                             <Alert variant="success" show={showAlert}

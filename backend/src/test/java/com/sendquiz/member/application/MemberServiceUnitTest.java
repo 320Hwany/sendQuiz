@@ -26,7 +26,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -115,8 +115,8 @@ class MemberServiceUnitTest {
         when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
 
         // then
-        assertThrows(MemberDuplicationException.class,
-                () -> memberService.validateDuplicate(memberSignup));
+        assertThatThrownBy(() -> memberService.validateDuplicate(memberSignup))
+                .isInstanceOf(MemberDuplicationException.class);
     }
 
     @Test
@@ -162,8 +162,8 @@ class MemberServiceUnitTest {
         when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
 
         // when
-        assertThrows(CertificationNotMatchException.class,
-                () -> memberService.validateCertificationNum(memberSignup));
+        assertThatThrownBy(() -> memberService.validateCertificationNum(memberSignup))
+                .isInstanceOf(CertificationNotMatchException.class);
     }
 
     @Test
@@ -188,8 +188,8 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         // then
-        assertThrows(MemberNotMatchException.class, () ->
-                memberService.login(memberLogin, new MockHttpServletResponse()));
+        assertThatThrownBy(() -> memberService.login(memberLogin, new MockHttpServletResponse()))
+                .isInstanceOf(MemberNotMatchException.class);
     }
 
     @Test
@@ -234,9 +234,8 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(any(), any())).thenReturn(false);
 
         // expected
-        assertThrows(PasswordNotMatchException.class,
-                () -> memberService.delete(MemberSession.builder().build(),
-                        MemberDelete.builder().build()));
+        assertThatThrownBy(() -> memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build()))
+                .isInstanceOf(PasswordNotMatchException.class);
     }
 
     @Test

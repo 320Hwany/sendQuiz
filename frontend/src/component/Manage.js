@@ -27,7 +27,7 @@ function Manage() {
                     <div className="card">
                         <div className="card-body">
                             <h1 className="card-title text-center mb-4" style={{color: 'navy'}}>회원정보 관리</h1>
-                            <div className="text-center mt-4">
+                            <div className="d-flex justify-content-center mt-4">
                                 <Link to="/update" className="btn btn-primary mx-3">
                                     회원정보 수정
                                 </Link>

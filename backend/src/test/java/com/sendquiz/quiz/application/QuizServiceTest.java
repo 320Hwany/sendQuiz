@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -76,8 +77,8 @@ class QuizServiceTest {
         List<Quiz> filteredQuizList2 = quizService.getFilteredQuizList(quizFilterSearch2);
 
         // then
-        Assertions.assertThat(filteredQuizList1.size()).isEqualTo(10);
-        Assertions.assertThat(filteredQuizList2.size()).isEqualTo(0);
+        assertThat(filteredQuizList1).hasSize(10);
+        assertThat(filteredQuizList2).hasSize(0);
     }
 
     @Test

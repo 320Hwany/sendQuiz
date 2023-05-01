@@ -6,18 +6,16 @@ function SignupSuccess() {
     return (
         <div className="container my-5">
             <div className="row justify-content-center">
-                <div className="col-md-6">
-                    <div className="card border-0 shadow-lg">
+                <div className="col-md-4">
                         <div className="card-body">
-                            <h1 className="card-title text-center mb-4">
+                            <h2 className="card-title text-center mb-4">
                                 회원가입이 완료되었습니다
-                            </h1>
+                            </h2>
                             <div className="text-center">
-                                <Link to="/login" className="btn btn-success btn-lg mx-3">
-                                    로그인 하러가기
+                                <Link to="/login" className="btn btn-success btn-lg mx-3" style={{fontSize: "1.2rem"}}>
+                                    로그인 하러 가기
                                 </Link>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>

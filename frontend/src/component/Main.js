@@ -91,14 +91,14 @@ function Main() {
                             </>
                         ) : null}
                     </div>
-                    <div className="text-center my-2">
-                        <Link to="/setting" className="btn btn-lg btn-outline-success">
+                    <div className="d-flex flex-column justify-content-center my-2 d-md-grid">
+                        <Link to="/setting" class="btn btn-lg btn-outline-success my-2">
                             SendQuiz 서비스 신청하기
                         </Link>
-                        <Link to="/manage" className="btn btn-lg btn-outline-primary mx-2">
+                        <Link to="/manage" class="btn btn-lg btn-outline-primary my-2">
                             회원정보 관리
                         </Link>
-                        <button onClick={handleLogout} className="btn btn-lg btn-outline-secondary mx-2">
+                        <button className="btn btn-lg btn-outline-secondary my-2" onClick={handleLogout}>
                             로그아웃
                         </button>
                     </div>

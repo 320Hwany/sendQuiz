@@ -91,6 +91,6 @@ class QuizFilterServiceTest {
 
         // then
         verify(quizFilterRepository, times(0)).save(any());
-        assertThat(quizFilter.isNetwork()).isEqualTo(true);
+        assertThat(quizFilter.isNetwork()).isTrue();
     }
 }

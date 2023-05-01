@@ -23,6 +23,6 @@ class QuizFilterRepositoryImplTest extends RepositoryTest {
         List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
 
         // then
-        assertThat(quizFilterSearchList.size()).isEqualTo(10);
+        assertThat(quizFilterSearchList).hasSize(10);
     }
 }

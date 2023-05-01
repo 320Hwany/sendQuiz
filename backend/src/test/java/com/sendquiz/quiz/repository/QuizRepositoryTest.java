@@ -58,8 +58,8 @@ public class QuizRepositoryTest extends RepositoryTest {
         List<Quiz> randomQuizList3 = quizRepository.findRandomQuizList(quizFilterSearch3);
 
         // then
-        assertThat(randomQuizList1.size()).isEqualTo(5);
-        assertThat(randomQuizList2.size()).isEqualTo(3);
-        assertThat(randomQuizList3.size()).isEqualTo(0);
+        assertThat(randomQuizList1).hasSize(5);
+        assertThat(randomQuizList2).hasSize(3);
+        assertThat(randomQuizList3).hasSize(0);
     }
 }
