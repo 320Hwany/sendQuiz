@@ -7,6 +7,7 @@ import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import com.sendquiz.member.dto.response.MemberResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -53,6 +54,13 @@ public class MemberController {
     public ResponseEntity<Void> delete(@Login MemberSession memberSession,
                                        @RequestBody MemberDelete memberDelete) {
         memberService.delete(memberSession, memberDelete);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/member")
+    public ResponseEntity<Void> update(@Login MemberSession memberSession,
+                                       @RequestBody @Valid MemberUpdate memberUpdate) {
+        memberService.update(memberSession, memberUpdate);
         return ResponseEntity.ok().build();
     }
 }

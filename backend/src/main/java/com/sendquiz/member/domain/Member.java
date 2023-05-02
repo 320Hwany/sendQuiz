@@ -2,11 +2,13 @@ package com.sendquiz.member.domain;
 
 import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.global.eumtype.Role;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import static jakarta.persistence.GenerationType.*;
 
@@ -38,6 +40,11 @@ public class Member extends BaseTimeEntity {
         this.password = password;
         this.role = role;
         this.refreshToken = refreshToken;
+    }
+
+    public void update(MemberUpdate memberUpdate, PasswordEncoder passwordEncoder) {
+        this.nickname = memberUpdate.getNickname();
+        this.password = passwordEncoder.encode(memberUpdate.getPassword());
     }
 
     public void updateRefreshToken(String refreshToken) {

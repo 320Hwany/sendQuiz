@@ -9,6 +9,7 @@ import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.exception.PasswordNotMatchException;
@@ -96,5 +97,11 @@ public class MemberService {
         }
         memberRepository.delete(member);
         member.deleteRefreshToken();
+    }
+
+    @Transactional
+    public void update(MemberSession memberSession, MemberUpdate memberUpdate) {
+        Member member = memberRepository.getById(memberSession.getId());
+        member.update(memberUpdate, passwordEncoder);
     }
 }

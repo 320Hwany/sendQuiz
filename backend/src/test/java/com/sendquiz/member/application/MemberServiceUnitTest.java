@@ -8,6 +8,7 @@ import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.exception.PasswordNotMatchException;
@@ -234,7 +235,8 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(any(), any())).thenReturn(false);
 
         // expected
-        assertThatThrownBy(() -> memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build()))
+        assertThatThrownBy(() ->
+                memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build()))
                 .isInstanceOf(PasswordNotMatchException.class);
     }
 
@@ -244,7 +246,8 @@ class MemberServiceUnitTest {
         // stub
         when(memberRepository.getById(any())).thenReturn(Member.builder().build());
         when(passwordEncoder.matches(any(), any())).thenReturn(true);
-        when(quizFilterRepository.findByMemberId(any())).thenReturn(Optional.ofNullable(QuizFilter.builder().build()));
+        when(quizFilterRepository.findByMemberId(any()))
+                .thenReturn(Optional.ofNullable(QuizFilter.builder().build()));
 
         // when
         memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
@@ -252,5 +255,31 @@ class MemberServiceUnitTest {
         // then
         verify(quizFilterRepository, times(1)).delete(any());
         verify(memberRepository, times(1)).delete(any());
+    }
+
+    @Test
+    @DisplayName("이메일을 제외한 회원 정보를 수정합니다")
+    void update() {
+        // given
+        Member member = Member.builder()
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        MemberUpdate memberUpdate = MemberUpdate.builder()
+                .nickname("update nickname")
+                .password("update password")
+                .build();
+
+        // stub
+        when(memberRepository.getById(any())).thenReturn(member);
+        when(passwordEncoder.encode(any())).thenReturn("encode password");
+
+        // when
+        memberService.update(MemberSession.builder().build(), memberUpdate);
+
+        // then
+        assertThat(member.getNickname()).isEqualTo("update nickname");
+        assertThat(member.getPassword()).isEqualTo("encode password");
     }
 }

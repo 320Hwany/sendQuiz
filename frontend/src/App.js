@@ -9,6 +9,7 @@ import Setting from "./component/Setting";
 import Quiz from "./component/Quiz";
 import Manage from "./component/Manage";
 import Delete from "./component/Delete";
+import Update from "./component/Update";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/hwany/quiz" element={<Quiz />} />
                     <Route path="/manage" element={<Manage />} />
                     <Route path="/delete" element={<Delete />} />
+                    <Route path="/update" element={<Update />} />
                 </Routes>
             </div>
         </Router>

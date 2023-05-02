@@ -5,6 +5,7 @@ import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.dto.request.MemberDelete;
 import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static com.sendquiz.global.constant.CommonConstant.REFRESH_TOKEN;
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;
 import static com.sendquiz.global.constant.ValidMessageConstant.EMAIL_VALID_MESSAGE;
+import static com.sendquiz.global.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class MemberControllerTest extends ControllerTest {
 
     @Test
-    @DisplayName("조건에 맞으면 회원가입에 성공합니다")
+    @DisplayName("회원가입을 위해 입력한 정보가 조건에 맞으면 회원가입에 성공합니다")
     void signup200() throws Exception {
         // given
         MemberSignup memberSignup = MemberSignup.builder()
@@ -312,13 +314,82 @@ class MemberControllerTest extends ControllerTest {
                 .passwordCheck("wrong password")
                 .build();
 
-        MemberSignup memberSignup = saveMemberInRepository();
+        saveMemberInRepository();
 
         // given 2
         String requestBody = objectMapper.writeValueAsString(memberDelete);
 
         // expected
         mockMvc.perform(post("/withdrawal")
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.message").value(MEMBER_AUTHENTICATION_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("로그인 한 회원의 이메일을 제외한 정보를 수정합니다")
+    void update200() throws Exception {
+        // given 1
+        MemberUpdate memberUpdate = MemberUpdate.builder()
+                .nickname("update nickname")
+                .password("update password")
+                .build();
+
+        MemberSignup memberSignup = saveMemberInRepository();
+
+        // given 2
+        String accessToken = getAccessToken(memberSignup);
+        String requestBody = objectMapper.writeValueAsString(memberUpdate);
+
+        // expected
+        mockMvc.perform(patch("/member")
+                        .header("Authorization", accessToken)
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("수정을 위해 입력한 정보가 조건에 맞지 않으면 예외가 발생합니다")
+    void update400() throws Exception {
+        // given 1
+        MemberUpdate memberUpdate = MemberUpdate.builder()
+                .nickname("")
+                .password("update password")
+                .build();
+
+        MemberSignup memberSignup = saveMemberInRepository();
+
+        // given 2
+        String accessToken = getAccessToken(memberSignup);
+        String requestBody = objectMapper.writeValueAsString(memberUpdate);
+
+        // expected
+        mockMvc.perform(patch("/member")
+                        .header("Authorization", accessToken)
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.validation.nickname").value(NICKNAME_VALID_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("로그인 하지 않으면 회원 정보를 수정할 수 없습니다")
+    void update401() throws Exception {
+        // given 1
+        MemberUpdate memberUpdate = MemberUpdate.builder()
+                .nickname("update nickname")
+                .password("update password")
+                .build();
+
+        saveMemberInRepository();
+
+        // given 2
+        String requestBody = objectMapper.writeValueAsString(memberUpdate);
+
+        // expected
+        mockMvc.perform(patch("/member")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
