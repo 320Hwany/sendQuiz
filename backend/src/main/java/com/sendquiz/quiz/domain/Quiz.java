@@ -29,7 +29,7 @@ public class Quiz extends BaseTimeEntity {
     private Subject subject;
 
     @Builder
-    public Quiz(Subject subject, String problem, String answer) {
+    private Quiz(Subject subject, String problem, String answer) {
         this.subject = subject;
         this.problem = problem;
         this.answer = answer;

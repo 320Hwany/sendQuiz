@@ -14,7 +14,7 @@ public class MemberDelete {
     private String passwordCheck;
 
     @Builder
-    public MemberDelete(String password, String passwordCheck) {
+    private MemberDelete(String password, String passwordCheck) {
         this.password = password;
         this.passwordCheck = passwordCheck;
     }

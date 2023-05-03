@@ -26,9 +26,9 @@ public class CommonConstant {
 
     public static final int ONE_DAY = 86400000;
 
-    public static final String QUIZ_CACHE = "quizCache";
+    public static final int ONE_MONTH = 24 * 60 * 60 * 30;
 
-    public static final String QUIZ_LIST_KEY = "'quizList'";
+    public static final String QUIZ_CACHE = "quizCache";
 
     public static final String QUIZ_LIST = "quizList";
 }

@@ -20,7 +20,7 @@ public class AdminSession {
     private Role role;
 
     @Builder
-    public AdminSession(Long id, String email, String password, Role role) {
+    protected AdminSession(Long id, String email, String password, Role role) {
         this.id = id;
         this.email = email;
         this.password = password;

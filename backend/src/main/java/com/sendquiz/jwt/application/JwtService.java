@@ -42,7 +42,7 @@ public class JwtService {
 
     public static void makeCookie(HttpServletResponse response, String refreshToken) {
         Cookie cookie = new Cookie(REFRESH_TOKEN, refreshToken);
-        cookie.setMaxAge(7 * 24 * 60 * 60 * 4);
+        cookie.setMaxAge(ONE_MONTH);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setSecure(true);

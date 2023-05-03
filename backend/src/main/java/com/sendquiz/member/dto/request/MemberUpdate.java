@@ -20,7 +20,7 @@ public class MemberUpdate {
     private String password;
 
     @Builder
-    public MemberUpdate(String nickname, String password) {
+    private MemberUpdate(String nickname, String password) {
         this.nickname = nickname;
         this.password = password;
     }

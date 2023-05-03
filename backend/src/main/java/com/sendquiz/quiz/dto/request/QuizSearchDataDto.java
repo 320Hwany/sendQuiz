@@ -15,7 +15,7 @@ public class QuizSearchDataDto {
     private Subject subject;
 
     @Builder
-    public QuizSearchDataDto(int numOfProblem, Subject subject) {
+    private QuizSearchDataDto(int numOfProblem, Subject subject) {
         this.numOfProblem = numOfProblem;
         this.subject = subject;
     }

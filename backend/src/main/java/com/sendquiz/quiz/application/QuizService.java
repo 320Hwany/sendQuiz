@@ -1,7 +1,6 @@
 package com.sendquiz.quiz.application;
 
 import com.sendquiz.email.application.EmailQuizSender;
-import com.sendquiz.email.application.prod.EmailQuizSenderProd;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.dto.request.QuizSave;
@@ -10,6 +9,7 @@ import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -56,23 +56,23 @@ public class QuizService {
                 .toList());
     }
 
+    @Cacheable(value = QUIZ_CACHE)
+    public List<Quiz> findAll() {
+        Cache cache = requireNonNull(cacheManager.getCache(QUIZ_CACHE));
+        List<Quiz> quizList = cache.get(QUIZ_LIST, List.class);
+
+        if (quizList == null) {
+            quizList = quizRepository.findAll();
+            cache.put(QUIZ_LIST, quizList);
+        }
+
+        return quizList;
+    }
+
     @Scheduled(fixedRate = ONE_DAY)
     @CacheEvict(value = QUIZ_CACHE, allEntries = true)
     public void flushCacheToDB() {
         log.info("flushCacheToDB");
-    }
-
-    @Cacheable(value = QUIZ_CACHE, key = QUIZ_LIST_KEY)
-    public List<Quiz> findAll() {
-        List<Quiz> quizList;
-        if (requireNonNull(cacheManager.getCache(QUIZ_CACHE)).get(QUIZ_LIST) == null) {
-            quizList = quizRepository.findAll();
-            requireNonNull(cacheManager.getCache(QUIZ_CACHE)).put(QUIZ_LIST, quizList);
-        } else {
-            quizList = requireNonNull(cacheManager.getCache(QUIZ_CACHE)).get(QUIZ_LIST, List.class);
-        }
-
-        return quizList;
     }
 
     // todo 성능 테스트로 비교해보기

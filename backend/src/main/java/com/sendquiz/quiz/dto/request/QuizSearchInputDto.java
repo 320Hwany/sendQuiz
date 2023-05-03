@@ -13,7 +13,7 @@ public class QuizSearchInputDto {
     private String subject;
 
     @Builder
-    public QuizSearchInputDto(int numOfProblem, String subject) {
+    private QuizSearchInputDto(int numOfProblem, String subject) {
         this.numOfProblem = numOfProblem;
         this.subject = subject;
     }

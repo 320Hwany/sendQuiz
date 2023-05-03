@@ -21,7 +21,7 @@ public class MemberResponse {
     private String accessToken;
 
     @Builder
-    public MemberResponse(Long id, String email, String nickname, int numOfProblem, String accessToken) {
+    private MemberResponse(Long id, String email, String nickname, int numOfProblem, String accessToken) {
         this.id = id;
         this.email = email;
         this.nickname = nickname;

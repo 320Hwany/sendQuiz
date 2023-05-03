@@ -1,11 +1,11 @@
 package com.sendquiz.global.eumtype;
 
 import com.sendquiz.quiz.exception.SubjectNotMatchException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum Subject {
 
     NETWORK("네트워크"),
@@ -15,7 +15,7 @@ public enum Subject {
     JAVA("자바"),
     SPRING("스프링");
 
-    private String value;
+    private final String value;
 
     public static Subject fromValue(String value) {
         for (Subject subject : Subject.values()) {

@@ -26,7 +26,7 @@ public class QuizFilterSave {
     private int numOfProblem;
 
     @Builder
-    public QuizFilterSave(boolean network, boolean database, boolean operatingSystem,
+    private QuizFilterSave(boolean network, boolean database, boolean operatingSystem,
                           boolean dataStructure, boolean java, boolean spring, int numOfProblem) {
         this.network = network;
         this.database = database;

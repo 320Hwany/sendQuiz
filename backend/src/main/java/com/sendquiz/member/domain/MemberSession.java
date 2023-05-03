@@ -23,7 +23,7 @@ public class MemberSession {
     private boolean needToRefresh;
 
     @Builder
-    public MemberSession(Long id, String email, String nickname, String password,
+    protected MemberSession(Long id, String email, String nickname, String password,
                          int numOfProblem, boolean needToRefresh) {
         this.id = id;
         this.email = email;

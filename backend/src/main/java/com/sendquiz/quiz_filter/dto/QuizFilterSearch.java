@@ -26,8 +26,8 @@ public class QuizFilterSearch {
 
     private String email;
 
-   @Builder
-   @QueryProjection
+    @Builder
+    @QueryProjection
     public QuizFilterSearch(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
                             boolean isJava, boolean isSpring, int numOfProblem, String email) {
         this.isNetwork = isNetwork;

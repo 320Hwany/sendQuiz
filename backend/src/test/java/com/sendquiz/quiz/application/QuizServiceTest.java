@@ -69,7 +69,6 @@ class QuizServiceTest {
 
         // stub
         when(cacheManager.getCache(any())).thenReturn(cache);
-        when(cache.get(any())).thenReturn(null);
         when(quizRepository.findAll()).thenReturn(quizList);
 
         // when
@@ -90,7 +89,6 @@ class QuizServiceTest {
 
         // stub
         when(cacheManager.getCache(any())).thenReturn(cache);
-        when(cache.get(any())).thenReturn(null);
         when(quizRepository.findAll()).thenReturn(quizList);
 
         // when
@@ -106,15 +104,15 @@ class QuizServiceTest {
         // given
         List<Quiz> quizList = new ArrayList<>();
         Cache cache = mock(Cache.class);
+        cache.put(QUIZ_LIST, quizList);
 
         // stub
         when(cacheManager.getCache(any())).thenReturn(cache);
-        when(cache.get(any())).thenReturn(ArgumentMatchers::notNull);
 
         // when
         quizService.findAll();
 
         // expected
-        verify(cache, times(1)).get(QUIZ_LIST, List.class);
+        verify(cache, times(0)).put(QUIZ_LIST, List.class);
     }
 }

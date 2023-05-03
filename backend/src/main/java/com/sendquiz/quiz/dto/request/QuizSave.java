@@ -18,7 +18,7 @@ public class QuizSave {
     private String answer;
 
     @Builder
-    public QuizSave(String subject, String problem, String answer) {
+    private QuizSave(String subject, String problem, String answer) {
         this.subject = subject;
         this.problem = problem;
         this.answer = answer;

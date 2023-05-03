@@ -22,7 +22,7 @@ public class Certification extends BaseTimeEntity {
     private String certificationNum;
 
     @Builder
-    public Certification(String email, String certificationNum) {
+    private Certification(String email, String certificationNum) {
         this.email = email;
         this.certificationNum = certificationNum;
     }

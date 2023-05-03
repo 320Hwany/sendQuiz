@@ -31,7 +31,7 @@ public class MemberSignup {
     private String password;
 
     @Builder
-    public MemberSignup(String email, String certificationNum, String nickname, String password) {
+    private MemberSignup(String email, String certificationNum, String nickname, String password) {
         this.email = email;
         this.certificationNum = certificationNum;
         this.nickname = nickname;

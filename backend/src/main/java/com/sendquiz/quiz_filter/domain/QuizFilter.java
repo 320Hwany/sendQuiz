@@ -40,7 +40,7 @@ public class QuizFilter extends BaseTimeEntity {
     private int numOfProblem;
 
     @Builder
-    public QuizFilter(Member member, boolean isNetwork, boolean isDatabase, boolean isOS,
+    private QuizFilter(Member member, boolean isNetwork, boolean isDatabase, boolean isOS,
                       boolean isDataStructure, boolean isJava, boolean isSpring, int numOfProblem) {
         this.member = member;
         this.isNetwork = isNetwork;

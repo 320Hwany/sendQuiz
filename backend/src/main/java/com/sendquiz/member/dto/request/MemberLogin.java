@@ -15,7 +15,7 @@ public class MemberLogin {
     private String password;
 
     @Builder
-    public MemberLogin(String email, String password) {
+    private MemberLogin(String email, String password) {
         this.email = email;
         this.password = password;
     }

@@ -1,14 +1,14 @@
 package com.sendquiz.global.eumtype;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public enum Role {
 
     BASIC("BASIC"),
     ADMIN("ADMIN");
 
-    private String value;
+    private final String value;
 }

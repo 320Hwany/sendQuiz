@@ -25,7 +25,7 @@ public class QuizFilterResponse {
     private int numOfProblem;
 
     @Builder
-    public QuizFilterResponse(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
+    private QuizFilterResponse(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
                               boolean isJava, boolean isSpring, int numOfProblem) {
         this.isNetwork = isNetwork;
         this.isDatabase = isDatabase;
