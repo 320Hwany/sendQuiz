@@ -1,17 +1,26 @@
 package com.sendquiz.email.application.prod;
 
 import com.sendquiz.email.application.EmailQuizSender;
+import com.sendquiz.email.exception.EmailMessageError;
+import com.sendquiz.global.constant.CommonConstant;
 import com.sendquiz.quiz.domain.Quiz;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.List;
 
+import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT;
+import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -20,24 +29,26 @@ import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT;
 public class EmailQuizSenderProd implements EmailQuizSender {
 
     private final JavaMailSender mailSender;
+    private final SpringTemplateEngine templateEngine;
 
     public void sendQuizList(List<Quiz> randomQuizList, String toEmail) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(toEmail);
-        message.setSubject(EMAIL_SUBJECT);
-        StringBuffer sb = makeText(randomQuizList);
-        message.setText(String.valueOf(sb));
-        mailSender.send(message);
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            helper.setTo(toEmail);
+            helper.setSubject(EMAIL_SUBJECT);
+            helper.setText(setContext(randomQuizList), true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new EmailMessageError();
+        }
     }
 
-    public StringBuffer makeText(List<Quiz> randomQuizList) {
-        StringBuffer sb = new StringBuffer();
-        for (Quiz quiz : randomQuizList) {
-            sb.append("-------------------------------------------").append("\n");
-            sb.append("분야 : ").append(quiz.getSubject().getValue()).append("\n");
-            sb.append("문제 : ").append(quiz.getProblem()).append("\n");
-            sb.append("답안").append("\n").append(quiz.getAnswer()).append("\n").append("\n");
-        }
-        return sb;
+    @Override
+    public String setContext(List<Quiz> randomQuizList) {
+        Context context = new Context();
+        context.setVariable(QUIZ_LIST, randomQuizList);
+        return templateEngine.process(QUIZ_LIST, context);
     }
 }
+

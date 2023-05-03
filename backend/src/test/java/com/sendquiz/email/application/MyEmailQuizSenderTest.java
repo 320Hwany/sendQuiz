@@ -41,7 +41,7 @@ public class MyEmailQuizSenderTest {
 
     @Test
     @DisplayName("랜덤 퀴즈 리스트로 이메일의 텍스트를 생성합니다")
-    void makeText() {
+    void setContext() {
         // given
         List<Quiz> randomQuizList = IntStream.range(1, 3)
                 .mapToObj(i -> Quiz.builder()
@@ -49,9 +49,9 @@ public class MyEmailQuizSenderTest {
                         .build()).toList();
 
         // when
-        StringBuffer sb = emailQuizSenderTest.makeText(randomQuizList);
+        String context = emailQuizSenderTest.setContext(randomQuizList);
 
         // then
-        assertThat(sb).isNotBlank();
+        assertThat(context).isNotBlank();
     }
 }

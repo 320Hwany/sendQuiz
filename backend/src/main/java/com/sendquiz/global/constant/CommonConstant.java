@@ -16,6 +16,10 @@ public class CommonConstant {
 
     public static final String CERTIFICATION_MESSAGE_TEST = "테스트 이메일 메세지";
 
+    public static final String CERTIFICATION_NUM = "certificationNum";
+
+    public static final String CERTIFICATION = "certification";
+
     public static final String AUTHORIZATION = "Authorization";
 
     public static final String REFRESH_TOKEN = "refreshToken";
@@ -31,4 +35,6 @@ public class CommonConstant {
     public static final String QUIZ_CACHE = "quizCache";
 
     public static final String QUIZ_LIST = "quizList";
+
+    public static final String UTF_8 = "UTF-8";
 }

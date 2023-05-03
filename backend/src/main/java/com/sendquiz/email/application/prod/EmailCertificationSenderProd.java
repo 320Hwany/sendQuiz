@@ -3,12 +3,17 @@ package com.sendquiz.email.application.prod;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.email.application.EmailCertificationSender;
+import com.sendquiz.email.exception.EmailMessageError;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.UUID;
 
@@ -22,22 +27,29 @@ import static com.sendquiz.global.constant.CommonConstant.*;
 public class EmailCertificationSenderProd implements EmailCertificationSender {
 
     private final JavaMailSender mailSender;
+    private final SpringTemplateEngine templateEngine;
     private final CertificationRepository certificationRepository;
 
     @Transactional
     public void sendCertificationNum(String toEmail) {
-        SimpleMailMessage message = new SimpleMailMessage();
-        String certificationNum = makeCertificationMessage(toEmail, message);
-        saveCertificationNum(toEmail, certificationNum);
-        mailSender.send(message);
+        MimeMessage message = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            String certificationNum = makeUUID();
+            saveCertificationNum(toEmail, certificationNum);
+            helper.setTo(toEmail);
+            helper.setSubject(EMAIL_SUBJECT);
+            helper.setText(setContext(certificationNum), true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new EmailMessageError();
+        }
     }
 
-    public String makeCertificationMessage(String toEmail, SimpleMailMessage message) {
-        String certificationNum = makeUUID();
-        message.setTo(toEmail);
-        message.setSubject(EMAIL_SUBJECT);
-        message.setText(CERTIFICATION_MESSAGE + certificationNum);
-        return certificationNum;
+    public String setContext(String certificationNum) {
+        Context context = new Context();
+        context.setVariable(CERTIFICATION_NUM, certificationNum);
+        return templateEngine.process(CERTIFICATION, context);
     }
 
     public String makeUUID() {

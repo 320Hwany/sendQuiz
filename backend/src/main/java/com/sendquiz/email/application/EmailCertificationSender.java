@@ -1,13 +1,11 @@
 package com.sendquiz.email.application;
 
 
-import org.springframework.mail.SimpleMailMessage;
-
 public interface EmailCertificationSender {
 
     void sendCertificationNum(String toEmail);
 
-    String makeCertificationMessage(String toEmail, SimpleMailMessage message);
+    String setContext(String certificationNum);
 
     String makeUUID();
 

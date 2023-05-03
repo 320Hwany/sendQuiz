@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_MESSAGE_TEST;
 import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
 
 @Getter
@@ -21,16 +22,13 @@ public class EmailQuizSenderTest implements EmailQuizSender {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject(EMAIL_SUBJECT_TEST);
-        StringBuffer sb = makeText(randomQuizList);
+        String sb = setContext(randomQuizList);
         message.setText(String.valueOf(sb));
         testMailSender.set(message);
     }
 
-    public StringBuffer makeText(List<Quiz> randomQuizList) {
-        StringBuffer sb = new StringBuffer();
-        for (Quiz quiz : randomQuizList) {
-            sb.append(quiz.getProblem());
-        }
-        return sb;
+    @Override
+    public String setContext(List<Quiz> randomQuizList) {
+        return CERTIFICATION_MESSAGE_TEST;
     }
 }

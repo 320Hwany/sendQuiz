@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <title>CS 면접 질문</title>
+</head>
+<body>
+<div style="background-color: #f2f2f2; padding: 20px;">
+    <h2>CS 면접 질문</h2>
+    <hr>
+    <div th:each="quiz : ${quizList}">
+        <div style="background-color: #fff; padding: 20px; margin-bottom: 20px; white-space: pre-wrap;">
+            <p><strong>분야 :</strong> <span th:text="${quiz.subject.value}"></span></p>
+            <p><strong>문제 :</strong> <span th:text="${quiz.problem}"></span></p>
+            <p><strong>답안 :</strong> <span th:text="${quiz.answer}"></span></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

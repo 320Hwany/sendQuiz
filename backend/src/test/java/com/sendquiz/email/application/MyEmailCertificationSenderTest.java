@@ -14,7 +14,6 @@ import org.springframework.mail.SimpleMailMessage;
 import java.util.Optional;
 
 import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_MESSAGE_TEST;
-import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -43,24 +42,7 @@ public class MyEmailCertificationSenderTest {
         // then
         ThreadLocal<SimpleMailMessage> testMailSender = emailCertificationSenderTest.getTestMailSender();
         SimpleMailMessage message = testMailSender.get();
-        assertThat(message.getSubject()).isEqualTo(EMAIL_SUBJECT_TEST);
         assertThat(message.getText()).isEqualTo(CERTIFICATION_MESSAGE_TEST);
-    }
-
-    @Test
-    @DisplayName("인증번호에 대한 메일을 생성하고 인증번호를 반환합니다")
-    void makeCertificationMessage() {
-        // given
-        String toMail = "test email";
-        SimpleMailMessage message = new SimpleMailMessage();
-
-        // when
-        String certificationNum = emailCertificationSenderTest.makeCertificationMessage(toMail, message);
-
-        // then
-        assertThat(message.getSubject()).isEqualTo(EMAIL_SUBJECT_TEST);
-        assertThat(message.getText()).isEqualTo(CERTIFICATION_MESSAGE_TEST);
-        assertThat(certificationNum.length()).isEqualTo(8);
     }
 
     @Test

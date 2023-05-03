@@ -5,9 +5,11 @@ import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.email.application.EmailCertificationSender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.context.Context;
 
 import java.util.UUID;
 
@@ -26,17 +28,16 @@ public class EmailCertificationSenderTest implements EmailCertificationSender {
     @Transactional
     public void sendCertificationNum(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
-        String certificationNum = makeCertificationMessage(toEmail, message);
+        String certificationNum = makeUUID();
         saveCertificationNum(toEmail, certificationNum);
+        String context = setContext(certificationNum);
+        message.setText(context);
         testMailSender.set(message);
     }
 
-    public String makeCertificationMessage(String toEmail, SimpleMailMessage message) {
-        String certificationNum = makeUUID();
-        message.setTo(toEmail);
-        message.setSubject(EMAIL_SUBJECT_TEST);
-        message.setText(CERTIFICATION_MESSAGE_TEST);
-        return certificationNum;
+    @Override
+    public String setContext(String certificationNum) {
+        return CERTIFICATION_MESSAGE_TEST;
     }
 
     public String makeUUID() {

@@ -1,5 +1,6 @@
 package com.sendquiz.global.exception;
 
+import com.sendquiz.email.exception.EmailMessageError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.MailSendException;
@@ -42,6 +43,16 @@ public class ControllerAdvice {
         ErrorResponse errorResponse = ErrorResponse.builder()
                 .statusCode(e.getStatusCode())
                 .message(e.getMessage())
+                .build();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
+    @ExceptionHandler(EmailMessageError.class)
+    public ResponseEntity<ErrorResponse> emailMessageError(EmailMessageError e) {
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .statusCode(e.getStatusCode())
+                .message(e.getMESSAGE())
                 .build();
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);

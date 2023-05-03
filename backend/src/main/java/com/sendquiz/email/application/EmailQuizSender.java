@@ -8,5 +8,5 @@ public interface EmailQuizSender {
 
     void sendQuizList(List<Quiz> randomQuizList, String toEmail);
 
-    StringBuffer makeText(List<Quiz> randomQuizList);
+    String setContext(List<Quiz> randomQuizList);
 }
