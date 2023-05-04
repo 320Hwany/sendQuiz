@@ -54,4 +54,8 @@ public class Member extends BaseTimeEntity {
     public void deleteRefreshToken() {
         this.refreshToken = null;
     }
+
+    public void updateToTemporaryPassword(String temporaryPassword, PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(temporaryPassword);
+    }
 }

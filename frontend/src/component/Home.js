@@ -37,6 +37,9 @@ function Home() {
                                 <Link to="/signup" className="btn btn-primary mx-3">
                                     회원가입
                                 </Link>
+                                <Link to="/find/password" className="btn btn-secondary mx-3">
+                                    비밀번호 찾기
+                                </Link>
                             </div>
                         </div>
                     </div>

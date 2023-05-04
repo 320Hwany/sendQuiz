@@ -20,6 +20,8 @@ public class CommonConstant {
 
     public static final String CERTIFICATION = "certification";
 
+    public static final String TEMPORARY_PASSWORD = "temporaryPassword";
+
     public static final String AUTHORIZATION = "Authorization";
 
     public static final String REFRESH_TOKEN = "refreshToken";

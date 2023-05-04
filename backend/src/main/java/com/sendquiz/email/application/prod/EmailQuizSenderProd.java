@@ -1,14 +1,12 @@
 package com.sendquiz.email.application.prod;
 
 import com.sendquiz.email.application.EmailQuizSender;
-import com.sendquiz.email.exception.EmailMessageError;
-import com.sendquiz.global.constant.CommonConstant;
+import com.sendquiz.email.exception.EmailMessageException;
 import com.sendquiz.quiz.domain.Quiz;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -40,7 +38,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
             helper.setText(setContext(randomQuizList), true);
             mailSender.send(message);
         } catch (MessagingException e) {
-            throw new EmailMessageError();
+            throw new EmailMessageException();
         }
     }
 

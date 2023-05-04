@@ -1,15 +1,19 @@
 package com.sendquiz.email.application.prod;
 
-import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.certification.repository.CertificationRepository;
-import com.sendquiz.email.application.EmailCertificationSender;
+import com.sendquiz.email.application.EmailPasswordFind;
 import com.sendquiz.email.exception.EmailMessageException;
+import com.sendquiz.member.domain.Member;
+import com.sendquiz.member.domain.MemberSession;
+import com.sendquiz.member.exception.MemberNotFoundException;
+import com.sendquiz.member.exception.MemberNotMatchException;
+import com.sendquiz.member.repository.MemberRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
@@ -17,52 +21,52 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.UUID;
 
-import static com.sendquiz.certification.domain.Certification.toCertification;
 import static com.sendquiz.global.constant.CommonConstant.*;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Primary
 @Service
-public class EmailCertificationSenderProd implements EmailCertificationSender {
+public class EmailPasswordFindProd implements EmailPasswordFind {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
-    private final CertificationRepository certificationRepository;
+    private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    @Override
     @Transactional
-    public void sendCertificationNum(String toEmail) {
+    public void sendTemporaryPassword(String toEmail) {
+        Member member = memberRepository.getByEmail(toEmail);
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
-            String certificationNum = makeUUID();
-            saveCertificationNum(toEmail, certificationNum);
+            String temporaryPassword = makeUUID();
+            updateToTemporaryPassword(member, temporaryPassword);
             helper.setTo(toEmail);
             helper.setSubject(EMAIL_SUBJECT);
-            helper.setText(setContext(certificationNum), true);
+            helper.setText(setContext(temporaryPassword), true);
             mailSender.send(message);
         } catch (MessagingException e) {
             throw new EmailMessageException();
         }
     }
 
+    @Override
     public String makeUUID() {
         return UUID.randomUUID().toString().substring(0,8);
     }
 
-    public void saveCertificationNum(String toEmail, String certificationNum) {
-        if (certificationRepository.findByEmail(toEmail).isEmpty()) {
-            Certification certification = toCertification(toEmail, certificationNum);
-            certificationRepository.save(certification);
-        } else {
-            Certification psCertification = certificationRepository.getByEmail(toEmail);
-            psCertification.updateNum(certificationNum);
-        }
+    @Override
+    @Transactional
+    public void updateToTemporaryPassword(Member member, String temporaryPassword) {
+        member.updateToTemporaryPassword(temporaryPassword, passwordEncoder);
     }
 
-    public String setContext(String certificationNum) {
+    @Override
+    public String setContext(String temporaryPassword) {
         Context context = new Context();
-        context.setVariable(CERTIFICATION_NUM, certificationNum);
-        return templateEngine.process(CERTIFICATION, context);
+        context.setVariable(TEMPORARY_PASSWORD, temporaryPassword);
+        return templateEngine.process(TEMPORARY_PASSWORD, context);
     }
 }

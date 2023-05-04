@@ -10,6 +10,7 @@ import Quiz from "./component/Quiz";
 import Manage from "./component/Manage";
 import Delete from "./component/Delete";
 import Update from "./component/Update";
+import FindPassword from "./component/FindPassword";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/manage" element={<Manage />} />
                     <Route path="/delete" element={<Delete />} />
                     <Route path="/update" element={<Update />} />
+                    <Route path="/find/password" element={<FindPassword />} />
                 </Routes>
             </div>
         </Router>

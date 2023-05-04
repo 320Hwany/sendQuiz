@@ -6,7 +6,7 @@ import static com.sendquiz.global.constant.ErrorMessageConstant.EMAIL_NOT_SEND_M
 import static com.sendquiz.global.constant.StatusCodeConstant.EMAIL_MESSAGE_EXCEPTION;
 
 @Getter
-public class EmailMessageError extends RuntimeException {
+public class EmailMessageException extends RuntimeException {
 
     private final String statusCode = EMAIL_MESSAGE_EXCEPTION;
 

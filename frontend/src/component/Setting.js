@@ -171,9 +171,14 @@ function Setting() {
                 </button>
                 </div>
             </div>
-            <button type="submit" className="btn btn-success mt-3 text-center d-block mx-auto">
-                서비스 신청하기
-            </button>
+            <div className="text-center">
+                <button type="submit" className="btn btn-success mt-3 d-inline-block mx-auto">
+                    서비스 신청하기
+                </button>
+                <Link to="/main" className="btn btn-secondary mx-3 mt-3 d-inline-block ml-3">
+                    홈으로
+                </Link>
+            </div>
         </form>
     );
 }
