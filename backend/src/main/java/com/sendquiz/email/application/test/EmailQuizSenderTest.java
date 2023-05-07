@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_MESSAGE_TEST;
+import static com.sendquiz.global.constant.CommonConstant.MESSAGE_SUBJECT_TEST;
 import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
 
 @Getter
@@ -29,6 +29,6 @@ public class EmailQuizSenderTest implements EmailQuizSender {
 
     @Override
     public String setContext(List<Quiz> randomQuizList) {
-        return CERTIFICATION_MESSAGE_TEST;
+        return MESSAGE_SUBJECT_TEST;
     }
 }

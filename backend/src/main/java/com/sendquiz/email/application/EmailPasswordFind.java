@@ -8,7 +8,7 @@ public interface EmailPasswordFind {
 
     void updateToTemporaryPassword(Member member, String temporaryPassword);
 
-    String setContext(String certificationNum);
-
     String makeUUID();
+
+    String setContext(String temporaryPassword);
 }

@@ -37,7 +37,7 @@ public class EmailCertificationSenderTest implements EmailCertificationSender {
 
     @Override
     public String setContext(String certificationNum) {
-        return CERTIFICATION_MESSAGE_TEST;
+        return MESSAGE_SUBJECT_TEST;
     }
 
     public String makeUUID() {

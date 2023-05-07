@@ -13,7 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 import java.util.Optional;
 
-import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_MESSAGE_TEST;
+import static com.sendquiz.global.constant.CommonConstant.MESSAGE_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -42,7 +42,7 @@ public class MyEmailCertificationSenderTest {
         // then
         ThreadLocal<SimpleMailMessage> testMailSender = emailCertificationSenderTest.getTestMailSender();
         SimpleMailMessage message = testMailSender.get();
-        assertThat(message.getText()).isEqualTo(CERTIFICATION_MESSAGE_TEST);
+        assertThat(message.getText()).isEqualTo(MESSAGE_SUBJECT_TEST);
     }
 
     @Test
