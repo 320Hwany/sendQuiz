@@ -4,6 +4,8 @@ import com.sendquiz.quiz.exception.SubjectNotMatchException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Arrays;
+
 @Getter
 @RequiredArgsConstructor
 public enum Subject {
@@ -18,11 +20,9 @@ public enum Subject {
     private final String value;
 
     public static Subject fromValue(String value) {
-        for (Subject subject : Subject.values()) {
-            if (subject.value.equals(value)) {
-                return subject;
-            }
-        }
-        throw new SubjectNotMatchException();
+        return Arrays.stream(Subject.values())
+                .filter(subject -> subject.value.equals(value))
+                .findFirst()
+                .orElseThrow(SubjectNotMatchException::new);
     }
 }
