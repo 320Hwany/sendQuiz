@@ -11,6 +11,7 @@ import Manage from "./component/Manage";
 import Delete from "./component/Delete";
 import Update from "./component/Update";
 import FindPassword from "./component/FindPassword";
+import Suggestions from "./component/Suggestions";
 
 function App() {
     return (
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/delete" element={<Delete />} />
                     <Route path="/update" element={<Update />} />
                     <Route path="/find/password" element={<FindPassword />} />
+                    <Route path="/suggestions" element={<Suggestions />} />
                 </Routes>
             </div>
         </Router>

@@ -101,6 +101,9 @@ function Main() {
                         <button className="btn btn-lg btn-outline-secondary my-2" onClick={handleLogout}>
                             로그아웃
                         </button>
+                        <Link to="/suggestions" class="btn btn-lg btn-outline-dark my-2">
+                            소중한 의견을 들려주세요
+                        </Link>
                     </div>
                 </div>
             </div>
