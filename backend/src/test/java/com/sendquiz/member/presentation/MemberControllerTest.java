@@ -49,7 +49,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberSignup);
 
         // expected
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(post("/api/signup")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated());
@@ -77,7 +77,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberSignup);
 
         // expected
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(post("/api/signup")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -106,7 +106,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberSignup);
 
         // expected
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(post("/api/signup")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -138,7 +138,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberSignup);
 
         // expected
-        mockMvc.perform(post("/signup")
+        mockMvc.perform(post("/api/signup")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -160,7 +160,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberLogin);
 
         // expected
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/api/login")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
@@ -189,7 +189,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberLogin);
 
         // expected
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/api/login")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -208,7 +208,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberLogin);
 
         // expected
-        mockMvc.perform(post("/login")
+        mockMvc.perform(post("/api/login")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isNotFound())
@@ -225,7 +225,7 @@ class MemberControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         // expected
-        mockMvc.perform(get("/member")
+        mockMvc.perform(get("/api/member")
                         .header("Authorization", accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(memberSignup.getEmail()))
@@ -239,7 +239,7 @@ class MemberControllerTest extends ControllerTest {
         saveMemberInRepository();
 
         // expected
-        mockMvc.perform(get("/member"))
+        mockMvc.perform(get("/api/member"))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -253,7 +253,7 @@ class MemberControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         // expected
-        mockMvc.perform(post("/logout")
+        mockMvc.perform(post("/api/logout")
                         .header("Authorization", accessToken))
                 .andExpect(status().isOk());
     }
@@ -274,7 +274,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberDelete);
 
         // expected
-        mockMvc.perform(post("/withdrawal")
+        mockMvc.perform(post("/api/withdrawal")
                         .header("Authorization", accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
@@ -297,7 +297,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberDelete);
 
         // expected
-        mockMvc.perform(post("/withdrawal")
+        mockMvc.perform(post("/api/withdrawal")
                         .header("Authorization", accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
@@ -320,7 +320,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberDelete);
 
         // expected
-        mockMvc.perform(post("/withdrawal")
+        mockMvc.perform(post("/api/withdrawal")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
@@ -343,7 +343,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberUpdate);
 
         // expected
-        mockMvc.perform(patch("/member")
+        mockMvc.perform(patch("/api/member")
                         .header("Authorization", accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
@@ -366,7 +366,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberUpdate);
 
         // expected
-        mockMvc.perform(patch("/member")
+        mockMvc.perform(patch("/api/member")
                         .header("Authorization", accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
@@ -389,7 +389,7 @@ class MemberControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(memberUpdate);
 
         // expected
-        mockMvc.perform(patch("/member")
+        mockMvc.perform(patch("/api/member")
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())

@@ -26,7 +26,7 @@ class QuizFilterControllerTest extends ControllerTest {
         String requestBody = objectMapper.writeValueAsString(quizFilterSave);
 
         // expected
-        mockMvc.perform(MockMvcRequestBuilders.post("/quizFilter")
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/quizFilter")
                         .header("Authorization", accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))

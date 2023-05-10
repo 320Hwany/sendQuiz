@@ -59,7 +59,7 @@ public class ControllerTest {
 
         String requestBody = objectMapper.writeValueAsString(memberLogin);
 
-        MockHttpServletResponse response = mockMvc.perform(post("/login")
+        MockHttpServletResponse response = mockMvc.perform(post("/api/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk())
