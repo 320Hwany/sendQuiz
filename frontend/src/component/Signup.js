@@ -22,7 +22,7 @@ function Signup() {
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/signup', { email, certificationNum, nickname, password })
+            .post('/api/signup', { email, certificationNum, nickname, password })
             .then((res) => {
                 navigate('/signup/success');
                 // 회원가입 성공 시 처리할 코드 작성
@@ -55,7 +55,7 @@ function Signup() {
         setEmailNotFound("");
         setCertificationNumMessage("인증번호가 전송되었습니다");
 
-        axios.post('http://localhost:8080/email/signup', params, {
+        axios.post('/api/email/signup', params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

@@ -16,7 +16,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/member', {
+            .get('/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -34,7 +34,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/quizFilter', {
+            .get('/api/quizFilter', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -53,7 +53,7 @@ function Main() {
     }, []);
 
     const handleLogout = () => {
-        axios.post('http://localhost:8080/logout', null,{
+        axios.post('/api/logout', null,{
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },

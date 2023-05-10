@@ -23,7 +23,7 @@ function FindPassword() {
             return;
         }
         setShowAlert(true);
-        axios.post('http://localhost:8080/email/password', params,{
+        axios.post('/api/email/password', params,{
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

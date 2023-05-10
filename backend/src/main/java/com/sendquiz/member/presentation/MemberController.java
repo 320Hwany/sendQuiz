@@ -20,6 +20,7 @@ import static com.sendquiz.jwt.application.JwtService.getMemberResponse;
 
 
 @RequiredArgsConstructor
+@RequestMapping("/api")
 @RestController
 public class MemberController {
 

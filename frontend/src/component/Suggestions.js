@@ -12,7 +12,7 @@ function Suggestions() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/member', {
+            .get('/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -30,7 +30,7 @@ function Suggestions() {
     const saveSuggestions = (e) => {
         e.preventDefault();
         axios
-            .post('http://localhost:8080/suggestions', { contents }, {
+            .post('/api/suggestions', { contents }, {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },

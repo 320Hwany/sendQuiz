@@ -12,7 +12,7 @@ function Delete() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/member', {
+            .get('/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -35,7 +35,7 @@ function Delete() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleDeleteClick = () => {
-        axios.post('http://localhost:8080/withdrawal', { password, passwordCheck }, {
+        axios.post('/api/withdrawal', { password, passwordCheck }, {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },

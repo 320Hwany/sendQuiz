@@ -8,7 +8,7 @@ function Manage() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/member', {
+            .get('/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },

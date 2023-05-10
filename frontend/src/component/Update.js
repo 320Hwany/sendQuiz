@@ -12,7 +12,7 @@ function Update() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8080/member', {
+            .get('/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -35,7 +35,7 @@ function Update() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleUpdateClick = () => {
-        axios.patch('http://localhost:8080/member', { nickname, password }, {
+        axios.patch('/api/member', { nickname, password }, {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },
