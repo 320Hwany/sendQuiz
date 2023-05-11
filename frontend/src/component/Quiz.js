@@ -14,7 +14,7 @@ function Quiz() {
     const saveQuiz = (e) => {
         e.preventDefault();
         axios
-            .post('/api/quiz', { subject, problem, answer }, {
+            .post('http://43.200.95.5:8080/api/quiz', { subject, problem, answer }, {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },

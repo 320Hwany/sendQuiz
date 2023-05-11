@@ -8,7 +8,7 @@ function Home() {
 
     useEffect(() => {
         axios
-            .get('/api/member', {
+            .get('http://43.200.95.5:8080/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },

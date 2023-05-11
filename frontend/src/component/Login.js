@@ -15,7 +15,7 @@ function Login() {
     const handleLogin = (e) => {
         e.preventDefault();
         axios
-            .post('/api/login', { email, password })
+            .post('http://43.200.95.5:8080/api/login', { email, password })
             .then((res) => {
                 localStorage.setItem("Authorization", res.data.accessToken);
                 navigate('/main');

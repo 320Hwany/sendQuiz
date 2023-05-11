@@ -8,7 +8,7 @@ function Setting() {
 
     useEffect(() => {
         axios
-            .get('/api/member', {
+            .get('http://43.200.95.5:8080/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -43,7 +43,7 @@ function Setting() {
         event.preventDefault();
         try {
             const response = await axios.post(
-                '/api/quizFilter',
+                'http://43.200.95.5:8080/api/quizFilter',
                 options,
                 {
                     headers: {
