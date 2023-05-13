@@ -12,7 +12,7 @@ function Update() {
 
     useEffect(() => {
         axios
-            .get('http://43.200.95.5:8080/api/member', {
+            .get('https://send-quiz.store/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -35,7 +35,7 @@ function Update() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleUpdateClick = () => {
-        axios.patch('http://43.200.95.5:8080/api/member', { nickname, password }, {
+        axios.patch('https://send-quiz.store/api/member', { nickname, password }, {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },

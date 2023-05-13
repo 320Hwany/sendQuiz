@@ -1,4 +1,4 @@
-package com.sendquiz.quiz_filter.dto;
+package com.sendquiz.quiz_filter.application.response;
 
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import lombok.AccessLevel;

@@ -1,4 +1,4 @@
-package com.sendquiz.member.dto.request;
+package com.sendquiz.member.presentation.request;
 
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;

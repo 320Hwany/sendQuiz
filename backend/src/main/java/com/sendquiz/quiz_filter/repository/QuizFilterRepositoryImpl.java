@@ -1,9 +1,9 @@
 package com.sendquiz.quiz_filter.repository;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.sendquiz.quiz_filter.application.request.QQuizFilterSearch;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
-import com.sendquiz.quiz_filter.dto.QQuizFilterSearch;
-import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
+import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

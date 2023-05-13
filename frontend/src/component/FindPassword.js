@@ -23,7 +23,7 @@ function FindPassword() {
             return;
         }
         setShowAlert(true);
-        axios.post('http://43.200.95.5:8080/api/email/password', params,{
+        axios.post('https://send-quiz.store/api/email/password', params,{
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

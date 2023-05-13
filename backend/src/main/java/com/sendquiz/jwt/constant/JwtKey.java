@@ -1,4 +1,4 @@
-package com.sendquiz.jwt.dto;
+package com.sendquiz.jwt.constant;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

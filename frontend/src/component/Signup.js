@@ -22,7 +22,7 @@ function Signup() {
     const handleSignUp = (e) => {
         e.preventDefault();
         axios
-            .post('http://43.200.95.5:8080/api/signup', { email, certificationNum, nickname, password })
+            .post('https://send-quiz.store/api/signup', { email, certificationNum, nickname, password })
             .then((res) => {
                 navigate('/signup/success');
                 // 회원가입 성공 시 처리할 코드 작성
@@ -55,7 +55,7 @@ function Signup() {
         setEmailNotFound("");
         setCertificationNumMessage("인증번호가 전송되었습니다");
 
-        axios.post('http://43.200.95.5:8080/api/email/signup', params, {
+        axios.post('https://send-quiz.store/api/email/signup', params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

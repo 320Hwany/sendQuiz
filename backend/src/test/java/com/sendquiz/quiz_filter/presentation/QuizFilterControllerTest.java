@@ -1,7 +1,7 @@
 package com.sendquiz.quiz_filter.presentation;
 
-import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.quiz_filter.dto.QuizFilterSave;
+import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.quiz_filter.presentation.request.QuizFilterSave;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

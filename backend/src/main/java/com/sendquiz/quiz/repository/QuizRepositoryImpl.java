@@ -4,7 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
-import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
+import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

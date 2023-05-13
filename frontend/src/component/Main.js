@@ -16,7 +16,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('http://43.200.95.5:8080/api/member', {
+            .get('https://send-quiz.store/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -34,7 +34,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('http://43.200.95.5:8080/api/quizFilter', {
+            .get('https://send-quiz.store/api/quizFilter', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
@@ -53,7 +53,7 @@ function Main() {
     }, []);
 
     const handleLogout = () => {
-        axios.post('http://43.200.95.5:8080/api/logout', null,{
+        axios.post('https://send-quiz.store/api/logout', null,{
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },

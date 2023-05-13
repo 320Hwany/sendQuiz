@@ -3,13 +3,13 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
-import com.sendquiz.jwt.dto.JwtResponse;
+import com.sendquiz.jwt.application.response.JwtResponse;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.dto.request.MemberDelete;
-import com.sendquiz.member.dto.request.MemberLogin;
-import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.member.dto.request.MemberUpdate;
+import com.sendquiz.member.presentation.request.MemberDelete;
+import com.sendquiz.member.presentation.request.MemberLogin;
+import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.member.presentation.request.MemberUpdate;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.exception.PasswordNotMatchException;
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 import static com.sendquiz.jwt.application.JwtService.*;
-import static com.sendquiz.jwt.dto.JwtResponse.toJwtResponse;
+import static com.sendquiz.jwt.application.response.JwtResponse.toJwtResponse;
 
 
 @RequiredArgsConstructor

@@ -4,7 +4,7 @@ import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
-import com.sendquiz.quiz_filter.dto.QuizFilterSave;
+import com.sendquiz.quiz_filter.presentation.request.QuizFilterSave;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,9 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.cache.CacheManager;
 
-import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;

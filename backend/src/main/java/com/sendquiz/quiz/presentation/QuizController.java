@@ -3,7 +3,7 @@ package com.sendquiz.quiz.presentation;
 import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.quiz.application.QuizService;
-import com.sendquiz.quiz.dto.request.QuizSave;
+import com.sendquiz.quiz.presentation.request.QuizSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

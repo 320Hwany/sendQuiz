@@ -8,7 +8,7 @@ function Manage() {
 
     useEffect(() => {
         axios
-            .get('http://43.200.95.5:8080/api/member', {
+            .get('https://send-quiz.store/api/member', {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },

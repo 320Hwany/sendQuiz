@@ -2,7 +2,7 @@ package com.sendquiz.quiz.domain;
 
 import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.global.eumtype.Subject;
-import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
+import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

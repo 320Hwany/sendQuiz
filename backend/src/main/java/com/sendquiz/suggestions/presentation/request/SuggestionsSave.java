@@ -1,4 +1,4 @@
-package com.sendquiz.suggestions.dto.request;
+package com.sendquiz.suggestions.presentation.request;
 
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.suggestions.domain.Suggestions;

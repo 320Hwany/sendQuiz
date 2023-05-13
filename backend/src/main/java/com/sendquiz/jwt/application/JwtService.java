@@ -1,7 +1,7 @@
 package com.sendquiz.jwt.application;
 
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.dto.response.MemberResponse;
+import com.sendquiz.member.presentation.response.MemberResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
@@ -14,8 +14,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
-import static com.sendquiz.jwt.dto.JwtKey.JWT_KEY;
-import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
+import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
+import static com.sendquiz.member.presentation.response.MemberResponse.toMemberResponse;
 
 @Service
 public class JwtService {

@@ -1,22 +1,14 @@
 package com.sendquiz.member.presentation;
 
 import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.dto.request.MemberDelete;
-import com.sendquiz.member.dto.request.MemberLogin;
-import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.member.dto.request.MemberUpdate;
+import com.sendquiz.member.presentation.request.MemberDelete;
+import com.sendquiz.member.presentation.request.MemberLogin;
+import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.member.presentation.request.MemberUpdate;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockCookie;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
-import static com.sendquiz.global.constant.CommonConstant.REFRESH_TOKEN;
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;
 import static com.sendquiz.global.constant.ValidMessageConstant.EMAIL_VALID_MESSAGE;
 import static com.sendquiz.global.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;

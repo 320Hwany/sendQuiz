@@ -1,4 +1,4 @@
-package com.sendquiz.quiz_filter.dto;
+package com.sendquiz.quiz_filter.presentation.request;
 
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.quiz_filter.domain.QuizFilter;

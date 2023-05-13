@@ -1,4 +1,4 @@
-package com.sendquiz.quiz_filter.dto;
+package com.sendquiz.quiz_filter.application.request;
 
 import com.querydsl.core.annotations.QueryProjection;
 import lombok.AccessLevel;

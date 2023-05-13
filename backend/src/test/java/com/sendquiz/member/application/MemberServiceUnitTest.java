@@ -5,10 +5,10 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.dto.request.MemberDelete;
-import com.sendquiz.member.dto.request.MemberLogin;
-import com.sendquiz.member.dto.request.MemberSignup;
-import com.sendquiz.member.dto.request.MemberUpdate;
+import com.sendquiz.member.presentation.request.MemberDelete;
+import com.sendquiz.member.presentation.request.MemberLogin;
+import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.member.presentation.request.MemberUpdate;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.exception.MemberNotMatchException;
 import com.sendquiz.member.exception.PasswordNotMatchException;
@@ -279,7 +279,8 @@ class MemberServiceUnitTest {
         memberService.update(MemberSession.builder().build(), memberUpdate);
 
         // then
-        assertThat(member.getNickname()).isEqualTo("update nickname");
-        assertThat(member.getPassword()).isEqualTo("encode password");
+        assertThat(member)
+                .extracting("nickname", "password")
+                .contains("update nickname", "encode password");
     }
 }

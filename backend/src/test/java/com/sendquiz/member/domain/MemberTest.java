@@ -1,14 +1,12 @@
 package com.sendquiz.member.domain;
 
-import com.sendquiz.member.dto.request.MemberUpdate;
-import org.assertj.core.api.Assertions;
+import com.sendquiz.member.presentation.request.MemberUpdate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MemberTest {
 

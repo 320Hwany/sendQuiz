@@ -1,8 +1,7 @@
 package com.sendquiz.quiz.domain;
 
 import com.sendquiz.global.eumtype.Subject;
-import com.sendquiz.quiz_filter.dto.QuizFilterSearch;
-import org.assertj.core.api.Assertions;
+import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
