@@ -4,6 +4,7 @@ import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.quiz.application.QuizService;
 import com.sendquiz.quiz.presentation.request.QuizSave;
+import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,8 +30,10 @@ public class QuizController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/test")
-    public void test() {
-        quizService.sendRandomQuizList();
+    @PatchMapping("/quiz")
+    public ResponseEntity<Void> update(@AdminLogin AdminSession adminSession,
+                                       @RequestBody QuizUpdate quizUpdate) {
+        quizService.update(quizUpdate);
+        return ResponseEntity.ok().build();
     }
 }

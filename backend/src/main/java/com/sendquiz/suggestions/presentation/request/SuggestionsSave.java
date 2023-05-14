@@ -20,8 +20,8 @@ public class SuggestionsSave {
 
     public Suggestions toEntity(Member member) {
         return Suggestions.builder()
-                .member(member)
                 .contents(contents)
+                .memberId(member.getId())
                 .build();
     }
 }

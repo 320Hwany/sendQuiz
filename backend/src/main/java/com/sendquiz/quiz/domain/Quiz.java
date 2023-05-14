@@ -2,6 +2,7 @@ package com.sendquiz.quiz.domain;
 
 import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.global.eumtype.Subject;
+import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -33,6 +34,12 @@ public class Quiz extends BaseTimeEntity {
         this.subject = subject;
         this.problem = problem;
         this.answer = answer;
+    }
+
+    public void update(QuizUpdate quizUpdate, Subject subject) {
+        this.problem = quizUpdate.getProblem();
+        this.answer = quizUpdate.getAnswer();
+        this.subject = subject;
     }
 
     public boolean filterQuizList(QuizFilterSearch quizFilterSearch) {

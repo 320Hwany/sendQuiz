@@ -11,6 +11,8 @@ public interface QuizRepository {
 
     List<Quiz> findAll();
 
+    Quiz getById(Long quizId);
+
     void save(Quiz quiz);
 
     void saveAll(List<Quiz> quizList);

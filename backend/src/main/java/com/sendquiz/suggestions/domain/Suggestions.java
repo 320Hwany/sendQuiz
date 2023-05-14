@@ -1,6 +1,5 @@
 package com.sendquiz.suggestions.domain;
 
-import com.sendquiz.member.domain.Member;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,13 +18,11 @@ public class Suggestions {
     @Lob
     private String contents;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    private Long memberId;
 
     @Builder
-    private Suggestions(String contents, Member member) {
+    public Suggestions(String contents, Long memberId) {
         this.contents = contents;
-        this.member = member;
+        this.memberId = memberId;
     }
 }
