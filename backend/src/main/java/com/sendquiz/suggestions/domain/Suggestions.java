@@ -21,7 +21,7 @@ public class Suggestions {
     private Long memberId;
 
     @Builder
-    public Suggestions(String contents, Long memberId) {
+    private Suggestions(String contents, Long memberId) {
         this.contents = contents;
         this.memberId = memberId;
     }

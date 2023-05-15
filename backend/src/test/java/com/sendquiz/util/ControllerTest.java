@@ -3,7 +3,9 @@ package com.sendquiz.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.global.eumtype.Role;
 import com.sendquiz.member.application.MemberService;
+import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.presentation.request.MemberLogin;
 import com.sendquiz.member.presentation.request.MemberSignup;
 import com.sendquiz.member.repository.MemberRepository;
@@ -48,6 +50,25 @@ public class ControllerTest {
                 .build();
 
         memberRepository.save(memberSignup.toEntity(passwordEncoder));
+        return memberSignup;
+    }
+
+    protected MemberSignup saveAdminMemberInRepository() {
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email("test@email.com")
+                .certificationNum("abcdefgh")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        Member member = Member.builder()
+                .email("test@email.com")
+                .nickname("test nickname")
+                .password(passwordEncoder.encode("test password"))
+                .role(Role.ADMIN)
+                .build();
+
+        memberRepository.save(member);
         return memberSignup;
     }
 

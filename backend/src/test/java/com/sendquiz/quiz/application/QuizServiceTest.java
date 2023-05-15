@@ -2,6 +2,8 @@ package com.sendquiz.quiz.application;
 
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
+import com.sendquiz.quiz.exception.SubjectNotMatchException;
+import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
 import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
@@ -37,12 +39,6 @@ class QuizServiceTest {
     @Mock
     private QuizFilterRepository quizFilterRepository;
 
-//    @Test
-//    @DisplayName("")
-//    void sendRandomQuizList() {
-//        // given
-//
-//    }
 
     @Test
     @DisplayName("퀴즈를 퀴즈 필터 조건에 맞는 퀴즈만 있도록 필터링합니다")
@@ -112,5 +108,56 @@ class QuizServiceTest {
 
         // expected
         verify(cache, times(0)).put(QUIZ_LIST, List.class);
+    }
+
+    @Test
+    @DisplayName("퀴즈가 존재하고 입력한 분야에 맞다면 퀴즈를 수정합니다")
+    void update() {
+        // given
+        Quiz quiz = Quiz.builder()
+                .problem("수정전 문제")
+                .answer("수정전 답")
+                .subject(Subject.JAVA)
+                .build();
+
+        QuizUpdate quizUpdate = QuizUpdate.builder()
+                .subject("네트워크")
+                .problem("수정후 문제")
+                .answer("수정후 답")
+                .build();
+
+        // stub
+        when(quizRepository.getById(any())).thenReturn(quiz);
+
+        // when
+        quizService.update(quizUpdate);
+
+        // then
+        assertThat(quiz).extracting("problem", "answer", "subject")
+                .contains("수정후 문제", "수정후 답", Subject.NETWORK);
+    }
+
+    @Test
+    @DisplayName("입력한 퀴즈 분야가 맞지 않으면 퀴즈를 수정할 수 없습니다")
+    void updateFailNotMatchSubject() {
+        // given
+        Quiz quiz = Quiz.builder()
+                .problem("수정전 문제")
+                .answer("수정전 답")
+                .subject(Subject.JAVA)
+                .build();
+
+        QuizUpdate quizUpdate = QuizUpdate.builder()
+                .subject("분야가 맞지 않음")
+                .problem("수정후 문제")
+                .answer("수정후 답")
+                .build();
+
+        // stub
+        when(quizRepository.getById(any())).thenReturn(quiz);
+
+        // then
+        assertThatThrownBy(() -> quizService.update(quizUpdate))
+                .isInstanceOf(SubjectNotMatchException.class);
     }
 }

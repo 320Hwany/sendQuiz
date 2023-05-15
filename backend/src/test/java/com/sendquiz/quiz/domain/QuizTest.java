@@ -1,6 +1,7 @@
 package com.sendquiz.quiz.domain;
 
 import com.sendquiz.global.eumtype.Subject;
+import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,5 +33,28 @@ class QuizTest {
         // then
         assertThat(conditionMeet).isTrue();
         assertThat(conditionNotMeet).isFalse();
+    }
+
+    @Test
+    @DisplayName("퀴즈 정보를 업데이트합니다")
+    void update() {
+        // given
+        Quiz quiz = Quiz.builder()
+                .problem("수정전 문제")
+                .answer("수정전 답")
+                .subject(Subject.JAVA)
+                .build();
+
+        QuizUpdate quizUpdate = QuizUpdate.builder()
+                .problem("수정후 문제")
+                .answer("수정후 답")
+                .build();
+
+        // when
+        quiz.update(quizUpdate, Subject.NETWORK);
+
+        // then
+        assertThat(quiz).extracting("problem", "answer", "subject")
+                .contains("수정후 문제", "수정후 답", Subject.NETWORK);
     }
 }

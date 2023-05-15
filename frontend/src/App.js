@@ -1,17 +1,18 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Signup from './component/Signup';
-import Login from "./component/Login";
+import Signup from './component/member/Signup';
+import Login from "./component/member/Login";
 import Home from "./component/Home";
 import Main from "./component/Main";
-import SignupSuccess from "./component/SignupSuccess";
-import Setting from "./component/Setting";
-import Quiz from "./component/Quiz";
-import Manage from "./component/Manage";
-import Delete from "./component/Delete";
-import Update from "./component/Update";
-import FindPassword from "./component/FindPassword";
+import SignupSuccess from "./component/member/SignupSuccess";
+import Setting from "./component/member/Setting";
+import Quiz from "./component/quiz/Quiz";
+import Manage from "./component/member/Manage";
+import Delete from "./component/member/Delete";
+import Update from "./component/member/Update";
+import FindPassword from "./component/member/FindPassword";
 import Suggestions from "./component/Suggestions";
+import QuizUpdate from "./component/quiz/QuizUpdate";
 
 function App() {
     return (
@@ -25,6 +26,7 @@ function App() {
                     <Route path="/signup/success" element={<SignupSuccess />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/hwany/quiz" element={<Quiz />} />
+                    <Route path="/hwany/quiz/update" element={<QuizUpdate />} />
                     <Route path="/manage" element={<Manage />} />
                     <Route path="/delete" element={<Delete />} />
                     <Route path="/update" element={<Update />} />
