@@ -1,8 +1,14 @@
 package com.sendquiz.global.config;
 
 import com.sendquiz.global.annotation.AdminLogin;
+import com.sendquiz.global.annotation.Login;
+import com.sendquiz.jwt.exception.CookieNotFoundException;
+import com.sendquiz.jwt.exception.JwsNotMatchException;
+import com.sendquiz.jwt.exception.RefreshTokenNotFoundException;
+import com.sendquiz.jwt.exception.RefreshTokenNotMatchException;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
+import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.exception.AdminAuthenticationException;
 import com.sendquiz.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -38,36 +44,13 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
         String accessJws = webRequest.getHeader(AUTHORIZATION);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        if (accessJws == null || accessJws.equals("")) {
-            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-            Cookie[] cookies = getCookies(request);
-            String refreshJws = getRefreshJws(cookies);
-            return getAdminSessionFromRefreshJws(refreshJws, decodedKey);
-        }
-
-        return getAdminSessionFromAccessJws(accessJws, decodedKey);
+        return getAdminSessionFromAccessJws(accessJws, decodedKey, webRequest);
     }
 
-    private static Cookie[] getCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies == null) {
-            throw new AdminAuthenticationException();
-        }
-        return cookies;
-    }
-
-    private static String getRefreshJws(Cookie[] cookies) {
-        String refreshJws = cookies[0].getValue();
-        if (refreshJws == null || refreshJws.equals("")) {
-            throw new AdminAuthenticationException();
-        }
-        return refreshJws;
-    }
-
-    private AdminSession getAdminSessionFromAccessJws(String jws, byte[] decodedKey) {
+    private AdminSession getAdminSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
@@ -75,8 +58,34 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
             return toAdminSession(member);
 
         } catch (JwtException e) {
-            throw new AdminAuthenticationException();
+            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+            Cookie[] cookies = getCookies(request);
+            String refreshJws = getRefreshJws(cookies);
+            return getAdminSessionFromRefreshJws(refreshJws, decodedKey);
         }
+    }
+
+    private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
+        return Jwts.parserBuilder()
+                .setSigningKey(decodedKey)
+                .build()
+                .parseClaimsJws(jws);
+    }
+
+    private static Cookie[] getCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            throw new CookieNotFoundException();
+        }
+        return cookies;
+    }
+
+    private static String getRefreshJws(Cookie[] cookies) {
+        String refreshJws = cookies[0].getValue();
+        if (refreshJws == null || refreshJws.equals("")) {
+            throw new RefreshTokenNotFoundException();
+        }
+        return refreshJws;
     }
 
     private AdminSession getAdminSessionFromRefreshJws(String jws, byte[] decodedKey) {
@@ -87,17 +96,9 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
             if (jws.equals(member.getRefreshToken())) {
                 return toAdminSession(member);
             }
-            throw new AdminAuthenticationException();
+            throw new RefreshTokenNotMatchException();
         } catch (JwtException e) {
-            throw new AdminAuthenticationException();
+            throw new JwsNotMatchException();
         }
-    }
-
-
-    private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
-        return Jwts.parserBuilder()
-                .setSigningKey(decodedKey)
-                .build()
-                .parseClaimsJws(jws);
     }
 }
