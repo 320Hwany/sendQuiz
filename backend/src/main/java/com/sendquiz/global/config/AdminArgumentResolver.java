@@ -3,9 +3,7 @@ package com.sendquiz.global.config;
 import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.exception.AdminAuthenticationException;
-import com.sendquiz.member.exception.MemberAuthenticationException;
 import com.sendquiz.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -25,7 +23,6 @@ import java.util.Base64;
 import static com.sendquiz.global.constant.CommonConstant.AUTHORIZATION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.AdminSession.toAdminSession;
-import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @RequiredArgsConstructor
 public class AdminArgumentResolver implements HandlerMethodArgumentResolver {

@@ -4,11 +4,13 @@ import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.presentation.response.MemberResponse;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.time.Duration;
 import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
@@ -41,12 +43,15 @@ public class JwtService {
     }
 
     public static void makeCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie(REFRESH_TOKEN, refreshToken);
-        cookie.setMaxAge(ONE_MONTH);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
+                .maxAge(Duration.ofDays(30))
+                .path("/")
+                .httpOnly(true)
+                .secure(true)
+                .sameSite(SAME_SITE_NONE)
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
     public static MemberResponse getMemberResponse(MemberSession memberSession) {

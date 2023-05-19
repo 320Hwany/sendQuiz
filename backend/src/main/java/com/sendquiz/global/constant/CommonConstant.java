@@ -26,13 +26,13 @@ public class CommonConstant {
 
     public static final String REFRESH_TOKEN = "refreshToken";
 
+    public static final String SAME_SITE_NONE = "None";
+
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
 
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
 
     public static final int ONE_DAY = 86400000;
-
-    public static final int ONE_MONTH = 24 * 60 * 60 * 30;
 
     public static final String SEVEN_AM = "0 0 7 * * *";
 
