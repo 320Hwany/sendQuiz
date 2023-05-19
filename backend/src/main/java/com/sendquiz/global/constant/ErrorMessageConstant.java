@@ -30,6 +30,8 @@ public class ErrorMessageConstant {
 
     public static final String JWS_NOT_MATCH_MESSAGE = "JWS 정보를 확인해주세요";
 
+    public static final String ACCESS_TOKEN_AUTHENTICATION = "AccessToken이 없어 로그인할 수 없습니다";
+
     public static final String SUBJECT_NOT_MATCH_MESSAGE = "해당 과목에 대한 요청을 처리할 수 없습니다";
 
     public static final String VALID_BAD_REQUEST_MESSAGE = "잘못된 요청입니다";

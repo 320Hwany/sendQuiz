@@ -1,6 +1,7 @@
 package com.sendquiz.member.presentation;
 
 import com.sendquiz.certification.domain.Certification;
+import com.sendquiz.jwt.exception.AccessTokenAuthenticationException;
 import com.sendquiz.member.presentation.request.MemberDelete;
 import com.sendquiz.member.presentation.request.MemberLogin;
 import com.sendquiz.member.presentation.request.MemberSignup;
@@ -316,7 +317,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(MEMBER_AUTHENTICATION_MESSAGE));
+                .andExpect(jsonPath("$.message").value(ACCESS_TOKEN_AUTHENTICATION));
     }
 
     @Test
@@ -367,8 +368,8 @@ class MemberControllerTest extends ControllerTest {
     }
 
     @Test
-    @DisplayName("로그인 하지 않으면 회원 정보를 수정할 수 없습니다")
-    void update401() throws Exception {
+    @DisplayName("AccessToken을 토큰을 보내지 않으면 정보를 수정할 수 없습니다")
+    void updateFailWithoutAccessToken() throws Exception {
         // given 1
         MemberUpdate memberUpdate = MemberUpdate.builder()
                 .nickname("update nickname")
@@ -385,6 +386,6 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(MEMBER_AUTHENTICATION_MESSAGE));
+                .andExpect(jsonPath("$.message").value(ACCESS_TOKEN_AUTHENTICATION));
     }
 }

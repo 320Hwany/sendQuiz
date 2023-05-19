@@ -1,10 +1,7 @@
 package com.sendquiz.global.config;
 
 import com.sendquiz.global.annotation.Login;
-import com.sendquiz.jwt.exception.CookieNotFoundException;
-import com.sendquiz.jwt.exception.JwsNotMatchException;
-import com.sendquiz.jwt.exception.RefreshTokenNotFoundException;
-import com.sendquiz.jwt.exception.RefreshTokenNotMatchException;
+import com.sendquiz.jwt.exception.*;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
@@ -65,10 +62,14 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
-        return Jwts.parserBuilder()
-                .setSigningKey(decodedKey)
-                .build()
-                .parseClaimsJws(jws);
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(decodedKey)
+                    .build()
+                    .parseClaimsJws(jws);
+        } catch (IllegalArgumentException e) {
+            throw new AccessTokenAuthenticationException();
+        }
     }
 
     private static Cookie[] getCookies(HttpServletRequest request) {
