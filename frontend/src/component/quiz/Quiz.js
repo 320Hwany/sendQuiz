@@ -18,6 +18,7 @@ function Quiz() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
+                withCredentials: true,
             })
             .then((res) => {
                 alert('저장에 성공했습니다');

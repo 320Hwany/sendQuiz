@@ -19,6 +19,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
+                .allowCredentials(true)
                 .allowedOrigins("https://send-quiz.vercel.app");
     }
 

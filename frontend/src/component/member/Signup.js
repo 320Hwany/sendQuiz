@@ -25,7 +25,6 @@ function Signup() {
             .post('https://send-quiz.store/api/signup', { email, certificationNum, nickname, password })
             .then((res) => {
                 navigate('/signup/success');
-                // 회원가입 성공 시 처리할 코드 작성
             })
             .catch((err) => {
                 setEmailError("");
