@@ -28,7 +28,11 @@ public class CommonConstant {
 
     public static final String SAME_SITE_NONE = "None";
 
+    public static final String SERVER_DOMAIN = "send-quiz.store";
+
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
+
+    public static final Long AFTER_30_MINUTES = System.currentTimeMillis() + 1800_000L;
 
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
 

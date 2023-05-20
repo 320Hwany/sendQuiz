@@ -20,6 +20,7 @@ function Main() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
+                withCredentials: true
             })
             .then(response => {
                 if (response.data.accessToken != null) {
@@ -38,6 +39,7 @@ function Main() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
+                withCredentials: true
             })
             .then(response => {
                 setNetwork(response.data.network);
@@ -57,6 +59,7 @@ function Main() {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },
+            withCredentials: true
         })
             .then(response => {
                 localStorage.removeItem('Authorization');

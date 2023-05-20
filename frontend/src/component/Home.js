@@ -12,6 +12,7 @@ function Home() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
+                withCredentials: true
             })
             .then(response => {
                 navigate("/main");

@@ -27,7 +27,7 @@ public class JwtService {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_ONE_HOUR))
+                .setExpiration(new Date(AFTER_30_MINUTES))
                 .signWith(accessTokenKey)
                 .compact();
     }
@@ -48,6 +48,7 @@ public class JwtService {
                 .path("/")
                 .httpOnly(true)
                 .secure(true)
+                .domain(SERVER_DOMAIN)
                 .sameSite(SAME_SITE_NONE)
                 .build();
 

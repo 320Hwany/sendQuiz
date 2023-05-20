@@ -12,6 +12,7 @@ function Manage() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
+                withCredentials: true
             })
             .then(response => {
             })
