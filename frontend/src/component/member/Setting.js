@@ -12,7 +12,6 @@ function Setting() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
-                withCredentials: true,
             })
             .then(response => {
             })
@@ -50,7 +49,6 @@ function Setting() {
                     headers: {
                         Authorization: localStorage.getItem('Authorization'),
                     },
-                    withCredentials: true,
                 }
             );
             navigate("/main");

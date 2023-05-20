@@ -16,7 +16,6 @@ function Update() {
                 headers: {
                     Authorization: localStorage.getItem('Authorization'),
                 },
-                withCredentials: true,
             })
             .then(response => {
             })
@@ -40,7 +39,6 @@ function Update() {
             headers: {
                 Authorization: localStorage.getItem('Authorization'),
             },
-            withCredentials: true,
         })
             .then((response) => {
                 setShowAlert(true);
