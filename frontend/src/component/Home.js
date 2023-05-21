@@ -10,9 +10,9 @@ function Home() {
         axios
             .get('https://send-quiz.store/api/member', {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then(response => {
                 navigate("/main");

@@ -14,9 +14,9 @@ function Update() {
         axios
             .get('https://send-quiz.store/api/member', {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then(response => {
             })
@@ -38,9 +38,9 @@ function Update() {
     const handleUpdateClick = () => {
         axios.patch('https://send-quiz.store/api/member', { nickname, password }, {
             headers: {
-                Authorization: localStorage.getItem('Authorization'),
+                Access_token: localStorage.getItem('Access_token'),
+                Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
             },
-            withCredentials: true
         })
             .then((response) => {
                 setShowAlert(true);

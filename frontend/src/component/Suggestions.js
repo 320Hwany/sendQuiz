@@ -14,13 +14,14 @@ function Suggestions() {
         axios
             .get('https://send-quiz.store/api/member', {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then(response => {
                 if (response.data.accessToken != null) {
-                    localStorage.setItem("Authorization", response.data.accessToken);
+                    localStorage.setItem("Access_token", response.data.accessToken);
+                    localStorage.setItem("Refresh_token_idx", response.data.refreshTokenId);
                 }
             })
             .catch(error => {
@@ -33,9 +34,9 @@ function Suggestions() {
         axios
             .post('https://send-quiz.store/api/suggestions', { contents }, {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then((res) => {
                 setShowAlert(true);

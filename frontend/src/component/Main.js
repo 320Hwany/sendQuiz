@@ -18,13 +18,14 @@ function Main() {
         axios
             .get('https://send-quiz.store/api/member', {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then(response => {
                 if (response.data.accessToken != null) {
-                    localStorage.setItem("Authorization", response.data.accessToken);
+                    localStorage.setItem("Access_token", response.data.accessToken);
+                    localStorage.setItem("Refresh_token_idx", response.data.refreshTokenId);
                 }
                 setNickname(response.data.nickname);
             })
@@ -37,9 +38,9 @@ function Main() {
         axios
             .get('https://send-quiz.store/api/quizFilter', {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
                 },
-                withCredentials: true
             })
             .then(response => {
                 setNetwork(response.data.network);
@@ -57,12 +58,13 @@ function Main() {
     const handleLogout = () => {
         axios.post('https://send-quiz.store/api/logout', null,{
             headers: {
-                Authorization: localStorage.getItem('Authorization'),
+                Access_token: localStorage.getItem('Access_token'),
+                Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
             },
-            withCredentials: true
         })
             .then(response => {
-                localStorage.removeItem('Authorization');
+                localStorage.removeItem('Access_token');
+                localStorage.removeItem('Refresh_token_idx');
                 navigate("/");
             })
             .catch(error => {
