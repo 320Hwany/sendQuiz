@@ -15,10 +15,13 @@ function Delete() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
+                if (response.data.accessToken != null) {
+                    localStorage.setItem("Access_token", response.data.accessToken);
+                }
             })
             .catch(error => {
                 navigate("/");
@@ -39,7 +42,7 @@ function Delete() {
         axios.post('https://send-quiz.store/api/withdrawal', { password, passwordCheck }, {
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
-                Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                Refresh_token: localStorage.getItem('Refresh_token'),
             },
         })
             .then((response) => {

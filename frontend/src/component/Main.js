@@ -19,13 +19,12 @@ function Main() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
                 if (response.data.accessToken != null) {
                     localStorage.setItem("Access_token", response.data.accessToken);
-                    localStorage.setItem("Refresh_token_idx", response.data.refreshTokenId);
                 }
                 setNickname(response.data.nickname);
             })
@@ -39,7 +38,7 @@ function Main() {
             .get('https://send-quiz.store/api/quizFilter', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
@@ -59,12 +58,12 @@ function Main() {
         axios.post('https://send-quiz.store/api/logout', null,{
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
-                Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                Refresh_token: localStorage.getItem('Refresh_token'),
             },
         })
             .then(response => {
                 localStorage.removeItem('Access_token');
-                localStorage.removeItem('Refresh_token_idx');
+                localStorage.removeItem('Refresh_token');
                 navigate("/");
             })
             .catch(error => {

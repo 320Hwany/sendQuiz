@@ -17,9 +17,9 @@ function QuizUpdate() {
         axios
             .patch('https://send-quiz.store/api/quiz', { quizId, subject, problem, answer }, {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
-                withCredentials: true,
             })
             .then((res) => {
                 alert('저장에 성공했습니다');

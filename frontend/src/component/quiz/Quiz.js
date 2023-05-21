@@ -9,16 +9,15 @@ function Quiz() {
     const [subject, setSubject] = useState('');
     const [problem, setProblem] = useState('');
     const [answer, setAnswer] = useState('');
-    const navigate = useNavigate();
 
     const saveQuiz = (e) => {
         e.preventDefault();
         axios
             .post('https://send-quiz.store/api/quiz', { subject, problem, answer }, {
                 headers: {
-                    Authorization: localStorage.getItem('Authorization'),
+                    Access_token: localStorage.getItem('Access_token'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
-                withCredentials: true,
             })
             .then((res) => {
                 alert('저장에 성공했습니다');

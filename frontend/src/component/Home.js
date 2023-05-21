@@ -11,7 +11,7 @@ function Home() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token_idx: localStorage.getItem('Refresh_token_idx'),
+                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
