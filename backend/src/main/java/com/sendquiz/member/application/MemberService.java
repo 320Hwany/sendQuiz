@@ -78,11 +78,11 @@ public class MemberService {
             if (optionalJwtRefreshToken.isPresent()) {
                 JwtRefreshToken jwtRefreshTokenPS = optionalJwtRefreshToken.get();
                 jwtRefreshTokenPS.update(refreshToken);
-                return toJwtResponse(accessToken, passwordEncoder.encode(String.valueOf(jwtRefreshToken.getId())));
+                return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
             }
 
             jwtRepository.save(jwtRefreshToken);
-            return toJwtResponse(accessToken, passwordEncoder.encode(String.valueOf(jwtRefreshToken.getId())));
+            return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
         }
         throw new MemberNotMatchException();
     }

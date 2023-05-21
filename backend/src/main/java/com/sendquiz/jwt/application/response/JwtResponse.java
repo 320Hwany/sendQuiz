@@ -8,18 +8,18 @@ public class JwtResponse {
 
     private final String accessToken;
 
-    private final String refreshTokenId;
+    private final String refreshToken;
 
     @Builder
-    private JwtResponse(String accessToken, String refreshTokenId) {
+    private JwtResponse(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
-        this.refreshTokenId = refreshTokenId;
+        this.refreshToken = refreshToken;
     }
 
-    public static JwtResponse toJwtResponse(String accessToken, String refreshTokenId) {
+    public static JwtResponse toJwtResponse(String accessToken, String refreshToken) {
         return JwtResponse.builder()
                 .accessToken(accessToken)
-                .refreshTokenId(refreshTokenId)
+                .refreshToken(refreshToken)
                 .build();
     }
 }
