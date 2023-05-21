@@ -31,28 +31,17 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private String refreshToken;
-
     @Builder
-    private Member(String email, String nickname, String password, Role role, String refreshToken) {
+    private Member(String email, String nickname, String password, Role role) {
         this.email = email;
         this.nickname = nickname;
         this.password = password;
         this.role = role;
-        this.refreshToken = refreshToken;
     }
 
     public void update(MemberUpdate memberUpdate, PasswordEncoder passwordEncoder) {
         this.nickname = memberUpdate.getNickname();
         this.password = passwordEncoder.encode(memberUpdate.getPassword());
-    }
-
-    public void updateRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
-
-    public void deleteRefreshToken() {
-        this.refreshToken = null;
     }
 
     public void updateToTemporaryPassword(String temporaryPassword, PasswordEncoder passwordEncoder) {

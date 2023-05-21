@@ -4,6 +4,8 @@ import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.jwt.application.response.JwtResponse;
+import com.sendquiz.jwt.domain.JwtRefreshToken;
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.presentation.request.MemberDelete;
@@ -16,7 +18,6 @@ import com.sendquiz.member.exception.PasswordNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,7 @@ import java.util.Optional;
 
 import static com.sendquiz.jwt.application.JwtService.*;
 import static com.sendquiz.jwt.application.response.JwtResponse.toJwtResponse;
+import static com.sendquiz.jwt.domain.JwtRefreshToken.toEntity;
 
 
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final CertificationRepository certificationRepository;
     private final QuizFilterRepository quizFilterRepository;
+    private final JwtRepository jwtRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -64,22 +67,30 @@ public class MemberService {
     }
 
     @Transactional
-    public JwtResponse login(MemberLogin memberLogin, HttpServletResponse response) {
+    public JwtResponse login(MemberLogin memberLogin) {
         Member member = memberRepository.getByEmail(memberLogin.getEmail());
         if (passwordEncoder.matches(memberLogin.getPassword(), member.getPassword())) {
             String accessToken = getAccessToken(member.getId());
             String refreshToken = getRefreshToken(member.getId());
-            member.updateRefreshToken(refreshToken);
-            makeCookie(response, refreshToken);
-            return toJwtResponse(accessToken);
+            JwtRefreshToken jwtRefreshToken = toEntity(refreshToken, member.getId());
+            Optional<JwtRefreshToken> optionalJwtRefreshToken = jwtRepository.findByMemberId(member.getId());
+
+            if (optionalJwtRefreshToken.isPresent()) {
+                JwtRefreshToken jwtRefreshTokenPS = optionalJwtRefreshToken.get();
+                jwtRefreshTokenPS.update(refreshToken);
+                return toJwtResponse(accessToken, passwordEncoder.encode(String.valueOf(jwtRefreshToken.getId())));
+            }
+
+            jwtRepository.save(jwtRefreshToken);
+            return toJwtResponse(accessToken, passwordEncoder.encode(String.valueOf(jwtRefreshToken.getId())));
         }
         throw new MemberNotMatchException();
     }
 
     @Transactional
     public void logout(MemberSession memberSession) {
-        Member member = memberRepository.getById(memberSession.getId());
-        member.deleteRefreshToken();
+        JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(memberSession.getId());
+        jwtRepository.delete(jwtRefreshToken);
     }
 
     @Transactional
@@ -95,8 +106,10 @@ public class MemberService {
             QuizFilter quizFilter = optionalQuizFilter.get();
             quizFilterRepository.delete(quizFilter);
         }
+
         memberRepository.delete(member);
-        member.deleteRefreshToken();
+        JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(memberSession.getId());
+        jwtRepository.delete(jwtRefreshToken);
     }
 
     @Transactional

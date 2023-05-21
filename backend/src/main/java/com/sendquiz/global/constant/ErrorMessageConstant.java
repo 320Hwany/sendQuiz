@@ -20,10 +20,6 @@ public class ErrorMessageConstant {
 
     public static final String MEMBER_NOT_FOUND_MESSAGE = "해당 이메일로 회원을 찾을 수 없습니다";
 
-    public static final String COOKIE_NOT_FOUND_MESSAGE = "쿠키가 존재하지 않습니다";
-
-    public static final String REFRESH_TOKEN_NOT_FOUND_MESSAGE = "쿠키에 Refresh Token이 존재하지 않습니다";
-
     public static final String CERTIFICATION_NOT_MATCH_MESSAGE = "인증번호가 일치하지 않습니다";
 
     public static final String REFRESH_TOKEN_NOT_MATCH_MESSAGE = "Refresh Token이 일치하지 않습니다";
@@ -31,6 +27,8 @@ public class ErrorMessageConstant {
     public static final String JWS_NOT_MATCH_MESSAGE = "JWS 정보를 확인해주세요";
 
     public static final String ACCESS_TOKEN_AUTHENTICATION = "AccessToken이 없어 로그인할 수 없습니다";
+
+    public static final String REFRESH_TOKEN_AUTHENTICATION = "RefreshToken이 없어 로그인할 수 없습니다";
 
     public static final String SUBJECT_NOT_MATCH_MESSAGE = "해당 과목에 대한 요청을 처리할 수 없습니다";
 

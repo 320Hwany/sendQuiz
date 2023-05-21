@@ -35,8 +35,6 @@ public class QMember extends EntityPathBase<Member> {
 
     public final StringPath password = createString("password");
 
-    public final StringPath refreshToken = createString("refreshToken");
-
     public final EnumPath<com.sendquiz.global.eumtype.Role> role = createEnum("role", com.sendquiz.global.eumtype.Role.class);
 
     public QMember(String variable) {

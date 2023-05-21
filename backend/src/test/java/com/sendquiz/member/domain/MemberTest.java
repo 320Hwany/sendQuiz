@@ -34,34 +34,4 @@ class MemberTest {
         assertThat(member.getNickname()).isEqualTo("update nickname");
         assertThat(passwordEncoder.matches(memberUpdate.getPassword(), member.getPassword())).isTrue();
      }
-
-    @Test
-    @DisplayName("회원의 로그인 유지를 위한 refreshToken을 업데이트합니다")
-    void updateRefreshToken() {
-        // given
-        Member member = Member.builder()
-                .refreshToken("before update")
-                .build();
-
-        // when
-        member.updateRefreshToken("after update");
-
-        // then
-        assertThat(member.getRefreshToken()).isEqualTo("after update");
-    }
-
-    @Test
-    @DisplayName("회원의 로그인을 유지를 위한 refreshToken을 삭제합니다")
-    void deleteRefreshToken() {
-        // given
-        Member member = Member.builder()
-                .refreshToken("refresh token")
-                .build();
-
-        // when
-        member.deleteRefreshToken();
-
-        // then
-        assertThat(member.getRefreshToken()).isNull();
-    }
 }

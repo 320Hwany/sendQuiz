@@ -1,5 +1,6 @@
 package com.sendquiz.global.config;
 
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,7 @@ import java.util.List;
 public class WebMvcConfig implements WebMvcConfigurer {
 
     private final MemberRepository memberRepository;
+    private final JwtRepository jwtRepository;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -25,7 +27,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new MemberArgumentResolver(memberRepository));
-        resolvers.add(new AdminArgumentResolver(memberRepository));
+        resolvers.add(new MemberArgumentResolver(memberRepository, jwtRepository));
+        resolvers.add(new AdminArgumentResolver(memberRepository, jwtRepository));
     }
 }

@@ -3,6 +3,8 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.jwt.domain.JwtRefreshToken;
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.presentation.request.MemberDelete;
@@ -48,6 +50,9 @@ class MemberServiceUnitTest {
 
     @Mock
     private QuizFilterRepository quizFilterRepository;
+
+    @Mock
+    private JwtRepository jwtRepository;
 
     @Mock
     private PasswordEncoder passwordEncoder;
@@ -189,7 +194,7 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         // then
-        assertThatThrownBy(() -> memberService.login(memberLogin, new MockHttpServletResponse()))
+        assertThatThrownBy(() -> memberService.login(memberLogin))
                 .isInstanceOf(MemberNotMatchException.class);
     }
 
@@ -199,18 +204,18 @@ class MemberServiceUnitTest {
         // given
         MemberSession memberSession = MemberSession.builder().build();
 
-        Member member = Member.builder()
-                .refreshToken("refreshToken")
+        JwtRefreshToken refreshToken = JwtRefreshToken.builder()
+                .refreshToken("refresh token")
                 .build();
 
         // stub
-        when(memberRepository.getById(any())).thenReturn(member);
+        when(jwtRepository.getByMemberId(any())).thenReturn(refreshToken);
 
         // when
         memberService.logout(memberSession);
 
         // then
-        assertThat(member.getRefreshToken()).isNull();
+        verify(jwtRepository, times(1)).delete(any());
     }
 
     @Test

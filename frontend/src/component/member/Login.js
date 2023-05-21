@@ -17,7 +17,8 @@ function Login() {
         axios
             .post('https://send-quiz.store/api/login', { email, password })
             .then((res) => {
-                localStorage.setItem("Authorization", res.data.accessToken);
+                localStorage.setItem("Access_token", res.data.accessToken);
+                localStorage.setItem("Refresh_token_idx", res.data.refreshTokenId);
                 navigate('/main');
             })
             .catch((err) => {

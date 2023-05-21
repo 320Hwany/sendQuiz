@@ -33,9 +33,8 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> login(@RequestBody MemberLogin memberLogin,
-                                             HttpServletResponse response) {
-        JwtResponse jwtResponse = memberService.login(memberLogin, response);
+    public ResponseEntity<JwtResponse> login(@RequestBody MemberLogin memberLogin) {
+        JwtResponse jwtResponse = memberService.login(memberLogin);
         return ResponseEntity.ok(jwtResponse);
     }
 

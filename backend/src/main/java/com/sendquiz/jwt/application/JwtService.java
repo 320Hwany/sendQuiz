@@ -27,7 +27,7 @@ public class JwtService {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_30_MINUTES))
+                .setExpiration(new Date(AFTER_ONE_HOUR))
                 .signWith(accessTokenKey)
                 .compact();
     }
@@ -40,19 +40,6 @@ public class JwtService {
                 .setExpiration(new Date(AFTER_ONE_MONTH))
                 .signWith(refreshTokenKey)
                 .compact();
-    }
-
-    public static void makeCookie(HttpServletResponse response, String refreshToken) {
-        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
-                .maxAge(Duration.ofDays(30))
-                .path("/")
-                .httpOnly(true)
-                .secure(true)
-                .domain(SERVER_DOMAIN)
-                .sameSite(SAME_SITE_NONE)
-                .build();
-
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
     }
 
     public static MemberResponse getMemberResponse(MemberSession memberSession) {

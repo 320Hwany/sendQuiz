@@ -2,6 +2,7 @@ package com.sendquiz.member.application;
 
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.jwt.application.response.JwtResponse;
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.presentation.request.MemberLogin;
 import com.sendquiz.member.repository.MemberRepository;
@@ -25,7 +26,7 @@ public class MemberServiceIntegrationTest {
     private MemberRepository memberRepository;
 
     @Autowired
-    private CertificationRepository certificationRepository;
+    protected JwtRepository jwtRepository;
 
     @Autowired
     protected PasswordEncoder passwordEncoder;
@@ -49,7 +50,7 @@ public class MemberServiceIntegrationTest {
         ReflectionTestUtils.setField(member, "id", 1L);
 
         // when
-        JwtResponse jwtResponse = memberService.login(memberLogin, new MockHttpServletResponse());
+        JwtResponse jwtResponse = memberService.login(memberLogin);
 
         // then
         assertThat(jwtResponse.getAccessToken()).isNotBlank();

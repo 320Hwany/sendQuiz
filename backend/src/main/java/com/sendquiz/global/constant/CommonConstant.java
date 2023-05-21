@@ -22,7 +22,9 @@ public class CommonConstant {
 
     public static final String TEMPORARY_PASSWORD = "temporaryPassword";
 
-    public static final String AUTHORIZATION = "Authorization";
+    public static final String ACCESS_TOKEN = "Access_token";
+
+    public static final String REFRESH_TOKEN_IDX = "Refresh_token_idx";
 
     public static final String REFRESH_TOKEN = "refreshToken";
 
@@ -31,8 +33,6 @@ public class CommonConstant {
     public static final String SERVER_DOMAIN = "send-quiz.store";
 
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
-
-    public static final Long AFTER_30_MINUTES = System.currentTimeMillis() + 1800_000L;
 
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
 

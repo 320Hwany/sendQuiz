@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -28,7 +29,7 @@ class QuizFilterControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(MockMvcRequestBuilders.post("/api/quizFilter")
-                        .header("Authorization", accessToken)
+                        .header(ACCESS_TOKEN, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated());

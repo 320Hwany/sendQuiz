@@ -1,6 +1,7 @@
 package com.sendquiz.util;
 
 import com.sendquiz.global.eumtype.Subject;
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz.domain.Quiz;
@@ -23,6 +24,9 @@ public class RepositoryTest {
 
     @Autowired
     protected QuizFilterRepository quizFilterRepository;
+
+    @Autowired
+    protected JwtRepository jwtRepository;
 
     protected Member saveMemberInRepository() {
         Member member = Member.builder()

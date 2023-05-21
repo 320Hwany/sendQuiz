@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.global.eumtype.Role;
+import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.application.MemberService;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.presentation.request.MemberLogin;
@@ -37,6 +38,9 @@ public class ControllerTest {
 
     @Autowired
     protected CertificationRepository certificationRepository;
+
+    @Autowired
+    protected JwtRepository jwtRepository;
 
     @Autowired
     protected PasswordEncoder passwordEncoder;

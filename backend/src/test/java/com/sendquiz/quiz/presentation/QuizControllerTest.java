@@ -7,6 +7,7 @@ import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -31,7 +32,7 @@ class QuizControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(post("/api/quiz")
-                        .header("Authorization", accessToken)
+                        .header(ACCESS_TOKEN, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated());
@@ -54,7 +55,7 @@ class QuizControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(post("/api/quiz")
-                        .header("Authorization", accessToken)
+                        .header(ACCESS_TOKEN, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
