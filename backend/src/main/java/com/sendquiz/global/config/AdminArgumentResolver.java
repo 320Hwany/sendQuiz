@@ -6,7 +6,6 @@ import com.sendquiz.jwt.exception.*;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -14,7 +13,6 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -72,12 +70,11 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     private AdminSession getAdminSessionFromRefreshJws(byte[] decodedKey, NativeWebRequest webRequest) {
         try {
-            String refreshJws = webRequest.getHeader(REFRESH_TOKEN_IDX);
+            String refreshJws = webRequest.getHeader(REFRESH_TOKEN);
             Jws<Claims> claims = getClaimsRefreshToken(refreshJws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
-
             if (refreshJws.equals(jwtRefreshToken.getRefreshToken())) {
                 return toAdminSession(member);
             }

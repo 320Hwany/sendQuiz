@@ -24,9 +24,7 @@ public class CommonConstant {
 
     public static final String ACCESS_TOKEN = "Access_token";
 
-    public static final String REFRESH_TOKEN_IDX = "Refresh_token_idx";
-
-    public static final String REFRESH_TOKEN = "refreshToken";
+    public static final String REFRESH_TOKEN = "Refresh_token";
 
     public static final String SAME_SITE_NONE = "None";
 

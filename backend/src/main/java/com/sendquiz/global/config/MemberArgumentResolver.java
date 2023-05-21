@@ -73,14 +73,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private MemberSession getMemberSessionFromRefreshJws(byte[] decodedKey, NativeWebRequest webRequest) {
         try {
-            String refreshTokenIdx = webRequest.getHeader(REFRESH_TOKEN_IDX);
-            assert refreshTokenIdx != null;
-            JwtRefreshToken jwtRefreshToken = jwtRepository.getById(Long.valueOf(refreshTokenIdx));
-            String refreshJws = jwtRefreshToken.getRefreshToken();
+            String refreshJws = webRequest.getHeader(REFRESH_TOKEN);
             Jws<Claims> claims = getClaimsRefreshToken(refreshJws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
-
+            JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
             if (refreshJws.equals(jwtRefreshToken.getRefreshToken())) {
                 return toMemberSession(member, true);
             }
