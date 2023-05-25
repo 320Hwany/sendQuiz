@@ -24,6 +24,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.constant.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
@@ -71,7 +72,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
-            throw new AccessTokenAuthenticationException();
+            throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }
     }
 

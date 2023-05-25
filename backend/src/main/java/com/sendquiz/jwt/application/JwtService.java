@@ -60,6 +60,7 @@ public class JwtService {
                 .path("/")
                 .httpOnly(true)
                 .secure(true)
+                .sameSite(SAME_SITE_NONE)
                 .build();
 
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
