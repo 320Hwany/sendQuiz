@@ -22,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("*")
                 .allowCredentials(true)
-                .allowedOrigins("https://api.send-quiz.vercel.app");
+                .allowedOrigins("https://api.send-quiz.store");
     }
 
     @Override
