@@ -44,24 +44,27 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
+        String accessJws = webRequest.getHeader(ACCESS_TOKEN);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        return getMemberSessionFromAccessJws(decodedKey, webRequest);
+        return getMemberSessionFromAccessJws(accessJws, decodedKey, webRequest);
     }
 
-    private MemberSession getMemberSessionFromAccessJws(byte[] decodedKey, NativeWebRequest webRequest) {
+    private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
         try {
-            String accessJws = webRequest.getHeader(ACCESS_TOKEN);
-            Jws<Claims> claims = getClaimsAccessToken(accessJws, decodedKey);
+            Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
             return toMemberSession(member, false);
 
         } catch (JwtException e) {
-            return getMemberSessionFromRefreshJws(decodedKey, webRequest);
+            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
+            Cookie[] cookies = getCookies(request);
+            String refreshJws = getRefreshJws(cookies);
+            return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
     }
 
-    private static Jws<Claims> getClaimsAccessToken(String jws, byte[] decodedKey) {
+    private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
         try {
             return Jwts.parserBuilder()
                     .setSigningKey(decodedKey)
@@ -72,40 +75,34 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         }
     }
 
-    private MemberSession getMemberSessionFromRefreshJws(byte[] decodedKey, NativeWebRequest webRequest) {
-        try {
-            HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
-            if (request.getCookies() == null) {
-                throw new CookieExpiredException();
-            }
-            Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(REFRESH_TOKEN)) {
-                    String refreshToken = cookie.getValue();
-                    Jws<Claims> claims = getClaimsRefreshToken(refreshToken, decodedKey);
-                    String memberId = claims.getBody().getSubject();
-                    Member member = memberRepository.getById(Long.valueOf(memberId));
-                    JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
-                    if (refreshToken.equals(jwtRefreshToken.getRefreshToken())) {
-                        return toMemberSession(member, true);
-                    }
-                    throw new RefreshTokenNotMatchException();
-                }
-            }
+    private static Cookie[] getCookies(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
             throw new CookieExpiredException();
-        } catch (JwtException e) {
-            throw new JwsNotMatchException();
         }
+        return cookies;
     }
 
-    private static Jws<Claims> getClaimsRefreshToken(String jws, byte[] decodedKey) {
-        try {
-            return Jwts.parserBuilder()
-                    .setSigningKey(decodedKey)
-                    .build()
-                    .parseClaimsJws(jws);
-        } catch (IllegalArgumentException e) {
+    private static String getRefreshJws(Cookie[] cookies) {
+        String refreshJws = cookies[0].getValue();
+        if (refreshJws == null || refreshJws.equals("")) {
             throw new RefreshTokenAuthenticationException();
+        }
+        return refreshJws;
+    }
+
+    private MemberSession getMemberSessionFromRefreshJws(String jws, byte[] decodedKey) {
+        try {
+            Jws<Claims> claims = getClaims(jws, decodedKey);
+            String memberId = claims.getBody().getSubject();
+            Member member = memberRepository.getById(Long.valueOf(memberId));
+            JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
+            if (jws.equals(jwtRefreshToken.getRefreshToken())) {
+                return toMemberSession(member, true);
+            }
+            throw new RefreshTokenNotMatchException();
+        } catch (JwtException e) {
+            throw new JwsNotMatchException();
         }
     }
 }

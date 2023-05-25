@@ -32,6 +32,8 @@ public class CommonConstant {
 
     public static final Long AFTER_ONE_HOUR = System.currentTimeMillis() + 3600_000L;
 
+    public static final Long AFTER_20_MINUTES = System.currentTimeMillis() + 1200_000L;
+
     public static final Long AFTER_ONE_MONTH = System.currentTimeMillis() + 2_592_000_000L;
 
     public static final int ONE_DAY = 86400000;
