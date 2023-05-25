@@ -14,6 +14,9 @@ function Home() {
                 },
             })
             .then(response => {
+                if (response.data.accessToken != null) {
+                    localStorage.setItem("Access_token", response.data.accessToken);
+                }
                 navigate("/main");
             })
             .catch(error => {

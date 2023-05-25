@@ -80,11 +80,12 @@ public class MemberService {
             if (optionalJwtRefreshToken.isPresent()) {
                 JwtRefreshToken jwtRefreshTokenPS = optionalJwtRefreshToken.get();
                 jwtRefreshTokenPS.update(refreshToken);
+                makeCookie(response, refreshToken);
                 return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
             }
 
-            jwtRepository.save(jwtRefreshToken);
             makeCookie(response, refreshToken);
+            jwtRepository.save(jwtRefreshToken);
             return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
         }
         throw new MemberNotMatchException();

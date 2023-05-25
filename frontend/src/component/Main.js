@@ -40,6 +40,9 @@ function Main() {
                 },
             })
             .then(response => {
+                if (response.data.accessToken != null) {
+                    localStorage.setItem("Access_token", response.data.accessToken);
+                }
                 setNetwork(response.data.network);
                 setDatabase(response.data.database);
                 setOS(response.data.os);
