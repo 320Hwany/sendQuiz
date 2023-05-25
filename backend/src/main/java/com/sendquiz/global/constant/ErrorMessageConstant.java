@@ -12,6 +12,8 @@ public class ErrorMessageConstant {
 
     public static final String MEMBER_AUTHENTICATION_MESSAGE = "로그인 후 이용해주세요";
 
+    public static final String COOKIE_EXPIRED_MESSAGE = "쿠키가 만료되었습니다";
+
     public static final String ADMIN_AUTHENTICATION_MESSAGE = "관리자로 로그인 후 이용해주세요";
 
     public static final String MEMBER_NOT_MATCH_MESSAGE = "이메일/비밀번호가 일치하지 않습니다";

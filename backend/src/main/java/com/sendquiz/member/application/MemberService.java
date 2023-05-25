@@ -3,6 +3,7 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.jwt.application.JwtService;
 import com.sendquiz.jwt.application.response.JwtResponse;
 import com.sendquiz.jwt.domain.JwtRefreshToken;
 import com.sendquiz.jwt.repository.JwtRepository;
@@ -18,6 +19,7 @@ import com.sendquiz.member.exception.PasswordNotMatchException;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,7 +69,7 @@ public class MemberService {
     }
 
     @Transactional
-    public JwtResponse login(MemberLogin memberLogin) {
+    public JwtResponse login(MemberLogin memberLogin, HttpServletResponse response) {
         Member member = memberRepository.getByEmail(memberLogin.getEmail());
         if (passwordEncoder.matches(memberLogin.getPassword(), member.getPassword())) {
             String accessToken = getAccessToken(member.getId());
@@ -82,6 +84,7 @@ public class MemberService {
             }
 
             jwtRepository.save(jwtRefreshToken);
+            makeCookie(response, refreshToken);
             return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
         }
         throw new MemberNotMatchException();

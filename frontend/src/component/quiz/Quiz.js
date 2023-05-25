@@ -16,7 +16,6 @@ function Quiz() {
             .post('https://send-quiz.store/api/quiz', { subject, problem, answer }, {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then((res) => {

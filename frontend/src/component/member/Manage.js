@@ -11,7 +11,6 @@ function Manage() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {

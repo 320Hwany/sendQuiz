@@ -18,7 +18,6 @@ function Login() {
             .post('https://send-quiz.store/api/login', { email, password })
             .then((res) => {
                 localStorage.setItem("Access_token", res.data.accessToken);
-                localStorage.setItem("Refresh_token", res.data.refreshToken);
                 navigate('/main');
             })
             .catch((err) => {

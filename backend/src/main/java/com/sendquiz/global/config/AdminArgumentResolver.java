@@ -6,11 +6,14 @@ import com.sendquiz.jwt.exception.*;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
+import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -70,15 +73,25 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     private AdminSession getAdminSessionFromRefreshJws(byte[] decodedKey, NativeWebRequest webRequest) {
         try {
-            String refreshJws = webRequest.getHeader(REFRESH_TOKEN);
-            Jws<Claims> claims = getClaimsRefreshToken(refreshJws, decodedKey);
-            String memberId = claims.getBody().getSubject();
-            Member member = memberRepository.getById(Long.valueOf(memberId));
-            JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
-            if (refreshJws.equals(jwtRefreshToken.getRefreshToken())) {
-                return toAdminSession(member);
+            HttpServletRequest request = webRequest.getNativeRequest(HttpServletRequest.class);
+            if (request.getCookies() == null) {
+                throw new CookieExpiredException();
             }
-            throw new RefreshTokenNotMatchException();
+            Cookie[] cookies = request.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals(REFRESH_TOKEN)) {
+                    String refreshToken = cookie.getValue();
+                    Jws<Claims> claims = getClaimsRefreshToken(refreshToken, decodedKey);
+                    String memberId = claims.getBody().getSubject();
+                    Member member = memberRepository.getById(Long.valueOf(memberId));
+                    JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
+                    if (refreshToken.equals(jwtRefreshToken.getRefreshToken())) {
+                        return toAdminSession(member);
+                    }
+                    throw new RefreshTokenNotMatchException();
+                }
+            }
+            throw new CookieExpiredException();
         } catch (JwtException e) {
             throw new JwsNotMatchException();
         }

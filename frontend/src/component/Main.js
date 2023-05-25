@@ -19,7 +19,6 @@ function Main() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
@@ -38,7 +37,6 @@ function Main() {
             .get('https://send-quiz.store/api/quizFilter', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
@@ -58,12 +56,10 @@ function Main() {
         axios.post('https://send-quiz.store/api/logout', null,{
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
-                Refresh_token: localStorage.getItem('Refresh_token'),
             },
         })
             .then(response => {
                 localStorage.removeItem('Access_token');
-                localStorage.removeItem('Refresh_token');
                 navigate("/");
             })
             .catch(error => {

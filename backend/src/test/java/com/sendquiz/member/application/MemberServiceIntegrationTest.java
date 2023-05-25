@@ -50,7 +50,7 @@ public class MemberServiceIntegrationTest {
         ReflectionTestUtils.setField(member, "id", 1L);
 
         // when
-        JwtResponse jwtResponse = memberService.login(memberLogin);
+        JwtResponse jwtResponse = memberService.login(memberLogin, new MockHttpServletResponse());
 
         // then
         assertThat(jwtResponse.getAccessToken()).isNotBlank();

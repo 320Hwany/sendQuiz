@@ -194,7 +194,7 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         // then
-        assertThatThrownBy(() -> memberService.login(memberLogin))
+        assertThatThrownBy(() -> memberService.login(memberLogin, new MockHttpServletResponse()))
                 .isInstanceOf(MemberNotMatchException.class);
     }
 

@@ -15,7 +15,6 @@ function Update() {
             .get('https://send-quiz.store/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
-                    Refresh_token: localStorage.getItem('Refresh_token'),
                 },
             })
             .then(response => {
@@ -42,7 +41,6 @@ function Update() {
         axios.patch('https://send-quiz.store/api/member', { nickname, password }, {
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
-                Refresh_token: localStorage.getItem('Refresh_token'),
             },
         })
             .then((response) => {

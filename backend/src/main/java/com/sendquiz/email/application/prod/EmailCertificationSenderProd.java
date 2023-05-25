@@ -50,6 +50,7 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
         return UUID.randomUUID().toString().substring(0,8);
     }
 
+    @Transactional
     public void saveCertificationNum(String toEmail, String certificationNum) {
         if (certificationRepository.findByEmail(toEmail).isEmpty()) {
             Certification certification = toCertification(toEmail, certificationNum);
