@@ -8,18 +8,15 @@ public class JwtResponse {
 
     private final String accessToken;
 
-    private final String refreshToken;
 
     @Builder
-    private JwtResponse(String accessToken, String refreshToken) {
+    private JwtResponse(String accessToken) {
         this.accessToken = accessToken;
-        this.refreshToken = refreshToken;
     }
 
-    public static JwtResponse toJwtResponse(String accessToken, String refreshToken) {
+    public static JwtResponse toJwtResponse(String accessToken) {
         return JwtResponse.builder()
                 .accessToken(accessToken)
-                .refreshToken(refreshToken)
                 .build();
     }
 }

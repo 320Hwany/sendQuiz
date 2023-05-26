@@ -317,7 +317,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(ACCESS_TOKEN_AUTHENTICATION));
+                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED_MESSAGE));
     }
 
     @Test
@@ -386,6 +386,6 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(ACCESS_TOKEN_AUTHENTICATION));
+                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED_MESSAGE));
     }
 }

@@ -81,12 +81,12 @@ public class MemberService {
                 JwtRefreshToken jwtRefreshTokenPS = optionalJwtRefreshToken.get();
                 jwtRefreshTokenPS.update(refreshToken);
                 makeCookie(response, refreshToken);
-                return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
+                return toJwtResponse(accessToken);
             }
 
             makeCookie(response, refreshToken);
             jwtRepository.save(jwtRefreshToken);
-            return toJwtResponse(accessToken, jwtRefreshToken.getRefreshToken());
+            return toJwtResponse(accessToken);
         }
         throw new MemberNotMatchException();
     }
