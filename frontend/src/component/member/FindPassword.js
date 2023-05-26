@@ -23,7 +23,7 @@ function FindPassword() {
             return;
         }
         setShowAlert(true);
-        axios.post('https://send-quiz.store/api/email/password', params,{
+        axios.post('/api/email/password', params,{
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }

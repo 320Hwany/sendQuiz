@@ -15,7 +15,7 @@ function QuizUpdate() {
     const updateQuiz = (e) => {
         e.preventDefault();
         axios
-            .patch('https://send-quiz.store/api/quiz', { quizId, subject, problem, answer }, {
+            .patch('/api/quiz', { quizId, subject, problem, answer }, {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },

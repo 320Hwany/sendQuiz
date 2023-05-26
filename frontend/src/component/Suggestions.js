@@ -12,7 +12,7 @@ function Suggestions() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/member', {
+            .get('/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
@@ -31,7 +31,7 @@ function Suggestions() {
     const saveSuggestions = (e) => {
         e.preventDefault();
         axios
-            .post('https://send-quiz.store/api/suggestions', { contents }, {
+            .post('/api/suggestions', { contents }, {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },

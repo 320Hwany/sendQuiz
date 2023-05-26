@@ -13,7 +13,7 @@ function Quiz() {
     const saveQuiz = (e) => {
         e.preventDefault();
         axios
-            .post('https://send-quiz.store/api/quiz', { subject, problem, answer }, {
+            .post('/api/quiz', { subject, problem, answer }, {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },

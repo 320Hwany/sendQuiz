@@ -8,7 +8,7 @@ function Manage() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/member', {
+            .get('/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },

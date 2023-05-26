@@ -16,7 +16,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/member', {
+            .get('/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
@@ -35,7 +35,7 @@ function Main() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/quizFilter', {
+            .get('/api/quizFilter', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
@@ -57,7 +57,7 @@ function Main() {
     }, []);
 
     const handleLogout = () => {
-        axios.post('https://send-quiz.store/api/logout', null,{
+        axios.post('/api/logout', null,{
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
             },

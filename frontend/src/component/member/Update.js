@@ -12,7 +12,7 @@ function Update() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/member', {
+            .get('/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
@@ -39,7 +39,7 @@ function Update() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleUpdateClick = () => {
-        axios.patch('https://send-quiz.store/api/member', { nickname, password }, {
+        axios.patch('/api/member', { nickname, password }, {
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
             },

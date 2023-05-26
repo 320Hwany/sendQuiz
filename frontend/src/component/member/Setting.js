@@ -8,7 +8,7 @@ function Setting() {
 
     useEffect(() => {
         axios
-            .get('https://send-quiz.store/api/member', {
+            .get('/api/member', {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
@@ -47,7 +47,7 @@ function Setting() {
         event.preventDefault();
         try {
             const response = await axios.post(
-                'https://send-quiz.store/api/quizFilter',
+                '/api/quizFilter',
                 options,
                 {
                     headers: {
