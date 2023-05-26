@@ -82,12 +82,12 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            log.info("CookieExpiredException");
+            throw new CookieExpiredException();
+        }
         for (Cookie cookie : cookies) {
             log.info("cookies={}", cookie.toString());
-        }
-        if (cookies == null) {
-            log.info("CookieExpiredException={}");
-            throw new CookieExpiredException();
         }
         return cookies;
     }
