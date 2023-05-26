@@ -16,6 +16,7 @@ function Suggestions() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then(response => {
                 if (response.data.accessToken != null) {
@@ -34,6 +35,7 @@ function Suggestions() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then((res) => {
                 setShowAlert(true);

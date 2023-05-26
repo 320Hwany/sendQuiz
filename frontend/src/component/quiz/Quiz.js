@@ -17,6 +17,7 @@ function Quiz() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then((res) => {
                 alert('저장에 성공했습니다');

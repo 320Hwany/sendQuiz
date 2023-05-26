@@ -12,6 +12,7 @@ function Setting() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then(response => {
                 if (response.data.accessToken != null) {
@@ -52,6 +53,7 @@ function Setting() {
                     headers: {
                         Access_token: localStorage.getItem('Access_token'),
                     },
+                    withCredentials: true,
                 }
             );
             navigate("/main");

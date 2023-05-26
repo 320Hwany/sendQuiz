@@ -12,6 +12,7 @@ function Home() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then(response => {
                 if (response.data.accessToken != null) {

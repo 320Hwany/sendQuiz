@@ -27,7 +27,7 @@ public class JwtService {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_20_MINUTES))
+                .setExpiration(new Date(AFTER_5_MINUTES))
                 .signWith(accessTokenKey)
                 .compact();
     }

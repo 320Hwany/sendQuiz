@@ -16,6 +16,7 @@ function Delete() {
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
+                withCredentials: true,
             })
             .then(response => {
                 if (response.data.accessToken != null) {
@@ -42,6 +43,7 @@ function Delete() {
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
             },
+            withCredentials: true,
         })
             .then((response) => {
                 setShowAlert(true);
