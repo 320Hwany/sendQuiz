@@ -55,6 +55,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             return toMemberSession(member, false);
 
         } catch (JwtException e) {
+            log.info("JwtException");
             HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
@@ -69,6 +70,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
+            log.info("ACCESS_TOKEN_AUTHENTICATION");
             throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }
     }
@@ -76,6 +78,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
+            log.info("CookieExpiredException");
             throw new CookieExpiredException();
         }
         return cookies;
@@ -96,6 +99,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
             if (jws.equals(jwtRefreshToken.getRefreshToken())) {
+                log.info("getMemberSessionFromRefreshJws");
                 return toMemberSession(member, true);
             }
             throw new RefreshTokenNotMatchException();
