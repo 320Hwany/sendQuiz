@@ -56,10 +56,9 @@ public class JwtService {
     public static void makeCookie(HttpServletResponse response, String refreshToken) {
         ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
                 .maxAge(Duration.ofDays(30))
-                .domain(SERVER_DOMAIN)
                 .path("/")
-                .httpOnly(true)
-                .secure(true)
+//                .httpOnly(true)
+//                .secure(true)
                 .sameSite(SAME_SITE_NONE)
                 .build();
 
