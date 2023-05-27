@@ -21,6 +21,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.util.Arrays;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
@@ -46,7 +47,9 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
         String accessJws = webRequest.getHeader(ACCESS_TOKEN);
+        log.info(JWT_KEY);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
+        log.info(Arrays.toString(decodedKey));
         return getMemberSessionFromAccessJws(accessJws, decodedKey, webRequest);
     }
 
