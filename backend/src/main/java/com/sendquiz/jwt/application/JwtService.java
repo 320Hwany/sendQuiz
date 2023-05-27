@@ -31,7 +31,7 @@ public class JwtService {
     }
 
     private static String getToken(Long memberId, long expired) {
-        SecretKey refreshTokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
+        SecretKey tokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
         Date now = new Date();
         Date expiredDate = new Date(now.getTime() + expired);
 
@@ -40,7 +40,7 @@ public class JwtService {
                 .setSubject(String.valueOf(memberId))
                 .setIssuedAt(now)
                 .setExpiration(expiredDate)
-                .signWith(refreshTokenKey)
+                .signWith(tokenKey)
                 .compact();
     }
 
