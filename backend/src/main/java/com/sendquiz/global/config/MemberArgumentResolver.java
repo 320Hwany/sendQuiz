@@ -49,34 +49,26 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
         try {
-            log.info("decodeKey={}", decodedKey);
-            log.info("accessJws={}", jws);
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
-            log.info("getMemberSessionFromAccessJws");
             return toMemberSession(member, false);
 
         } catch (JwtException e) {
-            log.info(e.getMessage());
             HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
-            log.info("getMemberSessionFromRefreshJws");
             return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
     }
 
     private static Jws<Claims> getClaims(String jws, byte[] decodedKey) {
         try {
-            log.info("getClaims");
             return Jwts.parserBuilder()
                     .setSigningKey(decodedKey)
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
-            log.info(e.getMessage());
-            log.info("ACCESS_TOKEN_AUTHENTICATION");
             throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }
     }
@@ -84,23 +76,16 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            log.info("CookieExpiredException");
             throw new CookieExpiredException();
-        }
-        for (Cookie cookie : cookies) {
-            log.info("cookies={}", cookie.toString());
         }
         return cookies;
     }
 
     private static String getRefreshJws(Cookie[] cookies) {
         String refreshJws = cookies[0].getValue();
-        log.info("refreshJws={}", refreshJws);
         if (refreshJws == null || refreshJws.equals("")) {
-            log.info("RefreshTokenAuthenticationException");
             throw new RefreshTokenAuthenticationException();
         }
-        log.info("getRefreshJws");
         return refreshJws;
     }
 
@@ -110,15 +95,11 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
-            log.info("jwtRepository.getByMemberId");
             if (jws.equals(jwtRefreshToken.getRefreshToken())) {
-                log.info("jws.equals(jwtRefreshToken.getRefreshToken())");
                 return toMemberSession(member, true);
             }
-            log.info("RefreshTokenNotMatchException");
             throw new RefreshTokenNotMatchException();
         } catch (JwtException e) {
-            log.info("JwsNotMatchException");
             throw new JwsNotMatchException();
         }
     }

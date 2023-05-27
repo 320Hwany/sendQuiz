@@ -11,33 +11,42 @@ import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Base64;
-import java.util.Date;
 import java.util.UUID;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.presentation.response.MemberResponse.toMemberResponse;
+import static java.sql.Timestamp.*;
 
 @Service
 public class JwtService {
 
     public static String getAccessToken(Long memberId) {
         SecretKey accessTokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiredDate = now.plusHours(1);
+
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_1_MINUTES))
+                .setIssuedAt(valueOf(now))
+                .setExpiration(valueOf(expiredDate))
                 .signWith(accessTokenKey)
                 .compact();
     }
 
     public static String getRefreshToken(Long memberId) {
         SecretKey refreshTokenKey = Keys.hmacShaKeyFor(Base64.getDecoder().decode(JWT_KEY));
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime expiredDate = now.plusMonths(1);
+
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_ONE_MONTH))
+                .setIssuedAt(valueOf(now))
+                .setExpiration(valueOf(expiredDate))
                 .signWith(refreshTokenKey)
                 .compact();
     }

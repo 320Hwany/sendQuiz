@@ -16,7 +16,6 @@ function Home() {
             })
             .then(response => {
                 if (response.data.accessToken != null) {
-                    localStorage.removeItem('Access_token');
                     localStorage.setItem("Access_token", response.data.accessToken);
                 }
                 navigate("/main");
