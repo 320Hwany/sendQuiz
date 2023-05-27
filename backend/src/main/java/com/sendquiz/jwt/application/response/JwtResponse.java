@@ -8,7 +8,6 @@ public class JwtResponse {
 
     private final String accessToken;
 
-
     @Builder
     private JwtResponse(String accessToken) {
         this.accessToken = accessToken;

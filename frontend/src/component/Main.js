@@ -24,6 +24,7 @@ function Main() {
             })
             .then(response => {
                 if (response.data.accessToken != null) {
+                    localStorage.removeItem('Access_token');
                     localStorage.setItem("Access_token", response.data.accessToken);
                 }
                 setNickname(response.data.nickname);

@@ -27,7 +27,7 @@ public class JwtService {
         return Jwts.builder()
                 .setId(UUID.randomUUID().toString())
                 .setSubject(String.valueOf(memberId))
-                .setExpiration(new Date(AFTER_5_MINUTES))
+                .setExpiration(new Date(AFTER_1_MINUTES))
                 .signWith(accessTokenKey)
                 .compact();
     }
@@ -59,7 +59,7 @@ public class JwtService {
                 .path("/")
 //                .httpOnly(true)
 //                .secure(true)
-                .sameSite(SAME_SITE_NONE)
+//                .sameSite(SAME_SITE_NONE)
                 .build();
 
         response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());

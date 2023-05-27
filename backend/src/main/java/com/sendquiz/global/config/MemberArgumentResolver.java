@@ -7,10 +7,7 @@ import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +18,6 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import java.util.Arrays;
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
@@ -47,14 +43,14 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
         String accessJws = webRequest.getHeader(ACCESS_TOKEN);
-        log.info(JWT_KEY);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        log.info(Arrays.toString(decodedKey));
         return getMemberSessionFromAccessJws(accessJws, decodedKey, webRequest);
     }
 
     private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
         try {
+            log.info("decodeKey={}", decodedKey);
+            log.info("accessJws={}", jws);
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
@@ -62,6 +58,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             return toMemberSession(member, false);
 
         } catch (JwtException e) {
+            log.info(e.getMessage());
             HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
@@ -78,6 +75,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
+            log.info(e.getMessage());
             log.info("ACCESS_TOKEN_AUTHENTICATION");
             throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }

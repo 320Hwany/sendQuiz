@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import static com.sendquiz.jwt.application.JwtService.*;
 
-
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @RestController
