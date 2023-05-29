@@ -22,7 +22,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedMethods("*")
                 .allowCredentials(true)
-                .allowedOrigins("http://3.34.119.43:3000", "http://3.34.119.43:80", "http://3.34.119.43");
+                .allowedOrigins("http://3.34.119.43:3000", "http://3.34.119.43:80", "http://3.34.119.43",
+                        "http://send-quiz.store");
     }
 
     @Override

@@ -43,6 +43,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
         String accessJws = webRequest.getHeader(ACCESS_TOKEN);
+        log.info("webRequest.getHeaderNames={}", webRequest.getHeaderNames());
         log.info("accessJwt={}", accessJws);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         return getMemberSessionFromAccessJws(accessJws, decodedKey, webRequest);
