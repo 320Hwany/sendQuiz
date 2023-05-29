@@ -23,7 +23,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowCredentials(true)
                 .allowedOrigins("http://3.34.119.43:3000", "http://3.34.119.43:80", "http://3.34.119.43",
-                        "http://send-quiz.store");
+                        "https://send-quiz.store");
     }
 
     @Override
