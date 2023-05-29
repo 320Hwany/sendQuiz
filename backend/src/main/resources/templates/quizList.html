@@ -18,9 +18,9 @@
             display: block;
         }
     </style>
-    <script>
+    <script th:inline="javascript">
         function toggleAnswer(element) {
-            let answer = element.nextElementSibling;
+            const answer = element.nextElementSibling;
             answer.classList.toggle("visible");
         }
     </script>
@@ -33,7 +33,10 @@
         <div style="background-color: #fff; padding: 20px; margin-bottom: 20px; white-space: pre-wrap;">
             <p><strong>분야 :</strong> <span th:text="${quiz.subject.value}"></span></p>
             <p><strong>문제 :</strong> <span th:text="${quiz.problem}"></span></p>
-            <p><strong>답안 :</strong> <span class="answer-toggle" onclick="toggleAnswer(this)">[답안 보기]</span> <span class="answer"><span th:text="${quiz.answer}"></span></span></p>
+            <p><strong>답안 :</strong>
+                <span class="answer-toggle" onclick="toggleAnswer(this)">[답안 보기]</span>
+                <span class="answer" th:text="${quiz.answer}"></span>
+            </p>
         </div>
     </div>
 </div>
