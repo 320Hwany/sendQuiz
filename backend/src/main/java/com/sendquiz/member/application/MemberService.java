@@ -3,7 +3,6 @@ package com.sendquiz.member.application;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
-import com.sendquiz.jwt.application.JwtService;
 import com.sendquiz.jwt.application.response.JwtResponse;
 import com.sendquiz.jwt.domain.JwtRefreshToken;
 import com.sendquiz.jwt.repository.JwtRepository;

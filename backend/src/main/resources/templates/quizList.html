@@ -3,6 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>CS 면접 질문</title>
+    <style>
+        .answer-toggle {
+            cursor: pointer;
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .answer {
+            display: none;
+        }
+
+        .answer.visible {
+            display: block;
+        }
+    </style>
+    <script>
+        function toggleAnswer(element) {
+            let answer = element.nextElementSibling;
+            answer.classList.toggle("visible");
+        }
+    </script>
 </head>
 <body>
 <div style="background-color: #f2f2f2; padding: 20px;">
@@ -12,7 +33,7 @@
         <div style="background-color: #fff; padding: 20px; margin-bottom: 20px; white-space: pre-wrap;">
             <p><strong>분야 :</strong> <span th:text="${quiz.subject.value}"></span></p>
             <p><strong>문제 :</strong> <span th:text="${quiz.problem}"></span></p>
-            <p><strong>답안 :</strong> <span th:text="${quiz.answer}"></span></p>
+            <p><strong>답안 :</strong> <span class="answer-toggle" onclick="toggleAnswer(this)">[답안 보기]</span> <span class="answer"><span th:text="${quiz.answer}"></span></span></p>
         </div>
     </div>
 </div>
