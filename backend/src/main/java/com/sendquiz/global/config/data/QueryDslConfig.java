@@ -1,4 +1,4 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.data;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;

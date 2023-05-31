@@ -1,4 +1,4 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.data;
 
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;

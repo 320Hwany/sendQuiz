@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.security:spring-security-crypto'
 	implementation 'org.bouncycastle:bcprov-jdk15on:1.70'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'com.amazonaws:aws-java-sdk-ses:1.12.429'
 
 	implementation 'com.mysql:mysql-connector-j'
 	implementation 'org.springframework.session:spring-session-jdbc'

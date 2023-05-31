@@ -1,5 +1,8 @@
 package com.sendquiz.email.application.prod;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.model.*;
 import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.email.exception.EmailMessageException;
 import com.sendquiz.quiz.domain.Quiz;
@@ -26,18 +29,21 @@ import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
 @Service
 public class EmailQuizSenderProd implements EmailQuizSender {
 
-    private final JavaMailSender mailSender;
+    private final AmazonSimpleEmailService amazonSimpleEmailService;
     private final SpringTemplateEngine templateEngine;
 
     public void sendQuizList(List<Quiz> randomQuizList, String toEmail) {
-        MimeMessage message = mailSender.createMimeMessage();
+        SendEmailRequest emailRequest = new SendEmailRequest()
+                .withDestination(new Destination().withToAddresses(toEmail))
+                .withMessage(new Message()
+                        .withSubject(new Content().withData(EMAIL_SUBJECT))
+                        .withBody(new Body().withHtml(new Content().withData(setContext(randomQuizList))))
+                )
+                .withSource(FROM_EMAIL_ADDRESS);
+
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
-            helper.setTo(toEmail);
-            helper.setSubject(EMAIL_SUBJECT);
-            helper.setText(setContext(randomQuizList), true);
-            mailSender.send(message);
-        } catch (MessagingException e) {
+            amazonSimpleEmailService.sendEmail(emailRequest);
+        } catch (AmazonClientException e) {
             throw new EmailMessageException();
         }
     }
@@ -49,4 +55,5 @@ public class EmailQuizSenderProd implements EmailQuizSender {
         return templateEngine.process(QUIZ_LIST, context);
     }
 }
+
 

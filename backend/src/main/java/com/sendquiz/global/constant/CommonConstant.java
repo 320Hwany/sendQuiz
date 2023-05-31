@@ -28,6 +28,8 @@ public class CommonConstant {
 
     public static final String SAME_SITE_NONE = "None";
 
+    public static final String FROM_EMAIL_ADDRESS = "yhwjd99@gmail.com";
+
     public static final int ONE_DAY = 86400000;
 
     public static final long ONE_HOUR = 1000 * 60 * 60;

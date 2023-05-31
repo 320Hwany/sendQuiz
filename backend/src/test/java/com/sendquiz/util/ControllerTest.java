@@ -1,5 +1,6 @@
 package com.sendquiz.util;
 
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.sendquiz.certification.repository.CertificationRepository;

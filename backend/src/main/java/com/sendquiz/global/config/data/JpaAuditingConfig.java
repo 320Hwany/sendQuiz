@@ -1,4 +1,4 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.data;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

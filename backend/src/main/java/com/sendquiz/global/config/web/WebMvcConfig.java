@@ -1,5 +1,7 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.web;
 
+import com.sendquiz.global.config.AdminArgumentResolver;
+import com.sendquiz.global.config.MemberArgumentResolver;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;

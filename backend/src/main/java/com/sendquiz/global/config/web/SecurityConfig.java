@@ -1,4 +1,4 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
