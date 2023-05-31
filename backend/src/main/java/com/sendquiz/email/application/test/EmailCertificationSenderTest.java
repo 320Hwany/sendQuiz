@@ -5,11 +5,9 @@ import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.email.application.EmailCertificationSender;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.thymeleaf.context.Context;
 
 import java.util.UUID;
 

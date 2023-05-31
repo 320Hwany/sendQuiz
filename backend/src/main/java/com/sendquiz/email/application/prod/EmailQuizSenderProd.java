@@ -6,12 +6,9 @@ import com.amazonaws.services.simpleemail.model.*;
 import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.email.exception.EmailMessageException;
 import com.sendquiz.quiz.domain.Quiz;
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
@@ -25,6 +22,7 @@ import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 @Primary
 @Service
 public class EmailQuizSenderProd implements EmailQuizSender {
@@ -33,6 +31,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
     private final SpringTemplateEngine templateEngine;
 
     public void sendQuizList(List<Quiz> randomQuizList, String toEmail) {
+        log.info("sendQuizList start");
         SendEmailRequest emailRequest = new SendEmailRequest()
                 .withDestination(new Destination().withToAddresses(toEmail))
                 .withMessage(new Message()
@@ -41,15 +40,19 @@ public class EmailQuizSenderProd implements EmailQuizSender {
                 )
                 .withSource(FROM_EMAIL_ADDRESS);
 
+        log.info("emailRequest");
         try {
+            log.info("amazonSimpleEmailService.sendEmail()");
             amazonSimpleEmailService.sendEmail(emailRequest);
         } catch (AmazonClientException e) {
+            log.info("AmazonClientException={}", e.getMessage());
             throw new EmailMessageException();
         }
     }
 
     @Override
     public String setContext(List<Quiz> randomQuizList) {
+        log.info("setContext start");
         Context context = new Context();
         context.setVariable(QUIZ_LIST, randomQuizList);
         return templateEngine.process(QUIZ_LIST, context);
