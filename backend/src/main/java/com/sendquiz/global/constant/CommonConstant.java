@@ -34,7 +34,7 @@ public class CommonConstant {
 
     public static final long ONE_MONTH = 1000L * 60 * 60 * 24 * 30;
 
-    public static final String SEVEN_AM = "0 0 7 * * *";
+    public static final String TWELVE_AM = "0 0 12 * * *";
 
     public static final String QUIZ_CACHE = "quizCache";
 
