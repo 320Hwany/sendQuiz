@@ -1,6 +1,8 @@
 # sendQuiz
 
-원하는 분야의 CS 면접 질문을 원하는 문제 수만큼 매일 아침마다 이메일로 전송해주는 서비스입니다.    
+원하는 분야의 CS 면접 질문을 원하는 문제 수만큼 매일 아침마다 이메일로 전송해주는 서비스입니다.     
+
+[Send Quiz 서비스 이용하기](https://send-quiz.store)
 
 ## Trouble Shooting
 
