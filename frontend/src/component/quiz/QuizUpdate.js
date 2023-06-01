@@ -22,11 +22,11 @@ function QuizUpdate() {
                 withCredentials: true,
             })
             .then((res) => {
-                alert('저장에 성공했습니다');
+                alert('수정에 성공했습니다');
             })
             .catch((err) => {
                 console.log(err.response.data.message);
-                alert('저장에 실패했습니다');
+                alert('수정에 실패했습니다');
             });
     };
 
