@@ -25,10 +25,10 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class QuizServiceTest {
+class QuizQueryTest {
 
     @InjectMocks
-    private QuizService quizService;
+    private QuizQuery quizQuery;
 
     @Mock
     private QuizRepository quizRepository;
@@ -66,8 +66,8 @@ class QuizServiceTest {
         when(quizRepository.findAll()).thenReturn(quizList);
 
         // when
-        List<Quiz> filteredQuizList1 = quizService.getFilteredQuizList(quizFilterSearch1);
-        List<Quiz> filteredQuizList2 = quizService.getFilteredQuizList(quizFilterSearch2);
+        List<Quiz> filteredQuizList1 = quizQuery.getFilteredQuizList(quizFilterSearch1);
+        List<Quiz> filteredQuizList2 = quizQuery.getFilteredQuizList(quizFilterSearch2);
 
         // then
         assertThat(filteredQuizList1).hasSize(10);
@@ -86,7 +86,7 @@ class QuizServiceTest {
         when(quizRepository.findAll()).thenReturn(quizList);
 
         // when
-        quizService.findAll();
+        quizQuery.findAll();
 
         // expected
         verify(cache, times(1)).put(QUIZ_LIST, quizList);
@@ -104,60 +104,9 @@ class QuizServiceTest {
         when(cacheManager.getCache(any())).thenReturn(cache);
 
         // when
-        quizService.findAll();
+        quizQuery.findAll();
 
         // expected
         verify(cache, times(0)).put(QUIZ_LIST, List.class);
-    }
-
-    @Test
-    @DisplayName("퀴즈가 존재하고 입력한 분야에 맞다면 퀴즈를 수정합니다")
-    void update() {
-        // given
-        Quiz quiz = Quiz.builder()
-                .problem("수정전 문제")
-                .answer("수정전 답")
-                .subject(Subject.JAVA)
-                .build();
-
-        QuizUpdate quizUpdate = QuizUpdate.builder()
-                .subject("네트워크")
-                .problem("수정후 문제")
-                .answer("수정후 답")
-                .build();
-
-        // stub
-        when(quizRepository.getById(any())).thenReturn(quiz);
-
-        // when
-        quizService.update(quizUpdate);
-
-        // then
-        assertThat(quiz).extracting("problem", "answer", "subject")
-                .contains("수정후 문제", "수정후 답", Subject.NETWORK);
-    }
-
-    @Test
-    @DisplayName("입력한 퀴즈 분야가 맞지 않으면 퀴즈를 수정할 수 없습니다")
-    void updateFailNotMatchSubject() {
-        // given
-        Quiz quiz = Quiz.builder()
-                .problem("수정전 문제")
-                .answer("수정전 답")
-                .subject(Subject.JAVA)
-                .build();
-
-        QuizUpdate quizUpdate = QuizUpdate.builder()
-                .subject("분야가 맞지 않음")
-                .problem("수정후 문제")
-                .answer("수정후 답")
-                .build();
-
-        // stub
-        when(quizRepository.getById(any())).thenReturn(quiz);
-
-        // then
-        assertThatThrownBy(() -> quizService.update(quizUpdate))
-                .isInstanceOf(SubjectNotMatchException.class);
     }
 }

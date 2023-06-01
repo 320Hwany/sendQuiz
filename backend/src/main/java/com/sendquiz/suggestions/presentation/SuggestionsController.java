@@ -2,7 +2,7 @@ package com.sendquiz.suggestions.presentation;
 
 import com.sendquiz.global.annotation.Login;
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.suggestions.application.SuggestionsService;
+import com.sendquiz.suggestions.application.SuggestionsCommand;
 import com.sendquiz.suggestions.presentation.request.SuggestionsSave;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class SuggestionsController {
 
-    private final SuggestionsService suggestionsService;
+    private final SuggestionsCommand suggestionsCommand;
 
     @PostMapping("/suggestions")
     public ResponseEntity<Void> save(@Login MemberSession memberSession,
                                      @RequestBody SuggestionsSave suggestionsSave) {
-        suggestionsService.save(memberSession, suggestionsSave);
+        suggestionsCommand.save(memberSession, suggestionsSave);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

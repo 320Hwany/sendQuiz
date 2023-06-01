@@ -20,10 +20,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class QuizFilterServiceTest {
+class QuizFilterCommandTest {
 
     @InjectMocks
-    private QuizFilterService quizFilterService;
+    private QuizFilterCommand quizFilterCommand;
 
     @Mock
     private QuizFilterRepository quizFilterRepository;
@@ -53,7 +53,7 @@ class QuizFilterServiceTest {
         when(quizFilterRepository.findByMemberId(any())).thenReturn(Optional.empty());
 
         // when
-        quizFilterService.save(quizFilterSave, memberSession);
+        quizFilterCommand.save(quizFilterSave, memberSession);
 
         // then
         verify(quizFilterRepository, times(1)).save(any());
@@ -85,7 +85,7 @@ class QuizFilterServiceTest {
         when(quizFilterRepository.findByMemberId(any())).thenReturn(Optional.of(quizFilter));
 
         // when
-        quizFilterService.save(quizFilterSave, memberSession);
+        quizFilterCommand.save(quizFilterSave, memberSession);
 
         // then
         verify(quizFilterRepository, times(0)).save(any());

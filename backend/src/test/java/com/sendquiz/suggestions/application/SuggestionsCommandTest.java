@@ -16,10 +16,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class SuggestionsServiceTest {
+class SuggestionsCommandTest {
 
     @InjectMocks
-    private SuggestionsService suggestionsService;
+    private SuggestionsCommand suggestionsCommand;
 
     @Mock
     private SuggestionsRepository suggestionsRepository;
@@ -47,7 +47,7 @@ class SuggestionsServiceTest {
         when(memberRepository.getById(any())).thenReturn(member);
 
         // when
-        suggestionsService.save(memberSession, suggestionsSave);
+        suggestionsCommand.save(memberSession, suggestionsSave);
 
         // then
         verify(suggestionsRepository, times(1)).save(any());

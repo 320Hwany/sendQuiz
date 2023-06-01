@@ -11,14 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Service
-public class SuggestionsService {
+public class SuggestionsCommand {
 
     private final SuggestionsRepository suggestionsRepository;
     private final MemberRepository memberRepository;
 
-    @Transactional
     public void save(MemberSession memberSession, SuggestionsSave suggestionsSave) {
         Member member = memberRepository.getById(memberSession.getId());
         Suggestions suggestions = suggestionsSave.toEntity(member);

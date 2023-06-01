@@ -1,12 +1,11 @@
 package com.sendquiz.util;
 
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.global.eumtype.Role;
 import com.sendquiz.jwt.repository.JwtRepository;
-import com.sendquiz.member.application.MemberService;
+import com.sendquiz.member.application.MemberCommand;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.presentation.request.MemberLogin;
 import com.sendquiz.member.presentation.request.MemberSignup;
@@ -32,7 +31,7 @@ public class ControllerTest {
     protected ObjectMapper objectMapper;
 
     @Autowired
-    protected MemberService memberService;
+    protected MemberCommand memberCommand;
 
     @Autowired
     protected MemberRepository memberRepository;

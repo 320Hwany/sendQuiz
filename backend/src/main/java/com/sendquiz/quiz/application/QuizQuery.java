@@ -1,10 +1,7 @@
 package com.sendquiz.quiz.application;
 
 import com.sendquiz.email.application.EmailQuizSender;
-import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
-import com.sendquiz.quiz.presentation.request.QuizSave;
-import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
 import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
@@ -29,7 +26,7 @@ import static java.util.Objects.*;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Service
-public class QuizService {
+public class QuizQuery {
 
     private final QuizRepository quizRepository;
     private final QuizFilterRepository quizFilterRepository;
@@ -84,17 +81,4 @@ public class QuizService {
 //            emailQuizSenderProd.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
 //        }
 //    }
-
-    @Transactional
-    public void save(QuizSave quizSave) {
-        Subject subject = Subject.fromValue(quizSave.getSubject());
-        quizRepository.save(quizSave.toEntity(subject));
-    }
-
-    @Transactional
-    public void update(QuizUpdate quizUpdate) {
-        Quiz quiz = quizRepository.getById(quizUpdate.getQuizId());
-        Subject subject = Subject.fromValue(quizUpdate.getSubject());
-        quiz.update(quizUpdate, subject);
-    }
 }

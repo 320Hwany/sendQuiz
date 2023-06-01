@@ -40,6 +40,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
                 )
                 .withSource(FROM_EMAIL_ADDRESS);
 
+
         log.info("emailRequest");
         try {
             log.info("amazonSimpleEmailService.sendEmail()");

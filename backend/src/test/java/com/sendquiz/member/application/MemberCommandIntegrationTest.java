@@ -1,6 +1,5 @@
 package com.sendquiz.member.application;
 
-import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.jwt.application.response.JwtResponse;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
@@ -17,10 +16,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @AcceptanceTest
-public class MemberServiceIntegrationTest {
+public class MemberCommandIntegrationTest {
 
     @Autowired
-    private MemberService memberService;
+    private MemberCommand memberCommand;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -50,7 +49,7 @@ public class MemberServiceIntegrationTest {
         ReflectionTestUtils.setField(member, "id", 1L);
 
         // when
-        JwtResponse jwtResponse = memberService.login(memberLogin, new MockHttpServletResponse());
+        JwtResponse jwtResponse = memberCommand.login(memberLogin, new MockHttpServletResponse());
 
         // then
         assertThat(jwtResponse.getAccessToken()).isNotBlank();

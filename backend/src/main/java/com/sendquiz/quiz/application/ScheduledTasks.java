@@ -10,10 +10,10 @@ import static com.sendquiz.global.constant.CommonConstant.TWELVE_AM;
 @Component
 public class ScheduledTasks {
 
-    private final QuizService quizService;
+    private final QuizQuery quizQuery;
 
     @Scheduled(cron = TWELVE_AM)
     public void sendQuizAt12AM() {
-        quizService.sendRandomQuizList();
+        quizQuery.sendRandomQuizList();
     }
 }

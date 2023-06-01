@@ -2,7 +2,7 @@ package com.sendquiz.member.presentation;
 
 import com.sendquiz.global.annotation.Login;
 import com.sendquiz.jwt.application.response.JwtResponse;
-import com.sendquiz.member.application.MemberService;
+import com.sendquiz.member.application.MemberCommand;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.presentation.request.MemberDelete;
 import com.sendquiz.member.presentation.request.MemberLogin;
@@ -23,18 +23,18 @@ import static com.sendquiz.jwt.application.JwtService.*;
 @RestController
 public class MemberController {
 
-    private final MemberService memberService;
+    private final MemberCommand memberCommand;
 
     @PostMapping("/signup")
     public ResponseEntity<Void> signup(@RequestBody @Valid MemberSignup memberSignup) {
-        memberService.signup(memberSignup);
+        memberCommand.signup(memberSignup);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody MemberLogin memberLogin,
                                              HttpServletResponse response) {
-        JwtResponse jwtResponse = memberService.login(memberLogin, response);
+        JwtResponse jwtResponse = memberCommand.login(memberLogin, response);
         return ResponseEntity.ok(jwtResponse);
     }
 
@@ -46,21 +46,21 @@ public class MemberController {
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(@Login MemberSession memberSession) {
-        memberService.logout(memberSession);
+        memberCommand.logout(memberSession);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/withdrawal")
     public ResponseEntity<Void> delete(@Login MemberSession memberSession,
                                        @RequestBody MemberDelete memberDelete) {
-        memberService.delete(memberSession, memberDelete);
+        memberCommand.delete(memberSession, memberDelete);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/member")
     public ResponseEntity<Void> update(@Login MemberSession memberSession,
                                        @RequestBody @Valid MemberUpdate memberUpdate) {
-        memberService.update(memberSession, memberUpdate);
+        memberCommand.update(memberSession, memberUpdate);
         return ResponseEntity.ok().build();
     }
 }

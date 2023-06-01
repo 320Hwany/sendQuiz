@@ -37,16 +37,13 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class MemberServiceUnitTest {
+class MemberCommandUnitTest {
 
     @InjectMocks
-    private MemberService memberService;
+    private MemberCommand memberCommand;
 
     @Mock
     private MemberRepository memberRepository;
-
-    @Mock
-    private CertificationRepository certificationRepository;
 
     @Mock
     private QuizFilterRepository quizFilterRepository;
@@ -57,6 +54,8 @@ class MemberServiceUnitTest {
     @Mock
     private PasswordEncoder passwordEncoder;
 
+    @Mock
+    private MemberQuery memberQuery;
 
     @Test
     @DisplayName("회원가입에 성공합니다")
@@ -69,107 +68,11 @@ class MemberServiceUnitTest {
                 .password("test password")
                 .build();
 
-        Certification certification = Certification.builder()
-                .email(memberSignup.getEmail())
-                .certificationNum(memberSignup.getCertificationNum())
-                .build();
-
-        // stub
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
-
         // when
-        memberService.signup(memberSignup);
+        memberCommand.signup(memberSignup);
 
         // then
         verify(memberRepository, times(1)).save(any());
-    }
-
-    @Test
-    @DisplayName("신규 회원이면 메소드를 통과합니다")
-    void validateDuplicate200() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        // stub
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-
-        // then
-        memberService.validateDuplicate(memberSignup);
-    }
-
-    @Test
-    @DisplayName("이미 가입된 회원이면 예외가 발생합니다")
-    void validateDuplicate400() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        Member member = memberSignup.toEntity(passwordEncoder);
-
-        // stub
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
-        when(memberRepository.findByEmail(anyString())).thenReturn(Optional.of(member));
-
-        // then
-        assertThatThrownBy(() -> memberService.validateDuplicate(memberSignup))
-                .isInstanceOf(MemberDuplicationException.class);
-    }
-
-    @Test
-    @DisplayName("인증번호가 일치하면 메소드를 통과합니다")
-    void validateCertificationNum200() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        Certification certification = Certification.builder()
-                .email(memberSignup.getEmail())
-                .certificationNum(memberSignup.getCertificationNum())
-                .build();
-
-        // stub
-        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
-
-        // when
-        memberService.validateCertificationNum(memberSignup);
-    }
-
-    @Test
-    @DisplayName("인증번호가 일치하지 않으면 예외가 발생합니다")
-    void validateCertificationNum400() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        Certification certification = Certification.builder()
-                .email(memberSignup.getEmail())
-                .certificationNum("일치하지 않는 인증번호")
-                .build();
-
-        // stub
-        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
-
-        // when
-        assertThatThrownBy(() -> memberService.validateCertificationNum(memberSignup))
-                .isInstanceOf(CertificationNotMatchException.class);
     }
 
     @Test
@@ -194,7 +97,7 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
         // then
-        assertThatThrownBy(() -> memberService.login(memberLogin, new MockHttpServletResponse()))
+        assertThatThrownBy(() -> memberCommand.login(memberLogin, new MockHttpServletResponse()))
                 .isInstanceOf(MemberNotMatchException.class);
     }
 
@@ -212,7 +115,7 @@ class MemberServiceUnitTest {
         when(jwtRepository.getByMemberId(any())).thenReturn(refreshToken);
 
         // when
-        memberService.logout(memberSession);
+        memberCommand.logout(memberSession);
 
         // then
         verify(jwtRepository, times(1)).delete(any());
@@ -226,7 +129,7 @@ class MemberServiceUnitTest {
         when(passwordEncoder.matches(any(), any())).thenReturn(true);
 
         // when
-        memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
+        memberCommand.delete(MemberSession.builder().build(), MemberDelete.builder().build());
 
         // then
         verify(memberRepository, times(1)).delete(any());
@@ -241,7 +144,7 @@ class MemberServiceUnitTest {
 
         // expected
         assertThatThrownBy(() ->
-                memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build()))
+                memberCommand.delete(MemberSession.builder().build(), MemberDelete.builder().build()))
                 .isInstanceOf(PasswordNotMatchException.class);
     }
 
@@ -255,7 +158,7 @@ class MemberServiceUnitTest {
                 .thenReturn(Optional.ofNullable(QuizFilter.builder().build()));
 
         // when
-        memberService.delete(MemberSession.builder().build(), MemberDelete.builder().build());
+        memberCommand.delete(MemberSession.builder().build(), MemberDelete.builder().build());
 
         // then
         verify(quizFilterRepository, times(1)).delete(any());
@@ -281,7 +184,7 @@ class MemberServiceUnitTest {
         when(passwordEncoder.encode(any())).thenReturn("encode password");
 
         // when
-        memberService.update(MemberSession.builder().build(), memberUpdate);
+        memberCommand.update(MemberSession.builder().build(), memberUpdate);
 
         // then
         assertThat(member)
