@@ -11,26 +11,6 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class TimeCheckAspect {
 
-    @Around("com.sendquiz.global.aop.pointcut.TimeCheckPointcut.allRepository()")
-    public Object repositoryTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        long methodStartTime = System.currentTimeMillis();
-        Object result = joinPoint.proceed();
-        String name = joinPoint.getSignature().getName();
-        long methodEndTime = System.currentTimeMillis();
-        log.info("repository methodName={}, time={}", name, methodEndTime - methodStartTime);
-        return result;
-    }
-
-    @Around("com.sendquiz.global.aop.pointcut.TimeCheckPointcut.allService()")
-    public Object applicationTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
-        long methodStartTime = System.currentTimeMillis();
-        Object result = joinPoint.proceed();
-        String name = joinPoint.getSignature().getName();
-        long methodEndTime = System.currentTimeMillis();
-        log.info("application methodName={}, time={}", name, methodEndTime - methodStartTime);
-        return result;
-    }
-
     @Around("com.sendquiz.global.aop.pointcut.TimeCheckPointcut.allPresentation()")
     public Object presentationTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
         long methodStartTime = System.currentTimeMillis();
@@ -38,6 +18,16 @@ public class TimeCheckAspect {
         String name = joinPoint.getSignature().getName();
         long methodEndTime = System.currentTimeMillis();
         log.info("presentation methodName={}, time={}", name, methodEndTime - methodStartTime);
+        return result;
+    }
+
+    @Around("com.sendquiz.global.aop.pointcut.TimeCheckPointcut.sendRandomQuizList()")
+    public Object sendRandomQuizListTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        long methodStartTime = System.currentTimeMillis();
+        Object result = joinPoint.proceed();
+        String name = joinPoint.getSignature().getName();
+        long methodEndTime = System.currentTimeMillis();
+        log.info("sendRandomQuizListTimeLog time={}", methodEndTime - methodStartTime);
         return result;
     }
 }

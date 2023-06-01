@@ -9,9 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,8 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
-import static java.util.Objects.*;
+import static com.sendquiz.global.constant.CommonConstant.QUIZ_CACHE;
+import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
+import static java.util.Objects.requireNonNull;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -28,11 +29,12 @@ import static java.util.Objects.*;
 @Service
 public class QuizQuery {
 
-    private final QuizRepository quizRepository;
     private final QuizFilterRepository quizFilterRepository;
     private final EmailQuizSender emailQuizSender;
     private final CacheManager cacheManager;
+    private final QuizRepository quizRepository;
 
+    @Async
     public void sendRandomQuizList() {
         List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
         for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
@@ -62,15 +64,10 @@ public class QuizQuery {
         if (quizList == null) {
             quizList = quizRepository.findAll();
             cache.put(QUIZ_LIST, quizList);
+            log.info("Get Quiz From Database");
         }
 
         return quizList;
-    }
-
-    @Scheduled(fixedRate = ONE_DAY)
-    @CacheEvict(value = QUIZ_CACHE, allEntries = true)
-    public void flushCacheToDB() {
-        log.info("flushCacheToDB");
     }
 
     // todo 성능 테스트로 비교해보기
