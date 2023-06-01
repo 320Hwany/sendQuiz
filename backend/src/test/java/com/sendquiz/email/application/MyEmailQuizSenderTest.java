@@ -4,15 +4,11 @@ import com.sendquiz.email.application.test.EmailQuizSenderTest;
 import com.sendquiz.quiz.domain.Quiz;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.sendquiz.global.constant.CommonConstant.MESSAGE_SUBJECT_TEST;
 import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 

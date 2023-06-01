@@ -31,7 +31,7 @@ function Home() {
                     <div className="card">
                         <div className="card-body">
                             <h1 className="card-title text-center mb-4" style={{color: 'navy'}}>SendQuiz</h1>
-                            <p className="card-text text-center">매일 아침 7시, 당신의 CS 면접을 대비해보세요.</p>
+                            <p className="card-text text-center">매일 아침, 당신의 CS 면접을 대비해보세요.</p>
                             <p className="card-text text-center">SendQuiz는 원하는 분야의 CS 면접 질문 및 해답을 제공하는 서비스입니다.</p>
                             <p className="card-text text-center">원하는 분야와 문제 수를 설정하면, 매일 아침 메일로 문제를 받아보실 수 있습니다.</p>
                             <div className="d-flex justify-content-center mt-4">

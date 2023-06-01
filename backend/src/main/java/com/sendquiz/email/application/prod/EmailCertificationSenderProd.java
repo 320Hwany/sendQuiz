@@ -1,14 +1,18 @@
 package com.sendquiz.email.application.prod;
 
 import com.amazonaws.AmazonClientException;
-import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.*;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.email.application.EmailCertificationSender;
 import com.sendquiz.email.exception.EmailMessageException;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
@@ -19,32 +23,30 @@ import java.util.UUID;
 import static com.sendquiz.certification.domain.Certification.toCertification;
 import static com.sendquiz.global.constant.CommonConstant.*;
 
+@Slf4j
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Primary
 @Service
 public class EmailCertificationSenderProd implements EmailCertificationSender {
 
-    private final AmazonSimpleEmailService amazonSimpleEmailService;
+    private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
     private final CertificationRepository certificationRepository;
 
     @Transactional
     public void sendCertificationNum(String toEmail) {
-        String certificationNum = makeUUID();
-        saveCertificationNum(toEmail, certificationNum);
-
-        SendEmailRequest emailRequest = new SendEmailRequest()
-                .withDestination(new Destination().withToAddresses(toEmail))
-                .withMessage(new Message()
-                        .withSubject(new Content().withData(EMAIL_SUBJECT))
-                        .withBody(new Body().withHtml(new Content().withData(setContext(certificationNum))))
-                )
-                .withSource(FROM_EMAIL_ADDRESS);
-
+        MimeMessage message = mailSender.createMimeMessage();
         try {
-            amazonSimpleEmailService.sendEmail(emailRequest);
-        } catch (AmazonClientException e) {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            String certificationNum = makeUUID();
+            saveCertificationNum(toEmail, certificationNum);
+            helper.setTo(toEmail);
+            helper.setSubject(EMAIL_SUBJECT);
+            helper.setText(setContext(certificationNum), true);
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            log.error("Error Message={}", e.getMessage());
             throw new EmailMessageException();
         }
     }
