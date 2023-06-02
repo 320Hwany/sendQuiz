@@ -21,10 +21,4 @@ public class QuizTestController {
         quizQuery.sendRandomQuizList();
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping("/quizList/hwany")
-    public ResponseEntity<Void> quizListTest(@AdminLogin AdminSession adminSession) {
-        quizQuery.sendRandomQuizTest();
-        return ResponseEntity.ok().build();
-    }
 }

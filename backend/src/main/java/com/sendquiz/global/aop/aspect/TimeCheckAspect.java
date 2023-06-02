@@ -25,7 +25,6 @@ public class TimeCheckAspect {
     public Object sendRandomQuizListTimeLog(ProceedingJoinPoint joinPoint) throws Throwable {
         long methodStartTime = System.currentTimeMillis();
         Object result = joinPoint.proceed();
-        String name = joinPoint.getSignature().getName();
         long methodEndTime = System.currentTimeMillis();
         log.info("sendRandomQuizListTimeLog time={}", methodEndTime - methodStartTime);
         return result;

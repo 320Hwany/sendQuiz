@@ -84,28 +84,4 @@ public class QuizQuery {
 //            emailQuizSenderProd.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
 //        }
 //    }
-
-    @Async
-    public void sendRandomQuizTest() {
-        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
-        List<QuizFilterSearch> quizFilterSearchTest = null;
-
-        quizFilterSearchTest.add(quizFilterSearchList.get(0));
-        quizFilterSearchTest.add(quizFilterSearchList.get(1));
-
-        List<CompletableFuture<Void>> emailSendingFutures = quizFilterSearchTest.stream()
-                .map(quizFilterSearch -> CompletableFuture.runAsync(() -> {
-                    List<Quiz> filteredQuizList = getFilteredQuizList(quizFilterSearch);
-
-                    Collections.shuffle(filteredQuizList);
-                    List<Quiz> randomQuizList = filteredQuizList.stream()
-                            .limit(quizFilterSearch.getNumOfProblem())
-                            .toList();
-
-                    emailQuizSender.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
-                }))
-                .toList();
-
-        CompletableFuture.allOf(emailSendingFutures.toArray(new CompletableFuture[0])).join();
-    }
 }
