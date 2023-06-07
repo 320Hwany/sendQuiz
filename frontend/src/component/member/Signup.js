@@ -44,6 +44,8 @@ function Signup() {
     };
 
     function AuthenticationEmail(e) {
+        if (e.target.disabled) return;
+
         e.target.disabled = true;
         const params = new URLSearchParams();
         params.append('email', email);
