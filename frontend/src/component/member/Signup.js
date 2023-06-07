@@ -18,6 +18,7 @@ function Signup() {
     const [nicknameError, setNicknameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [emailNotFound, setEmailNotFound] = useState('');
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false); // 버튼 비활성화 상태를 추적하는 상태 변수
 
     const handleSignUp = (e) => {
         e.preventDefault();
@@ -44,32 +45,34 @@ function Signup() {
     };
 
     function AuthenticationEmail(e) {
-        if (e.target.disabled) return;
+        if (isButtonDisabled) return; // 버튼이 비활성화 상태인 경우 중복 클릭 방지
+        setIsButtonDisabled(true); // 버튼을 비활성화 상태로 설정
 
-        e.target.disabled = true;
         const params = new URLSearchParams();
         params.append('email', email);
-        if (email == null || email === "") {
-            setEmailError("이메일을 입력해주세요");
+        if (email == null || email === '') {
+            setEmailError('이메일을 입력해주세요');
             return;
         }
-        setEmailError("");
-        setEmailNotFound("");
-        setCertificationNumMessage("인증번호가 전송되었습니다");
+        setEmailError('');
+        setEmailNotFound('');
+        setCertificationNumMessage('인증번호가 전송되었습니다');
 
-        axios.post('/api/email/signup', params, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-            .then(response => {
+        axios
+            .post('/api/email/signup', params, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+            .then((response) => {
                 setTimeout(() => {
-                    e.target.disabled = false;
+                    setIsButtonDisabled(false); // 일정 시간 후 버튼을 다시 활성화 상태로 설정
                 }, 30000); // 30초
             })
-            .catch(err => {
+            .catch((err) => {
                 setEmailNotFound(err.response.data.message);
-                setCertificationNumMessage("");
+                setCertificationNumMessage('');
+                setIsButtonDisabled(false); // 에러 발생 시 버튼을 다시 활성화 상태로 설정
             });
     }
 
