@@ -39,6 +39,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
             helper.setSubject(EMAIL_SUBJECT);
             helper.setText(setContext(randomQuizList), true);
             mailSender.send(message);
+            log.info("sendQuizList success");
         } catch (MessagingException e) {
             log.error("Error Message={}", e.getMessage());
             throw new EmailMessageException();

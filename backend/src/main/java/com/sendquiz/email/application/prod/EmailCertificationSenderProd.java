@@ -1,7 +1,6 @@
 package com.sendquiz.email.application.prod;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.services.simpleemail.model.*;
+import com.sendquiz.certification.application.CertificationCommand;
 import com.sendquiz.certification.domain.Certification;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.email.application.EmailCertificationSender;
@@ -20,7 +19,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.UUID;
 
-import static com.sendquiz.certification.domain.Certification.toCertification;
 import static com.sendquiz.global.constant.CommonConstant.*;
 
 @Slf4j
@@ -32,15 +30,14 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
-    private final CertificationRepository certificationRepository;
+    private final CertificationCommand certificationCommand;
 
-    @Transactional
     public void sendCertificationNum(String toEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
             String certificationNum = makeUUID();
-            saveCertificationNum(toEmail, certificationNum);
+            certificationCommand.saveCertificationNum(toEmail, certificationNum);
             helper.setTo(toEmail);
             helper.setSubject(EMAIL_SUBJECT);
             helper.setText(setContext(certificationNum), true);
@@ -53,17 +50,6 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
 
     public String makeUUID() {
         return UUID.randomUUID().toString().substring(0, 8);
-    }
-
-    @Transactional
-    public void saveCertificationNum(String toEmail, String certificationNum) {
-        if (certificationRepository.findByEmail(toEmail).isEmpty()) {
-            Certification certification = toCertification(toEmail, certificationNum);
-            certificationRepository.save(certification);
-        } else {
-            Certification psCertification = certificationRepository.getByEmail(toEmail);
-            psCertification.updateNum(certificationNum);
-        }
     }
 
     public String setContext(String certificationNum) {

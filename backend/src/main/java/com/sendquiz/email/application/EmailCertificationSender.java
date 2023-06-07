@@ -8,6 +8,4 @@ public interface EmailCertificationSender {
     String setContext(String certificationNum);
 
     String makeUUID();
-
-    void saveCertificationNum(String toEmail, String certificationNum);
 }
