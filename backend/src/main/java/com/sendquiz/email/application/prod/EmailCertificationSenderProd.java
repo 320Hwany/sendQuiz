@@ -23,7 +23,6 @@ import static com.sendquiz.global.constant.CommonConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 @Primary
 @Service
 public class EmailCertificationSenderProd implements EmailCertificationSender {
