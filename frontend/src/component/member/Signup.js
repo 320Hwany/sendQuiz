@@ -47,7 +47,6 @@ function Signup() {
     function AuthenticationEmail(e) {
         if (isButtonDisabled) return; // 버튼이 비활성화 상태인 경우 중복 클릭 방지
         setIsButtonDisabled(true); // 버튼을 비활성화 상태로 설정
-        console.log("isButtonDisabled = " + isButtonDisabled);
         const params = new URLSearchParams();
         params.append('email', email);
         if (email == null || email === '') {

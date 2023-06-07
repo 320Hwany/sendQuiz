@@ -9,6 +9,7 @@ function Suggestions() {
     const [contents, setContents] = useState('');
     const navigate = useNavigate();
     const [showAlert, setShowAlert] = useState(false);
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false); // 버튼 비활성화 상태를 추적하는 상태 변수
 
     useEffect(() => {
         axios
@@ -29,6 +30,8 @@ function Suggestions() {
     }, []);
 
     const saveSuggestions = (e) => {
+        if (isButtonDisabled) return; // 버튼이 비활성화 상태인 경우 중복 클릭 방지
+        setIsButtonDisabled(true); // 버튼을 비활성화 상태로 설정
         e.preventDefault();
         axios
             .post('/api/suggestions', { contents }, {
@@ -39,6 +42,9 @@ function Suggestions() {
             })
             .then((res) => {
                 setShowAlert(true);
+                setTimeout(() => {
+                    setIsButtonDisabled(false); // 일정 시간 후 버튼을 다시 활성화 상태로 설정
+                }, 30000); // 30초
                 setTimeout(() => {
                     navigate("/");
                 }, 1700);
@@ -68,7 +74,7 @@ function Suggestions() {
 
                     <div className="d-flex text-center mt-4">
                         <button type="button" className="btn btn-success"
-                                onClick={saveSuggestions}>의견 보내기</button>
+                                onClick={saveSuggestions} disabled={isButtonDisabled}>>의견 보내기</button>
                         <Link to="/main" className="btn btn-primary mx-3">
                             홈으로
                         </Link>

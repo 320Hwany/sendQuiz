@@ -9,6 +9,7 @@ function Update() {
     const [nickname, setNickname] = useState('');
     const [password, setPassword] = useState('');
     const [notMatchError, setNotMatchError] = useState('');
+    const [isButtonDisabled, setIsButtonDisabled] = useState(false); // 버튼 비활성화 상태를 추적하는 상태 변수
 
     useEffect(() => {
         axios
@@ -39,6 +40,9 @@ function Update() {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleUpdateClick = () => {
+        if (isButtonDisabled) return; // 버튼이 비활성화 상태인 경우 중복 클릭 방지
+        setIsButtonDisabled(true); // 버튼을 비활성화 상태로 설정
+
         axios.patch('/api/member', { nickname, password }, {
             headers: {
                 Access_token: localStorage.getItem('Access_token'),
@@ -46,6 +50,9 @@ function Update() {
         })
             .then((response) => {
                 setShowAlert(true);
+                setTimeout(() => {
+                    setIsButtonDisabled(false); // 일정 시간 후 버튼을 다시 활성화 상태로 설정
+                }, 30000); // 30초
                 setTimeout(() => {
                     navigate("/");
                 }, 1700);
@@ -85,7 +92,7 @@ function Update() {
 
                                 <div className="d-flex text-center mt-4">
                                     <button type="button" className="btn btn-danger"
-                                            onClick={handleUpdateClick}>회원 수정</button>
+                                            onClick={handleUpdateClick} disabled={isButtonDisabled}>>회원 수정</button>
                                     <Link to="/main" className="btn btn-success mx-3">
                                         홈으로
                                     </Link>
