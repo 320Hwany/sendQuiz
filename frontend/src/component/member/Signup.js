@@ -43,7 +43,13 @@ function Signup() {
             });
     };
 
+    let isButtonDisabled = false;
+
     function AuthenticationEmail(e) {
+        if (isButtonDisabled) {
+            return;
+        }
+
         const params = new URLSearchParams();
         params.append('email', email);
         if (email == null || email === "") {
@@ -54,18 +60,27 @@ function Signup() {
         setEmailNotFound("");
         setCertificationNumMessage("인증번호가 전송되었습니다");
 
+        isButtonDisabled = true;
+
         axios.post('/api/email/signup', params, {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
             .then(response => {
+                isButtonDisabled = false;
             })
             .catch(err => {
                 setEmailNotFound(err.response.data.message);
                 setCertificationNumMessage("");
+                isButtonDisabled = false;
             });
+
+        setTimeout(() => {
+            isButtonDisabled = false;
+        }, 5000);
     }
+
 
     return (
         <Container className="d-flex justify-content-center align-items-center">
