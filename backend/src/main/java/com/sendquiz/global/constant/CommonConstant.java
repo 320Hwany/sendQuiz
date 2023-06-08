@@ -40,8 +40,6 @@ public class CommonConstant {
 
     public static final String EIGHT_AM = "0 0 8 * * *";
 
-    public static final String SEVEN_AM = "0 0 7 * * *";
-
     public static final String QUIZ_CACHE = "quizCache";
 
     public static final String QUIZ_LIST = "quizList";

@@ -33,20 +33,24 @@ public class ScheduledTasks {
     }
 
     @Scheduled(cron = EIGHT_AM)
-    public void getCache() {
+    public void updateCache() {
+        clearQuizCache();
+        putCache();
+    }
+
+    @CacheEvict(value = QUIZ_CACHE, allEntries = true)
+    public void clearQuizCache() {
+        log.info("EIGHT_AM clearQuizCache");
+    }
+
+    public void putCache() {
         Cache cache = requireNonNull(cacheManager.getCache(QUIZ_CACHE));
         List<Quiz> quizList = cache.get(QUIZ_LIST, List.class);
 
         if (quizList == null) {
             quizList = quizRepository.findAll();
             cache.put(QUIZ_LIST, quizList);
-            log.info("EIGHT_AM getCache");
+            log.info("EIGHT_AM putCache");
         }
-    }
-
-    @Scheduled(cron = SEVEN_AM)
-    @CacheEvict(value = QUIZ_CACHE, allEntries = true)
-    public void flushCacheToDB() {
-        log.info("SEVEN_AM flushCacheToDB");
     }
 }
