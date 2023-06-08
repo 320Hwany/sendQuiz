@@ -1,6 +1,6 @@
 package com.sendquiz.member.domain;
 
-import com.sendquiz.member.presentation.request.MemberUpdate;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -10,7 +10,8 @@ import static org.assertj.core.api.Assertions.*;
 
 class MemberTest {
 
-    PasswordEncoder passwordEncoder = new SCryptPasswordEncoder(16, 8, 1, 32, 64);
+    PasswordEncoder passwordEncoder =
+            new SCryptPasswordEncoder(16, 8, 1, 32, 64);
 
     @Test
     @DisplayName("이메일을 제외한 회원 정보를 수정합니다")
@@ -33,5 +34,22 @@ class MemberTest {
         // then
         assertThat(member.getNickname()).isEqualTo("update nickname");
         assertThat(passwordEncoder.matches(memberUpdate.getPassword(), member.getPassword())).isTrue();
-     }
+    }
+
+    @Test
+    @DisplayName("임시 비밀번호로 변경")
+    void updateToTemporaryPassword() {
+        // given
+        Member member = Member.builder()
+                .email("test@email.com")
+                .nickname("test nickname")
+                .password("test password")
+                .build();
+
+        // when
+        member.updateToTemporaryPassword("temporary password", passwordEncoder);
+
+        // then
+        assertThat(passwordEncoder.matches("temporary password", member.getPassword())).isTrue();
+    }
 }

@@ -1,4 +1,4 @@
-package com.sendquiz.quiz.presentation.request;
+package com.sendquiz.quiz.dto.request;
 
 import lombok.AccessLevel;
 import lombok.Builder;

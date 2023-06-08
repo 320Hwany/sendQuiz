@@ -1,4 +1,4 @@
-package com.sendquiz.member.presentation.request;
+package com.sendquiz.member.dto.request;
 
 import com.sendquiz.global.eumtype.Role;
 import com.sendquiz.member.domain.Member;

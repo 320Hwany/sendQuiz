@@ -2,7 +2,7 @@ package com.sendquiz.quiz_filter.domain;
 
 import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.quiz_filter.presentation.request.QuizFilterSave;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterUpdate;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
@@ -52,13 +52,13 @@ public class QuizFilter extends BaseTimeEntity {
         this.numOfProblem = numOfProblem;
     }
 
-    public void update(QuizFilterSave quizFilterSave) {
-        this.isNetwork = quizFilterSave.isNetwork();
-        this.isDatabase = quizFilterSave.isDatabase();
-        this.isOS = quizFilterSave.isOperatingSystem();
-        this.isDataStructure = quizFilterSave.isDataStructure();
-        this.isJava = quizFilterSave.isJava();
-        this.isSpring = quizFilterSave.isSpring();
-        this.numOfProblem = quizFilterSave.getNumOfProblem();
+    public void update(QuizFilterUpdate quizFilterUpdate) {
+        this.isNetwork = quizFilterUpdate.isNetwork();
+        this.isDatabase = quizFilterUpdate.isDatabase();
+        this.isOS = quizFilterUpdate.isOperatingSystem();
+        this.isDataStructure = quizFilterUpdate.isDataStructure();
+        this.isJava = quizFilterUpdate.isJava();
+        this.isSpring = quizFilterUpdate.isSpring();
+        this.numOfProblem = quizFilterUpdate.getNumOfProblem();
     }
 }

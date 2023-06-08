@@ -1,7 +1,7 @@
 package com.sendquiz.quiz_filter.repository;
 
 import com.sendquiz.quiz_filter.domain.QuizFilter;
-import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 
 import java.util.List;
 import java.util.Optional;

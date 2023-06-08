@@ -2,8 +2,8 @@ package com.sendquiz.quiz.application;
 
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
-import com.sendquiz.quiz.presentation.request.QuizSave;
-import com.sendquiz.quiz.presentation.request.QuizUpdate;
+import com.sendquiz.quiz.dto.request.QuizSave;
+import com.sendquiz.quiz.dto.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

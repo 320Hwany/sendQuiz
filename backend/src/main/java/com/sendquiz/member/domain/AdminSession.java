@@ -15,14 +15,17 @@ public class AdminSession {
 
     private String email;
 
+    private String nickname;
+
     private String password;
 
     private Role role;
 
     @Builder
-    protected AdminSession(Long id, String email, String password, Role role) {
+    private AdminSession(Long id, String email, String nickname, String password, Role role) {
         this.id = id;
         this.email = email;
+        this.nickname = nickname;
         this.password = password;
         this.role = role;
     }
@@ -34,7 +37,9 @@ public class AdminSession {
         return AdminSession.builder()
                 .id(member.getId())
                 .email(member.getEmail())
+                .nickname(member.getNickname())
                 .password(member.getPassword())
+                .role(member.getRole())
                 .build();
     }
 }

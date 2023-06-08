@@ -5,7 +5,7 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.exception.MemberDuplicationException;
-import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

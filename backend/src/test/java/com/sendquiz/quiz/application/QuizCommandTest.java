@@ -3,7 +3,7 @@ package com.sendquiz.quiz.application;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.exception.SubjectNotMatchException;
-import com.sendquiz.quiz.presentation.request.QuizUpdate;
+import com.sendquiz.quiz.dto.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

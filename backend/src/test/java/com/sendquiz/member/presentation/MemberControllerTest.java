@@ -1,10 +1,10 @@
 package com.sendquiz.member.presentation;
 
 import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.member.presentation.request.MemberDelete;
-import com.sendquiz.member.presentation.request.MemberLogin;
-import com.sendquiz.member.presentation.request.MemberSignup;
-import com.sendquiz.member.presentation.request.MemberUpdate;
+import com.sendquiz.member.dto.request.MemberDelete;
+import com.sendquiz.member.dto.request.MemberLogin;
+import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

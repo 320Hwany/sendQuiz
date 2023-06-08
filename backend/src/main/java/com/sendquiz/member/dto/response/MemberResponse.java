@@ -1,4 +1,4 @@
-package com.sendquiz.member.presentation.response;
+package com.sendquiz.member.dto.response;
 
 import com.sendquiz.member.domain.MemberSession;
 import lombok.AccessLevel;

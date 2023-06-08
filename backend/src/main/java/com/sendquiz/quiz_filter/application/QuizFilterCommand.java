@@ -4,7 +4,7 @@ import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
-import com.sendquiz.quiz_filter.presentation.request.QuizFilterSave;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSave;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class QuizFilterCommand {
         Optional<QuizFilter> optionalQuizFilter = quizFilterRepository.findByMemberId(member.getId());
         if (optionalQuizFilter.isPresent()) {
             QuizFilter quizFilter = optionalQuizFilter.get();
-            quizFilter.update(quizFilterSave);
+            quizFilter.update(quizFilterSave.toQuizFilterUpdate());
         } else {
             QuizFilter quizFilter = quizFilterSave.toEntity(member);
             quizFilterRepository.save(quizFilter);

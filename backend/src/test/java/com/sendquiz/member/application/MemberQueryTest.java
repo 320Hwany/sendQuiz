@@ -5,7 +5,7 @@ import com.sendquiz.certification.exception.CertificationNotMatchException;
 import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.exception.MemberDuplicationException;
-import com.sendquiz.member.presentation.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.sendquiz.quiz_filter.presentation.request;
+package com.sendquiz.quiz_filter.dto.request;
 
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.quiz_filter.domain.QuizFilter;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class QuizFilterSave {
+public class QuizFilterUpdate {
 
     private boolean network;
 
@@ -26,8 +26,8 @@ public class QuizFilterSave {
     private int numOfProblem;
 
     @Builder
-    private QuizFilterSave(boolean network, boolean database, boolean operatingSystem,
-                          boolean dataStructure, boolean java, boolean spring, int numOfProblem) {
+    private QuizFilterUpdate(boolean network, boolean database, boolean operatingSystem, boolean dataStructure,
+                            boolean java, boolean spring, int numOfProblem) {
         this.network = network;
         this.database = database;
         this.operatingSystem = operatingSystem;

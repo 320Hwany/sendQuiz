@@ -1,14 +1,14 @@
 package com.sendquiz.member.presentation;
 
 import com.sendquiz.global.annotation.Login;
-import com.sendquiz.jwt.application.response.JwtResponse;
+import com.sendquiz.jwt.dto.response.JwtResponse;
 import com.sendquiz.member.application.MemberCommand;
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.presentation.request.MemberDelete;
-import com.sendquiz.member.presentation.request.MemberLogin;
-import com.sendquiz.member.presentation.request.MemberSignup;
-import com.sendquiz.member.presentation.request.MemberUpdate;
-import com.sendquiz.member.presentation.response.MemberResponse;
+import com.sendquiz.member.dto.request.MemberDelete;
+import com.sendquiz.member.dto.request.MemberLogin;
+import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.member.dto.request.MemberUpdate;
+import com.sendquiz.member.dto.response.MemberResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

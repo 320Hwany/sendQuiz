@@ -1,4 +1,4 @@
-package com.sendquiz.quiz.presentation.request;
+package com.sendquiz.quiz.dto.request;
 
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;

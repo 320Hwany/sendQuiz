@@ -1,9 +1,9 @@
 package com.sendquiz.member.application;
 
-import com.sendquiz.jwt.application.response.JwtResponse;
+import com.sendquiz.jwt.dto.response.JwtResponse;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
-import com.sendquiz.member.presentation.request.MemberLogin;
+import com.sendquiz.member.dto.request.MemberLogin;
 import com.sendquiz.member.repository.MemberRepository;
 import com.sendquiz.util.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;

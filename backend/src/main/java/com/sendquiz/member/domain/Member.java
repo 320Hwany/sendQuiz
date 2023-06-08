@@ -2,7 +2,7 @@ package com.sendquiz.member.domain;
 
 import com.sendquiz.global.BaseTimeEntity;
 import com.sendquiz.global.eumtype.Role;
-import com.sendquiz.member.presentation.request.MemberUpdate;
+import com.sendquiz.member.dto.request.MemberUpdate;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;

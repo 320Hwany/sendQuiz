@@ -1,12 +1,11 @@
 package com.sendquiz.quiz_filter.presentation;
 
-import com.sendquiz.member.presentation.request.MemberSignup;
-import com.sendquiz.quiz_filter.presentation.request.QuizFilterSave;
+import com.sendquiz.member.dto.request.MemberSignup;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSave;
 import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON;

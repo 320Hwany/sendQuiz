@@ -1,4 +1,4 @@
-package com.sendquiz.jwt.application.response;
+package com.sendquiz.jwt.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

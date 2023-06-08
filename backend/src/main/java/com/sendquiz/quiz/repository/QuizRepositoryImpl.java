@@ -5,7 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.exception.QuizNotFoundException;
-import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

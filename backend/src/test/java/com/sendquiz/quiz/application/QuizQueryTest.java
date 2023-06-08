@@ -2,10 +2,8 @@ package com.sendquiz.quiz.application;
 
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
-import com.sendquiz.quiz.exception.SubjectNotMatchException;
-import com.sendquiz.quiz.presentation.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
-import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

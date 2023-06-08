@@ -3,7 +3,7 @@ package com.sendquiz.quiz.application;
 import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.repository.QuizRepository;
-import com.sendquiz.quiz_filter.application.request.QuizFilterSearch;
+import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
