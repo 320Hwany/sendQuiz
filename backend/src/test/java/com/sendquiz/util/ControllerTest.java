@@ -11,11 +11,13 @@ import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.member.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.cache.CacheManager;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.sendquiz.util.TestConstant.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,12 +43,15 @@ public class ControllerTest {
     @Autowired
     protected PasswordEncoder passwordEncoder;
 
+    @Autowired
+    protected CacheManager cacheManager;
+
     protected MemberSignup saveMemberInRepository() {
         MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
                 .build();
 
         memberRepository.save(memberSignup.toEntity(passwordEncoder));
@@ -55,16 +60,16 @@ public class ControllerTest {
 
     protected MemberSignup saveAdminMemberInRepository() {
         MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
                 .build();
 
         Member member = Member.builder()
-                .email("test@email.com")
-                .nickname("test nickname")
-                .password(passwordEncoder.encode("test password"))
+                .email(TEST_EMAIL)
+                .nickname(TEST_NICKNAME)
+                .password(passwordEncoder.encode(TEST_PASSWORD))
                 .role(Role.ADMIN)
                 .build();
 

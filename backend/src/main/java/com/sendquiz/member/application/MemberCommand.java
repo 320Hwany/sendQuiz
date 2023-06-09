@@ -26,7 +26,6 @@ import static com.sendquiz.jwt.application.JwtService.*;
 import static com.sendquiz.jwt.dto.response.JwtResponse.toJwtResponse;
 import static com.sendquiz.jwt.domain.JwtRefreshToken.toEntity;
 
-
 @RequiredArgsConstructor
 @Transactional
 @Service

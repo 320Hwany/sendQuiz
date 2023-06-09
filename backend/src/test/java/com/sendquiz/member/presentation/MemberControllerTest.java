@@ -9,9 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_CACHE;
 import static com.sendquiz.global.constant.ErrorMessageConstant.*;
-import static com.sendquiz.global.constant.ValidMessageConstant.EMAIL_VALID_MESSAGE;
 import static com.sendquiz.global.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
+import static com.sendquiz.util.TestConstant.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -19,6 +20,95 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 class MemberControllerTest extends ControllerTest {
 
+    @Test
+    @DisplayName("입력한 조건과 인증번호가 일치하면 회원가입에 성공합니다")
+    void signup201() throws Exception {
+        // given 1
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
+                .build();
+
+        // given 2
+        cacheManager.getCache(CERTIFICATION_CACHE).put(TEST_EMAIL, TEST_CERTIFICATION_NUM);
+
+        String requestBody = objectMapper.writeValueAsString(memberSignup);
+
+        // expected
+        mockMvc.perform(post("/api/signup")
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    @DisplayName("입력한 조건에 맞는 인증번호가 일치하지 않으면 예외가 발생합니다")
+    void signup400CertificationNumNotMatch() throws Exception {
+        // given 1
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
+                .build();
+
+        // given 2
+        cacheManager.getCache(CERTIFICATION_CACHE).put(TEST_EMAIL, "일치하지 않는 인증번호");
+
+        String requestBody = objectMapper.writeValueAsString(memberSignup);
+
+        // expected
+        mockMvc.perform(post("/api/signup")
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value(CERTIFICATION_NOT_MATCH_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("입력한 조건에 맞지 않으면 예외가 발생합니다")
+    void signup400ValidException() throws Exception {
+        // given 1
+        MemberSignup memberSignup = MemberSignup.builder()
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname("")
+                .password(TEST_PASSWORD)
+                .build();
+
+        // given 2
+        cacheManager.getCache(CERTIFICATION_CACHE).put(TEST_EMAIL, TEST_CERTIFICATION_NUM);
+
+        String requestBody = objectMapper.writeValueAsString(memberSignup);
+
+        // expected
+        mockMvc.perform(post("/api/signup")
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.validation.nickname").value(NICKNAME_VALID_MESSAGE));
+    }
+
+    @Test
+    @DisplayName("이미 가입된 회원이면 예외가 발생합니다")
+    void signup400AlreadySignup() throws Exception {
+        // given 1
+        MemberSignup memberSignup = saveMemberInRepository();
+
+        // given 2
+        cacheManager.getCache(CERTIFICATION_CACHE).put("test@email.com", "abcdefgh");
+
+        String requestBody = objectMapper.writeValueAsString(memberSignup);
+
+        // expected
+        mockMvc.perform(post("/api/signup")
+                        .contentType(APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value(MEMBER_DUPLICATION_MESSAGE));
+    }
 
     @Test
     @DisplayName("회원정보가 일치하면 Jws를 반환합니다")
@@ -47,10 +137,10 @@ class MemberControllerTest extends ControllerTest {
     void login400NotMatch() throws Exception {
         // given 1
         MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
+                .email(TEST_EMAIL)
+                .certificationNum(TEST_CERTIFICATION_NUM)
+                .nickname(TEST_NICKNAME)
+                .password(TEST_PASSWORD)
                 .build();
 
         memberRepository.save(memberSignup.toEntity(passwordEncoder));
@@ -76,8 +166,8 @@ class MemberControllerTest extends ControllerTest {
     void login404NotFoundMember() throws Exception {
         // given 1
         MemberLogin memberLogin = MemberLogin.builder()
-                .email("test@email")
-                .password("test password")
+                .email(TEST_EMAIL)
+                .password(TEST_PASSWORD)
                 .build();
 
         String requestBody = objectMapper.writeValueAsString(memberLogin);
@@ -138,8 +228,8 @@ class MemberControllerTest extends ControllerTest {
     void delete() throws Exception {
         // given 1
         MemberDelete memberDelete = MemberDelete.builder()
-                .password("test password")
-                .passwordCheck("test password")
+                .password(TEST_PASSWORD)
+                .passwordCheck(TEST_PASSWORD)
                 .build();
 
         MemberSignup memberSignup = saveMemberInRepository();
@@ -161,7 +251,7 @@ class MemberControllerTest extends ControllerTest {
     void delete400() throws Exception {
         // given 1
         MemberDelete memberDelete = MemberDelete.builder()
-                .password("test password")
+                .password(TEST_PASSWORD)
                 .passwordCheck("wrong password")
                 .build();
 
@@ -185,8 +275,8 @@ class MemberControllerTest extends ControllerTest {
     void delete401() throws Exception {
         // given 1
         MemberDelete memberDelete = MemberDelete.builder()
-                .password("test password")
-                .passwordCheck("wrong password")
+                .password(TEST_PASSWORD)
+                .passwordCheck(TEST_PASSWORD)
                 .build();
 
         saveMemberInRepository();
