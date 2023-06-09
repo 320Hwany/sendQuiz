@@ -44,5 +44,7 @@ public class CommonConstant {
 
     public static final String QUIZ_LIST = "quizList";
 
+    public static final String CERTIFICATION_CACHE = "certificationCache";
+
     public static final String UTF_8 = "UTF-8";
 }

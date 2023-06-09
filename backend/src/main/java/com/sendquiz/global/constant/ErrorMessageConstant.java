@@ -43,4 +43,6 @@ public class ErrorMessageConstant {
     public static final String QUIZ_FILTER_NOT_FOUND_MESSAGE = "아직 이용하고 있는 서비스가 없습니다";
 
     public static final String EMAIL_NOT_SEND_MESSAGE = "이메일을 전송할 수 없습니다";
+
+    public static final String CACHE_NOT_FOUND_EXCEPTION = "캐시를 찾을 수 없습니다";
 }

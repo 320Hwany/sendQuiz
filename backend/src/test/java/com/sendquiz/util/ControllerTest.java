@@ -2,7 +2,6 @@ package com.sendquiz.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.global.eumtype.Role;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.application.MemberCommand;
@@ -35,9 +34,6 @@ public class ControllerTest {
 
     @Autowired
     protected MemberRepository memberRepository;
-
-    @Autowired
-    protected CertificationRepository certificationRepository;
 
     @Autowired
     protected JwtRepository jwtRepository;

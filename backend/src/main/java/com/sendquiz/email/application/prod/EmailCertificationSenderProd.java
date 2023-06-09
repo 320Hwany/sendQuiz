@@ -1,8 +1,6 @@
 package com.sendquiz.email.application.prod;
 
-import com.sendquiz.certification.application.CertificationCommand;
-import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.certification.repository.CertificationRepository;
+import com.sendquiz.certification.application.CertificationService;
 import com.sendquiz.email.application.EmailCertificationSender;
 import com.sendquiz.email.exception.EmailMessageException;
 import jakarta.mail.MessagingException;
@@ -13,7 +11,6 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -29,14 +26,14 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
 
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
-    private final CertificationCommand certificationCommand;
+    private final CertificationService certificationService;
 
     public void sendCertificationNum(String toEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
             String certificationNum = makeUUID();
-            certificationCommand.saveCertificationNum(toEmail, certificationNum);
+            certificationService.putCertificationNumberToCache(toEmail, certificationNum);
             helper.setTo(toEmail);
             helper.setSubject(EMAIL_SUBJECT);
             helper.setText(setContext(certificationNum), true);

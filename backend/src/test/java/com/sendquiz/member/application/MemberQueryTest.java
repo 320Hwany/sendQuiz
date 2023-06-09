@@ -1,8 +1,5 @@
 package com.sendquiz.member.application;
 
-import com.sendquiz.certification.domain.Certification;
-import com.sendquiz.certification.exception.CertificationNotMatchException;
-import com.sendquiz.certification.repository.CertificationRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.exception.MemberDuplicationException;
 import com.sendquiz.member.dto.request.MemberSignup;
@@ -29,9 +26,6 @@ public class MemberQueryTest {
 
     @Mock
     private MemberRepository memberRepository;
-
-    @Mock
-    private CertificationRepository certificationRepository;
 
     @Test
     @DisplayName("신규 회원이면 메소드를 통과합니다")
@@ -73,52 +67,4 @@ public class MemberQueryTest {
         assertThatThrownBy(() -> memberQuery.validateDuplicate(memberSignup))
                 .isInstanceOf(MemberDuplicationException.class);
     }
-
-    @Test
-    @DisplayName("인증번호가 일치하면 메소드를 통과합니다")
-    void validateCertificationNum200() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        Certification certification = Certification.builder()
-                .email(memberSignup.getEmail())
-                .certificationNum(memberSignup.getCertificationNum())
-                .build();
-
-        // stub
-        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
-
-        // when
-        memberQuery.validateCertificationNum(memberSignup);
-    }
-
-    @Test
-    @DisplayName("인증번호가 일치하지 않으면 예외가 발생합니다")
-    void validateCertificationNum400() {
-        // given
-        MemberSignup memberSignup = MemberSignup.builder()
-                .email("test@email.com")
-                .certificationNum("abcdefgh")
-                .nickname("test nickname")
-                .password("test password")
-                .build();
-
-        Certification certification = Certification.builder()
-                .email(memberSignup.getEmail())
-                .certificationNum("일치하지 않는 인증번호")
-                .build();
-
-        // stub
-        when(certificationRepository.getByEmail(memberSignup.getEmail())).thenReturn(certification);
-
-        // when
-        assertThatThrownBy(() -> memberQuery.validateCertificationNum(memberSignup))
-                .isInstanceOf(CertificationNotMatchException.class);
-    }
-
 }
