@@ -27,7 +27,7 @@ public class QuizController {
 
     @PostMapping("/quiz")
     public ResponseEntity<Void> saveQuiz(@AdminLogin AdminSession adminSession,
-                                     @RequestBody QuizSave quizSave) {
+                                         @RequestBody QuizSave quizSave) {
         quizCommand.save(quizSave);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -39,9 +39,9 @@ public class QuizController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/quiz")
+    @PostMapping("/quiz")
     public ResponseEntity<List<QuizPagingResponse>> getQuizzes(@Login MemberSession memberSession,
-                                                               @RequestBody QuizSearch quizSearch) {
+                                                               @ModelAttribute QuizSearch quizSearch) {
         List<QuizPagingResponse> pagingQuizzesResponse = quizQuery.findAllWithFilter(quizSearch);
         return ResponseEntity.ok(pagingQuizzesResponse);
     }
