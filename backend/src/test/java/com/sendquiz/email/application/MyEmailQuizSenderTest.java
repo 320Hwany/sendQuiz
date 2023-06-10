@@ -27,7 +27,7 @@ public class MyEmailQuizSenderTest {
                         .build()).toList();
 
         // when
-        emailQuizSenderTest.sendQuizList(randomQuizList, toMail);
+        emailQuizSenderTest.sendQuizzes(randomQuizList, toMail);
 
         // then
         ThreadLocal<SimpleMailMessage> testMailSender = emailQuizSenderTest.getTestMailSender();

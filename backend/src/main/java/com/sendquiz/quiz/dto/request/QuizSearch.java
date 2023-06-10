@@ -1,6 +1,5 @@
-package com.sendquiz.quiz_filter.dto.request;
+package com.sendquiz.quiz.dto.request;
 
-import com.querydsl.core.annotations.QueryProjection;
 import com.sendquiz.quiz.domain.Quiz;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -12,36 +11,32 @@ import static com.sendquiz.global.eumtype.Subject.SPRING;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class QuizFilterSearch {
+public class QuizSearch {
 
-    private boolean isNetwork;
+    private boolean network;
 
-    private boolean isDatabase;
+    private boolean database;
 
-    private boolean isOS;
+    private boolean operatingSystem;
 
-    private boolean isDataStructure;
+    private boolean dataStructure;
 
-    private boolean isJava;
+    private boolean java;
 
-    private boolean isSpring;
+    private boolean spring;
 
-    private int numOfProblem;
-
-    private String email;
+    private int page;
 
     @Builder
-    @QueryProjection
-    public QuizFilterSearch(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
-                            boolean isJava, boolean isSpring, int numOfProblem, String email) {
-        this.isNetwork = isNetwork;
-        this.isDatabase = isDatabase;
-        this.isOS = isOS;
-        this.isDataStructure = isDataStructure;
-        this.isJava = isJava;
-        this.isSpring = isSpring;
-        this.numOfProblem = numOfProblem;
-        this.email = email;
+    private QuizSearch(boolean network, boolean database, boolean operatingSystem,
+                      boolean dataStructure, boolean java, boolean spring, int page) {
+        this.network = network;
+        this.database = database;
+        this.operatingSystem = operatingSystem;
+        this.dataStructure = dataStructure;
+        this.java = java;
+        this.spring = spring;
+        this.page = page;
     }
 
     public boolean filterQuiz(Quiz quiz) {
@@ -59,7 +54,7 @@ public class QuizFilterSearch {
     }
 
     private boolean containOS(Quiz quiz) {
-        return isOS() && quiz.getSubject() == OPERATING_SYSTEM;
+        return isOperatingSystem() && quiz.getSubject() == OPERATING_SYSTEM;
     }
 
     private boolean containDataStructure(Quiz quiz) {

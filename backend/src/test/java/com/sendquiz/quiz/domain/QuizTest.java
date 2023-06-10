@@ -27,8 +27,8 @@ class QuizTest {
                 .build();
 
         // when
-        boolean conditionMeet = quiz.filterQuizList(quizFilterSearch1);
-        boolean conditionNotMeet = quiz.filterQuizList(quizFilterSearch2);
+        boolean conditionMeet = quiz.filterQuiz(quizFilterSearch1);
+        boolean conditionNotMeet = quiz.filterQuiz(quizFilterSearch2);
 
         // then
         assertThat(conditionMeet).isTrue();

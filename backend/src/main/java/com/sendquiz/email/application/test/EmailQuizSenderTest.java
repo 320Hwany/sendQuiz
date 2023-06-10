@@ -18,7 +18,7 @@ public class EmailQuizSenderTest implements EmailQuizSender {
 
     private ThreadLocal<SimpleMailMessage> testMailSender = new ThreadLocal<>();
 
-    public void sendQuizList(List<Quiz> randomQuizList, String toEmail) {
+    public void sendQuizzes(List<Quiz> randomQuizList, String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject(EMAIL_SUBJECT_TEST);

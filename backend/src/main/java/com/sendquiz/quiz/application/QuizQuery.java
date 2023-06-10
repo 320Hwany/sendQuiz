@@ -2,6 +2,9 @@ package com.sendquiz.quiz.application;
 
 import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.quiz.domain.Quiz;
+import com.sendquiz.quiz.dto.request.QuizSearch;
+import com.sendquiz.quiz.dto.response.QuizPagingResponse;
+import com.sendquiz.quiz.dto.response.QuizSearchResponse;
 import com.sendquiz.quiz.repository.QuizRepository;
 import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
@@ -21,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.sendquiz.global.constant.CommonConstant.QUIZ_CACHE;
 import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
+import static com.sendquiz.quiz.dto.response.QuizSearchResponse.toQuizResponse;
 import static java.util.Objects.requireNonNull;
 
 
@@ -36,29 +40,29 @@ public class QuizQuery {
     private final QuizRepository quizRepository;
 
     @Async
-    public void sendRandomQuizList() {
+    public void sendRandomQuizzes() {
         List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
 
         List<CompletableFuture<Void>> emailSendingFutures = quizFilterSearchList.stream()
                 .map(quizFilterSearch -> CompletableFuture.runAsync(() -> {
-                    List<Quiz> filteredQuizList = getFilteredQuizList(quizFilterSearch);
+                    List<Quiz> filteredQuizzes = getFilteredQuizzes(quizFilterSearch);
 
-                    Collections.shuffle(filteredQuizList);
-                    List<Quiz> randomQuizList = filteredQuizList.stream()
+                    Collections.shuffle(filteredQuizzes);
+                    List<Quiz> randomQuizzes = filteredQuizzes.stream()
                             .limit(quizFilterSearch.getNumOfProblem())
                             .toList();
 
-                    emailQuizSender.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
+                    emailQuizSender.sendQuizzes(randomQuizzes, quizFilterSearch.getEmail());
                 }))
                 .toList();
 
         CompletableFuture.allOf(emailSendingFutures.toArray(new CompletableFuture[0])).join();
     }
 
-    protected List<Quiz> getFilteredQuizList(QuizFilterSearch quizFilterSearch) {
+    protected List<Quiz> getFilteredQuizzes(QuizFilterSearch quizFilterSearch) {
         return new ArrayList<>(findAll()
                 .stream()
-                .filter(q -> q.filterQuizList(quizFilterSearch))
+                .filter(q -> q.filterQuiz(quizFilterSearch))
                 .toList());
     }
 
@@ -76,12 +80,26 @@ public class QuizQuery {
         return quizList;
     }
 
-    // todo 성능 테스트로 비교해보기
-//    public void sendRandomQuizList() {
-//        List<QuizFilterSearch> quizFilterSearchList = quizFilterRepository.findAllQuizFilterSearch();
-//        for (QuizFilterSearch quizFilterSearch : quizFilterSearchList) {
-//            List<Quiz> randomQuizList = quizRepository.findRandomQuizList(quizFilterSearch);
-//            emailQuizSenderProd.sendQuizList(randomQuizList, quizFilterSearch.getEmail());
-//        }
-//    }
+    public List<QuizPagingResponse> findAllWithFilter(QuizSearch quizSearch) {
+        List<Quiz> quizzes = findAll();
+        List<QuizSearchResponse> filterQuizzes = new ArrayList<>();
+        List<QuizPagingResponse> pagingQuizzes = new ArrayList<>();
+
+        for (Quiz quiz : quizzes) {
+            if (quiz.filterQuiz(quizSearch)) {
+                filterQuizzes.add(toQuizResponse(quiz));
+            }
+        }
+
+        int startIndex = (quizSearch.getPage() - 1) * 10;
+        for (int i = startIndex; i < filterQuizzes.size(); i++) {
+            QuizSearchResponse quizSearchResponse = filterQuizzes.get(i);
+            pagingQuizzes.add(QuizPagingResponse.toQuizPagingResponse(quizSearchResponse, i));
+            if (pagingQuizzes.size() == 10) {
+                break;
+            }
+        }
+
+        return pagingQuizzes;
+    }
 }

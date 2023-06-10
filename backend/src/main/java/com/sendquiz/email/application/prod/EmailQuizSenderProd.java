@@ -31,7 +31,7 @@ public class EmailQuizSenderProd implements EmailQuizSender {
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
 
-    public void sendQuizList(List<Quiz> randomQuizList, String toEmail) {
+    public void sendQuizzes(List<Quiz> randomQuizList, String toEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);

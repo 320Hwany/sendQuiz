@@ -29,7 +29,7 @@ public class ScheduledTasks {
     @Scheduled(cron = NINE_AM)
     public void sendQuizAt9AM() {
         log.info("NINE_AM sendQuizAt9AM");
-        quizQuery.sendRandomQuizList();
+        quizQuery.sendRandomQuizzes();
     }
 
     @Scheduled(cron = EIGHT_AM)

@@ -39,7 +39,7 @@ public class MemberController {
     }
 
     @GetMapping("/member")
-    public ResponseEntity<MemberResponse> get(@Login MemberSession memberSession) {
+    public ResponseEntity<MemberResponse> getMember(@Login MemberSession memberSession) {
         MemberResponse memberResponse = getMemberResponse(memberSession);
         return ResponseEntity.ok(memberResponse);
     }
@@ -51,14 +51,14 @@ public class MemberController {
     }
 
     @PostMapping("/withdrawal")
-    public ResponseEntity<Void> delete(@Login MemberSession memberSession,
+    public ResponseEntity<Void> deleteMember(@Login MemberSession memberSession,
                                        @RequestBody MemberDelete memberDelete) {
         memberCommand.delete(memberSession, memberDelete);
         return ResponseEntity.ok().build();
     }
 
     @PatchMapping("/member")
-    public ResponseEntity<Void> update(@Login MemberSession memberSession,
+    public ResponseEntity<Void> updateMember(@Login MemberSession memberSession,
                                        @RequestBody @Valid MemberUpdate memberUpdate) {
         memberCommand.update(memberSession, memberUpdate);
         return ResponseEntity.ok().build();

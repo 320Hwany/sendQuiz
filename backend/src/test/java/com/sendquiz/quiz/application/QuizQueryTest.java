@@ -64,8 +64,8 @@ class QuizQueryTest {
         when(quizRepository.findAll()).thenReturn(quizList);
 
         // when
-        List<Quiz> filteredQuizList1 = quizQuery.getFilteredQuizList(quizFilterSearch1);
-        List<Quiz> filteredQuizList2 = quizQuery.getFilteredQuizList(quizFilterSearch2);
+        List<Quiz> filteredQuizList1 = quizQuery.getFilteredQuizzes(quizFilterSearch1);
+        List<Quiz> filteredQuizList2 = quizQuery.getFilteredQuizzes(quizFilterSearch2);
 
         // then
         assertThat(filteredQuizList1).hasSize(10);

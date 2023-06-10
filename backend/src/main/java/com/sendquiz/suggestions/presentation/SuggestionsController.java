@@ -20,7 +20,7 @@ public class SuggestionsController {
     private final SuggestionsCommand suggestionsCommand;
 
     @PostMapping("/suggestions")
-    public ResponseEntity<Void> save(@Login MemberSession memberSession,
+    public ResponseEntity<Void> saveSuggestions(@Login MemberSession memberSession,
                                      @RequestBody SuggestionsSave suggestionsSave) {
         suggestionsCommand.save(memberSession, suggestionsSave);
         return ResponseEntity.status(HttpStatus.CREATED).build();

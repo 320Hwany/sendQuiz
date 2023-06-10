@@ -20,14 +20,14 @@ public class QuizFilterController {
     private final QuizFilterQuery quizFilterQuery;
 
     @PostMapping("/quizFilter")
-    public ResponseEntity<Void> save(@Login MemberSession memberSession,
+    public ResponseEntity<Void> saveQuizFilter(@Login MemberSession memberSession,
                                      @RequestBody QuizFilterSave quizFilterSave) {
         quizFilterCommand.save(quizFilterSave, memberSession);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/quizFilter")
-    public ResponseEntity<QuizFilterResponse> get(@Login MemberSession memberSession) {
+    public ResponseEntity<QuizFilterResponse> getQuizFilter(@Login MemberSession memberSession) {
         return ResponseEntity.ok(quizFilterQuery.get(memberSession.getId()));
     }
 }

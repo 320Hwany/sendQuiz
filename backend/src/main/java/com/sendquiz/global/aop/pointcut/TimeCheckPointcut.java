@@ -7,6 +7,6 @@ public class TimeCheckPointcut {
     @Pointcut("execution(* com.sendquiz..presentation.*.*(..))")
     public void allPresentation() {}
 
-    @Pointcut("execution(* com.sendquiz.quiz.application.QuizQuery.sendRandomQuizList(..))")
+    @Pointcut("execution(* com.sendquiz.quiz.application.QuizQuery.sendRandomQuizzes(..))")
     public void sendRandomQuizList() {}
 }
