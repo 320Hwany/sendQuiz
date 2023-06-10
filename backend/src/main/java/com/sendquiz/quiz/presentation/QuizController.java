@@ -39,7 +39,7 @@ public class QuizController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/quiz")
+    @GetMapping("/quiz")
     public ResponseEntity<List<QuizPagingResponse>> getQuizzes(@Login MemberSession memberSession,
                                                                @ModelAttribute QuizSearch quizSearch) {
         List<QuizPagingResponse> pagingQuizzesResponse = quizQuery.findAllWithFilter(quizSearch);
