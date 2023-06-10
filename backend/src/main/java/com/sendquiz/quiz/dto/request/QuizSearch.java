@@ -1,15 +1,13 @@
 package com.sendquiz.quiz.dto.request;
 
 import com.sendquiz.quiz.domain.Quiz;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static com.sendquiz.global.eumtype.Subject.*;
 import static com.sendquiz.global.eumtype.Subject.SPRING;
 
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizSearch {
 

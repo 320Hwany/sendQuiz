@@ -28,7 +28,7 @@ public class QuizPagingResponse {
 
     public static QuizPagingResponse toQuizPagingResponse(QuizSearchResponse quizSearchResponse, int number) {
         return QuizPagingResponse.builder()
-                .number(number)
+                .number(number + 1)
                 .problem(quizSearchResponse.getProblem())
                 .answer(quizSearchResponse.getAnswer())
                 .subject(quizSearchResponse.getSubject())
