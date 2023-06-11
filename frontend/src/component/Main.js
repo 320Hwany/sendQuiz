@@ -5,12 +5,12 @@ import {ListGroup, ListGroupItem} from "react-bootstrap";
 
 function Main() {
     const [nickname, setNickname] = useState('');
-    const [network, setNetwork] = useState(false);
-    const [database, setDatabase] = useState(false);
-    const [os, setOS] = useState(false);
-    const [dataStructure, setDataStructure] = useState(false);
-    const [java, setJava] = useState(false);
-    const [spring, setSpring] = useState(false);
+    const [isNetwork, setIsNetwork] = useState(false);
+    const [isDatabase, setIsDatabase] = useState(false);
+    const [isOS, setIsOS] = useState(false);
+    const [isDataStructure, setIsDataStructure] = useState(false);
+    const [isJava, setIsJava] = useState(false);
+    const [isSpring, setIsSpring] = useState(false);
     const [numOfProblem, setNumOfProblem] = useState(0);
     const navigate = useNavigate();
 
@@ -44,12 +44,12 @@ function Main() {
                 if (response.data.accessToken != null) {
                     localStorage.setItem("Access_token", response.data.accessToken);
                 }
-                setNetwork(response.data.network);
-                setDatabase(response.data.database);
-                setOS(response.data.os);
-                setDataStructure(response.data.dataStructure);
-                setJava(response.data.java);
-                setSpring(response.data.spring);
+                setIsNetwork(response.data.isNetwork);
+                setIsDatabase(response.data.isDatabase);
+                setIsOS(response.data.isOS);
+                setIsDataStructure(response.data.isDataStructure);
+                setIsJava(response.data.isJava);
+                setIsSpring(response.data.isSpring);
                 setNumOfProblem(response.data.numOfProblem);
             })
             .catch(error => {
@@ -78,16 +78,16 @@ function Main() {
                 <div className="col-lg-8 mx-auto">
                     <div className="text-center py-5">
                         <h1 className="display-4">{nickname}님 반갑습니다!</h1>
-                        {network || database || os || dataStructure || java || spring || numOfProblem !== 0 ? (
+                        {isNetwork || isDatabase || isOS || isDataStructure || isJava || isSpring || numOfProblem !== 0 ? (
                             <>
                                 <h2 className="my-3">현재 이용중인 서비스</h2>
                                 <ListGroup>
-                                    {network && <ListGroupItem>네트워크</ListGroupItem>}
-                                    {database && <ListGroupItem>데이터베이스</ListGroupItem>}
-                                    {os && <ListGroupItem>운영체제</ListGroupItem>}
-                                    {dataStructure && <ListGroupItem>자료구조</ListGroupItem>}
-                                    {java && <ListGroupItem>자바</ListGroupItem>}
-                                    {spring && <ListGroupItem>스프링</ListGroupItem>}
+                                    {isNetwork && <ListGroupItem>네트워크</ListGroupItem>}
+                                    {isDatabase && <ListGroupItem>데이터베이스</ListGroupItem>}
+                                    {isOS && <ListGroupItem>운영체제</ListGroupItem>}
+                                    {isDataStructure && <ListGroupItem>자료구조</ListGroupItem>}
+                                    {isJava && <ListGroupItem>자바</ListGroupItem>}
+                                    {isSpring && <ListGroupItem>스프링</ListGroupItem>}
                                     {numOfProblem !== 0 && (
                                         <ListGroupItem>{numOfProblem}문제</ListGroupItem>
                                     )}
