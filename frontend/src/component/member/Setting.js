@@ -26,12 +26,12 @@ function Setting() {
 
     const [options,
         setOptions] = useState({
-        network: false,
-        database: false,
-        operatingSystem: false,
-        dataStructure: false,
-        java: false,
-        spring: false,
+        isNetwork: false,
+        isDatabase: false,
+        isOS: false,
+        isDataStructure: false,
+        isJava: false,
+        isSpring: false,
         numOfProblem: 5
     });
 
@@ -70,38 +70,38 @@ function Setting() {
                 style={{ maxWidth: '400px', margin: '0 auto' }}>
                 <button
                     className={`btn ${
-                        options.network ? 'btn-primary' : 'btn-outline-primary'
+                        options.isNetwork ? 'btn-primary' : 'btn-outline-primary'
                     }`}
                     type="button"
                     onClick={() =>
                         handleOptionChange({
-                            target: { name: 'network', checked: !options.network },
+                            target: { name: 'isNetwork', checked: !options.isNetwork },
                         })
                     }>
                     네트워크
                 </button>
                 <button
                     className={`btn ${
-                        options.database ? 'btn-primary' : 'btn-outline-primary'
+                        options.isDatabase ? 'btn-primary' : 'btn-outline-primary'
                     }`}
                     type="button"
                     onClick={() =>
                         handleOptionChange({
-                            target: { name: 'database', checked: !options.database },
+                            target: { name: 'isDatabase', checked: !options.isDatabase },
                         })
                     }>
                     데이터베이스
                 </button>
                 <button
                     className={`btn ${
-                        options.operatingSystem ? 'btn-primary' : 'btn-outline-primary'
+                        options.isOS ? 'btn-primary' : 'btn-outline-primary'
                     }`}
                     type="button"
                     onClick={() =>
                         handleOptionChange({
                             target: {
-                                name: 'operatingSystem',
-                                checked: !options.operatingSystem,
+                                name: 'isOS',
+                                checked: !options.isOS,
                             },
                         })
                     }>
@@ -109,31 +109,31 @@ function Setting() {
                 </button>
                 <button
                     className={`btn ${
-                        options.dataStructure ? 'btn-primary' : 'btn-outline-primary'
+                        options.isDataStructure ? 'btn-primary' : 'btn-outline-primary'
                     }`}
                     type="button"
                     onClick={() =>
                         handleOptionChange({
-                            target: { name: 'dataStructure', checked: !options.dataStructure },
+                            target: { name: 'isDataStructure', checked: !options.isDataStructure },
                         })
                     }>
                     자료구조
                 </button>
                 <button
-                    className={`btn ${options.java ? 'btn-primary' : 'btn-outline-primary'}`}
+                    className={`btn ${options.isJava ? 'btn-primary' : 'btn-outline-primary'}`}
                     type="button"
                     onClick={() =>
-                        handleOptionChange({ target: { name: 'java', checked: !options.java } })
+                        handleOptionChange({ target: { name: 'isJava', checked: !options.isJava } })
                     }>
                     자바
                 </button>
                 <button
                     className={`btn ${
-                        options.spring ? 'btn-primary' : 'btn-outline-primary'
+                        options.isSpring ? 'btn-primary' : 'btn-outline-primary'
                     }`}
                     type="button"
                     onClick={() =>
-                        handleOptionChange({ target: { name: 'spring', checked: !options.spring } })
+                        handleOptionChange({ target: { name: 'isSpring', checked: !options.isSpring } })
                     }>
                     스프링
                 </button>

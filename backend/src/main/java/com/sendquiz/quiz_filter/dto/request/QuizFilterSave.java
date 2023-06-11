@@ -44,7 +44,7 @@ public class QuizFilterSave {
                 .member(member)
                 .isNetwork(isNetwork != null ? isNetwork : FALSE)
                 .isDatabase(isDatabase != null ? isDatabase : FALSE)
-                .isOS(isOS != null ? isOS : false)
+                .isOS(isOS != null ? isOS : FALSE)
                 .isDataStructure(isDataStructure != null ? isDataStructure : FALSE)
                 .isJava(isJava != null ? isJava : FALSE)
                 .isSpring(isSpring != null ? isSpring : FALSE)
