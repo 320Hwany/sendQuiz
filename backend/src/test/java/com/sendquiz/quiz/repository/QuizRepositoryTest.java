@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QuizRepositoryTest extends RepositoryTest {
@@ -23,32 +25,32 @@ public class QuizRepositoryTest extends RepositoryTest {
 
         // given 2
         QuizFilterSearch quizFilterSearch1 = QuizFilterSearch.builder()
-                .isNetwork(true)
-                .isDatabase(false)
-                .isOS(false)
-                .isDataStructure(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(TRUE)
+                .isDatabase(FALSE)
+                .isOS(FALSE)
+                .isDataStructure(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .numOfProblem(5)
                 .build();
 
         QuizFilterSearch quizFilterSearch2 = QuizFilterSearch.builder()
-                .isNetwork(false)
-                .isDatabase(false)
-                .isOS(false)
-                .isDataStructure(false)
-                .isJava(true)
-                .isSpring(false)
+                .isNetwork(FALSE)
+                .isDatabase(FALSE)
+                .isOS(FALSE)
+                .isDataStructure(FALSE)
+                .isJava(TRUE)
+                .isSpring(FALSE)
                 .numOfProblem(3)
                 .build();
 
         QuizFilterSearch quizFilterSearch3 = QuizFilterSearch.builder()
-                .isNetwork(false)
-                .isDatabase(false)
-                .isOS(false)
-                .isDataStructure(true)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(FALSE)
+                .isDatabase(FALSE)
+                .isOS(FALSE)
+                .isDataStructure(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .numOfProblem(5)
                 .build();
 

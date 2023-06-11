@@ -6,6 +6,8 @@ import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.*;
 
 class QuizTest {
@@ -19,21 +21,21 @@ class QuizTest {
                 .build();
 
         QuizFilterSearch quizFilterSearch1 = QuizFilterSearch.builder()
-                .isNetwork(true)
-                .isDatabase(false)
-                .isDataStructure(false)
-                .isOS(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(TRUE)
+                .isDatabase(FALSE)
+                .isDataStructure(FALSE)
+                .isOS(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .build();
 
         QuizFilterSearch quizFilterSearch2 = QuizFilterSearch.builder()
-                .isNetwork(false)
-                .isDatabase(false)
-                .isDataStructure(false)
-                .isOS(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(FALSE)
+                .isDatabase(FALSE)
+                .isDataStructure(FALSE)
+                .isOS(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .build();
 
         // when

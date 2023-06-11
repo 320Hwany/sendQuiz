@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static java.lang.Boolean.FALSE;
+
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizFilterSave {
@@ -40,12 +42,12 @@ public class QuizFilterSave {
     public QuizFilter toEntity(Member member) {
         return QuizFilter.builder()
                 .member(member)
-                .isNetwork(isNetwork != null ? isNetwork : false)
-                .isDatabase(isDatabase != null ? isDatabase : false)
+                .isNetwork(isNetwork != null ? isNetwork : FALSE)
+                .isDatabase(isDatabase != null ? isDatabase : FALSE)
                 .isOS(isOS != null ? isOS : false)
-                .isDataStructure(isDataStructure != null ? isDataStructure : false)
-                .isJava(isJava != null ? isJava : false)
-                .isSpring(isSpring != null ? isSpring : false)
+                .isDataStructure(isDataStructure != null ? isDataStructure : FALSE)
+                .isJava(isJava != null ? isJava : FALSE)
+                .isSpring(isSpring != null ? isSpring : FALSE)
                 .numOfProblem(numOfProblem)
                 .build();
     }
@@ -53,12 +55,12 @@ public class QuizFilterSave {
 
     public QuizFilterUpdate toQuizFilterUpdate() {
         return QuizFilterUpdate.builder()
-                .isNetwork(isNetwork != null ? isNetwork : false)
-                .isDatabase(isDatabase != null ? isDatabase : false)
-                .isOS(isOS != null ? isOS : false)
-                .isDataStructure(isDataStructure != null ? isDataStructure : false)
-                .isJava(isJava != null ? isJava : false)
-                .isSpring(isSpring != null ? isSpring : false)
+                .isNetwork(isNetwork != null ? isNetwork : FALSE)
+                .isDatabase(isDatabase != null ? isDatabase : FALSE)
+                .isOS(isOS != null ? isOS : FALSE)
+                .isDataStructure(isDataStructure != null ? isDataStructure : FALSE)
+                .isJava(isJava != null ? isJava : FALSE)
+                .isSpring(isSpring != null ? isSpring : FALSE)
                 .numOfProblem(numOfProblem)
                 .build();
     }

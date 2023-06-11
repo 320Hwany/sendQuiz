@@ -28,6 +28,8 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -63,21 +65,21 @@ class QuizQueryTest {
 
         // given 2
         QuizFilterSearch quizFilterSearch1 = QuizFilterSearch.builder()
-                .isNetwork(true)
-                .isDatabase(false)
-                .isDataStructure(false)
-                .isOS(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(TRUE)
+                .isDatabase(FALSE)
+                .isDataStructure(FALSE)
+                .isOS(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .build();
 
         QuizFilterSearch quizFilterSearch2 = QuizFilterSearch.builder()
-                .isNetwork(false)
-                .isDatabase(true)
-                .isDataStructure(false)
-                .isOS(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(FALSE)
+                .isDatabase(TRUE)
+                .isDataStructure(FALSE)
+                .isOS(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .build();
 
         // given 3
@@ -166,12 +168,12 @@ class QuizQueryTest {
 
         // given 2
         QuizSearch quizSearch = QuizSearch.builder()
-                .isNetwork(true)
-                .isDatabase(false)
-                .isDataStructure(false)
-                .isOS(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(TRUE)
+                .isDatabase(FALSE)
+                .isDataStructure(FALSE)
+                .isOS(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .page(1)
                 .build();
 

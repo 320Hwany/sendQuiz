@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static com.sendquiz.global.eumtype.Subject.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -33,7 +34,7 @@ public class QuizCommandTest {
         Quiz quiz = Quiz.builder()
                 .problem("수정전 문제")
                 .answer("수정전 답")
-                .subject(Subject.JAVA)
+                .subject(JAVA)
                 .build();
 
         QuizUpdate quizUpdate = QuizUpdate.builder()
@@ -50,7 +51,7 @@ public class QuizCommandTest {
 
         // then
         assertThat(quiz).extracting("problem", "answer", "subject")
-                .contains("수정후 문제", "수정후 답", Subject.NETWORK);
+                .contains("수정후 문제", "수정후 답", NETWORK);
     }
 
     @Test
@@ -60,7 +61,7 @@ public class QuizCommandTest {
         Quiz quiz = Quiz.builder()
                 .problem("수정전 문제")
                 .answer("수정전 답")
-                .subject(Subject.JAVA)
+                .subject(JAVA)
                 .build();
 
         QuizUpdate quizUpdate = QuizUpdate.builder()

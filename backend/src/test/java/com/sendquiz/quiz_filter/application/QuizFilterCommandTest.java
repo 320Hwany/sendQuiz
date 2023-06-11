@@ -15,6 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -64,11 +66,11 @@ class QuizFilterCommandTest {
     void saveAlreadyExist() {
         // given
         QuizFilter quizFilter = QuizFilter.builder()
-                .isNetwork(false)
+                .isNetwork(FALSE)
                 .build();
 
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .isNetwork(true)
+                .isNetwork(TRUE)
                 .build();
 
         Member member = Member.builder()

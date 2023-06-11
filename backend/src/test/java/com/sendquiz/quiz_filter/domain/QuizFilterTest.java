@@ -4,6 +4,8 @@ import com.sendquiz.quiz_filter.dto.request.QuizFilterUpdate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -14,22 +16,22 @@ class QuizFilterTest {
     void update() {
         // given
         QuizFilter quizFilter = QuizFilter.builder()
-                .isNetwork(true)
-                .isDatabase(true)
-                .isOS(true)
-                .isDataStructure(true)
-                .isJava(true)
-                .isSpring(true)
+                .isNetwork(TRUE)
+                .isDatabase(TRUE)
+                .isOS(TRUE)
+                .isDataStructure(TRUE)
+                .isJava(TRUE)
+                .isSpring(TRUE)
                 .numOfProblem(7)
                 .build();
 
         QuizFilterUpdate quizFilterUpdate = QuizFilterUpdate.builder()
-                .isNetwork(false)
-                .isDatabase(false)
-                .isOS(false)
-                .isDataStructure(false)
-                .isJava(false)
-                .isSpring(false)
+                .isNetwork(FALSE)
+                .isDatabase(FALSE)
+                .isOS(FALSE)
+                .isDataStructure(FALSE)
+                .isJava(FALSE)
+                .isSpring(FALSE)
                 .numOfProblem(5)
                 .build();
 

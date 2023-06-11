@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
+import static java.lang.Boolean.TRUE;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -21,7 +22,7 @@ class QuizFilterControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .isNetwork(true)
+                .isNetwork(TRUE)
                 .build();
 
         String requestBody = objectMapper.writeValueAsString(quizFilterSave);

@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+
 @AcceptanceTest
 public class RepositoryTest {
 
@@ -77,12 +80,12 @@ public class RepositoryTest {
         List<QuizFilter> networkQuizFilterList = LongStream.range(1, 6)
                 .mapToObj(i -> QuizFilter.builder()
                         .member(memberList.get((int) (i - 1)))
-                        .isNetwork(true)
-                        .isDatabase(false)
-                        .isOS(false)
-                        .isDataStructure(false)
-                        .isJava(false)
-                        .isSpring(false)
+                        .isNetwork(TRUE)
+                        .isDatabase(FALSE)
+                        .isOS(FALSE)
+                        .isDataStructure(FALSE)
+                        .isJava(FALSE)
+                        .isSpring(FALSE)
                         .numOfProblem(5)
                         .build())
                 .toList();
@@ -90,12 +93,12 @@ public class RepositoryTest {
         List<QuizFilter> databaseQuizFilterList = LongStream.range(6, 11)
                 .mapToObj(i -> QuizFilter.builder()
                         .member(memberList.get((int) (i - 1)))
-                        .isNetwork(false)
-                        .isDatabase(true)
-                        .isOS(false)
-                        .isDataStructure(false)
-                        .isJava(false)
-                        .isSpring(false)
+                        .isNetwork(FALSE)
+                        .isDatabase(TRUE)
+                        .isOS(FALSE)
+                        .isDataStructure(FALSE)
+                        .isJava(FALSE)
+                        .isSpring(FALSE)
                         .numOfProblem(5)
                         .build())
                 .toList();
