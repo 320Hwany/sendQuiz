@@ -21,7 +21,7 @@ class QuizFilterControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .network(true)
+                .isNetwork(true)
                 .build();
 
         String requestBody = objectMapper.writeValueAsString(quizFilterSave);

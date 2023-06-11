@@ -64,10 +64,20 @@ class QuizQueryTest {
         // given 2
         QuizFilterSearch quizFilterSearch1 = QuizFilterSearch.builder()
                 .isNetwork(true)
+                .isDatabase(false)
+                .isDataStructure(false)
+                .isOS(false)
+                .isJava(false)
+                .isSpring(false)
                 .build();
 
         QuizFilterSearch quizFilterSearch2 = QuizFilterSearch.builder()
+                .isNetwork(false)
                 .isDatabase(true)
+                .isDataStructure(false)
+                .isOS(false)
+                .isJava(false)
+                .isSpring(false)
                 .build();
 
         // given 3
@@ -156,9 +166,12 @@ class QuizQueryTest {
 
         // given 2
         QuizSearch quizSearch = QuizSearch.builder()
-                .network(true)
-                .database(false)
-                .spring(false)
+                .isNetwork(true)
+                .isDatabase(false)
+                .isDataStructure(false)
+                .isOS(false)
+                .isJava(false)
+                .isSpring(false)
                 .page(1)
                 .build();
 

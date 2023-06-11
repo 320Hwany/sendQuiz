@@ -11,53 +11,54 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizFilterSave {
 
-    private boolean network;
+    private Boolean isNetwork;
 
-    private boolean database;
+    private Boolean isDatabase;
 
-    private boolean operatingSystem;
+    private Boolean isOS;
 
-    private boolean dataStructure;
+    private Boolean isDataStructure;
 
-    private boolean java;
+    private Boolean isJava;
 
-    private boolean spring;
+    private Boolean isSpring;
 
     private int numOfProblem;
 
     @Builder
-    private QuizFilterSave(boolean network, boolean database, boolean operatingSystem,
-                          boolean dataStructure, boolean java, boolean spring, int numOfProblem) {
-        this.network = network;
-        this.database = database;
-        this.operatingSystem = operatingSystem;
-        this.dataStructure = dataStructure;
-        this.java = java;
-        this.spring = spring;
+    private QuizFilterSave(Boolean isNetwork, Boolean isDatabase, Boolean isOS,
+                           Boolean isDataStructure, Boolean isJava, Boolean isSpring, int numOfProblem) {
+        this.isNetwork = isNetwork;
+        this.isDatabase = isDatabase;
+        this.isOS = isOS;
+        this.isDataStructure = isDataStructure;
+        this.isJava = isJava;
+        this.isSpring = isSpring;
         this.numOfProblem = numOfProblem;
     }
 
     public QuizFilter toEntity(Member member) {
         return QuizFilter.builder()
                 .member(member)
-                .isNetwork(network)
-                .isDatabase(database)
-                .isOS(operatingSystem)
-                .isDataStructure(dataStructure)
-                .isJava(java)
-                .isSpring(spring)
+                .isNetwork(isNetwork != null ? isNetwork : false)
+                .isDatabase(isDatabase != null ? isDatabase : false)
+                .isOS(isOS != null ? isOS : false)
+                .isDataStructure(isDataStructure != null ? isDataStructure : false)
+                .isJava(isJava != null ? isJava : false)
+                .isSpring(isSpring != null ? isSpring : false)
                 .numOfProblem(numOfProblem)
                 .build();
     }
 
+
     public QuizFilterUpdate toQuizFilterUpdate() {
         return QuizFilterUpdate.builder()
-                .network(network)
-                .database(database)
-                .operatingSystem(operatingSystem)
-                .dataStructure(dataStructure)
-                .java(java)
-                .spring(spring)
+                .isNetwork(isNetwork != null ? isNetwork : false)
+                .isDatabase(isDatabase != null ? isDatabase : false)
+                .isOS(isOS != null ? isOS : false)
+                .isDataStructure(isDataStructure != null ? isDataStructure : false)
+                .isJava(isJava != null ? isJava : false)
+                .isSpring(isSpring != null ? isSpring : false)
                 .numOfProblem(numOfProblem)
                 .build();
     }

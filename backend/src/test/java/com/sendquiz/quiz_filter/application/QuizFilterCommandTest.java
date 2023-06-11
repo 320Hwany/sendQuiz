@@ -36,7 +36,7 @@ class QuizFilterCommandTest {
     void save() {
         // given
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .network(true)
+                .isNetwork(true)
                 .build();
 
         Member member = Member.builder()
@@ -68,7 +68,7 @@ class QuizFilterCommandTest {
                 .build();
 
         QuizFilterSave quizFilterSave = QuizFilterSave.builder()
-                .network(true)
+                .isNetwork(true)
                 .build();
 
         Member member = Member.builder()
@@ -89,6 +89,6 @@ class QuizFilterCommandTest {
 
         // then
         verify(quizFilterRepository, times(0)).save(any());
-        assertThat(quizFilter.isNetwork()).isTrue();
+        assertThat(quizFilter.getIsNetwork()).isTrue();
     }
 }

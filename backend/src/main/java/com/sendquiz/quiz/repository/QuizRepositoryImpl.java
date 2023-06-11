@@ -87,26 +87,26 @@ public class QuizRepositoryImpl implements QuizRepository {
     }
 
     private BooleanExpression networkTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isNetwork() ? quiz.subject.eq(Subject.NETWORK) : null;
+        return quizFilterSearch.getIsNetwork() ? quiz.subject.eq(Subject.NETWORK) : null;
     }
 
     private BooleanExpression databaseTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isDatabase() ? quiz.subject.eq(Subject.DATA_BASE) : null;
+        return quizFilterSearch.getIsDatabase() ? quiz.subject.eq(Subject.DATA_BASE) : null;
     }
 
     private BooleanExpression operatingSystemTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isOS() ? quiz.subject.eq(Subject.OPERATING_SYSTEM) : null;
+        return quizFilterSearch.getIsOS() ? quiz.subject.eq(Subject.OPERATING_SYSTEM) : null;
     }
 
     private BooleanExpression dataStructureTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isDataStructure() ? quiz.subject.eq(Subject.DATA_STRUCTURE) : null;
+        return quizFilterSearch.getIsDataStructure() ? quiz.subject.eq(Subject.DATA_STRUCTURE) : null;
     }
 
     private BooleanExpression javaTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isJava() ? quiz.subject.eq(Subject.JAVA) : null;
+        return quizFilterSearch.getIsJava() ? quiz.subject.eq(Subject.JAVA) : null;
     }
 
     private BooleanExpression springTrue(QuizFilterSearch quizFilterSearch) {
-        return quizFilterSearch.isSpring() ? quiz.subject.eq(Subject.SPRING) : null;
+        return quizFilterSearch.getIsSpring() ? quiz.subject.eq(Subject.SPRING) : null;
     }
 }

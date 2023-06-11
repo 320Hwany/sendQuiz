@@ -10,23 +10,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class QuizFilterResponse {
 
-    private boolean isNetwork;
+    private Boolean isNetwork;
 
-    private boolean isDatabase;
+    private Boolean isDatabase;
 
-    private boolean isOS;
+    private Boolean isOS;
 
-    private boolean isDataStructure;
+    private Boolean isDataStructure;
 
-    private boolean isJava;
+    private Boolean isJava;
 
-    private boolean isSpring;
+    private Boolean isSpring;
 
     private int numOfProblem;
 
     @Builder
-    private QuizFilterResponse(boolean isNetwork, boolean isDatabase, boolean isOS, boolean isDataStructure,
-                              boolean isJava, boolean isSpring, int numOfProblem) {
+    private QuizFilterResponse(Boolean isNetwork, Boolean isDatabase, Boolean isOS, Boolean isDataStructure,
+                               Boolean isJava, Boolean isSpring, int numOfProblem) {
         this.isNetwork = isNetwork;
         this.isDatabase = isDatabase;
         this.isOS = isOS;
@@ -38,12 +38,12 @@ public class QuizFilterResponse {
 
     public static QuizFilterResponse toQuizFilterResponse(QuizFilter quizFilter) {
         return QuizFilterResponse.builder()
-                .isNetwork(quizFilter.isNetwork())
-                .isDatabase(quizFilter.isDatabase())
-                .isOS(quizFilter.isOS())
-                .isDataStructure(quizFilter.isDataStructure())
-                .isJava(quizFilter.isJava())
-                .isSpring(quizFilter.isSpring())
+                .isNetwork(quizFilter.getIsNetwork())
+                .isDatabase(quizFilter.getIsDatabase())
+                .isOS(quizFilter.getIsOS())
+                .isDataStructure(quizFilter.getIsDataStructure())
+                .isJava(quizFilter.getIsJava())
+                .isSpring(quizFilter.getIsSpring())
                 .numOfProblem(quizFilter.getNumOfProblem())
                 .build();
     }

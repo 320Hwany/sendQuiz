@@ -20,15 +20,25 @@ class QuizTest {
 
         QuizFilterSearch quizFilterSearch1 = QuizFilterSearch.builder()
                 .isNetwork(true)
+                .isDatabase(false)
+                .isDataStructure(false)
+                .isOS(false)
+                .isJava(false)
+                .isSpring(false)
                 .build();
 
         QuizFilterSearch quizFilterSearch2 = QuizFilterSearch.builder()
                 .isNetwork(false)
+                .isDatabase(false)
+                .isDataStructure(false)
+                .isOS(false)
+                .isJava(false)
+                .isSpring(false)
                 .build();
 
         // when
-        boolean conditionMeet = quiz.filterQuiz(quizFilterSearch1);
-        boolean conditionNotMeet = quiz.filterQuiz(quizFilterSearch2);
+        Boolean conditionMeet = quiz.filterQuiz(quizFilterSearch1);
+        Boolean conditionNotMeet = quiz.filterQuiz(quizFilterSearch2);
 
         // then
         assertThat(conditionMeet).isTrue();

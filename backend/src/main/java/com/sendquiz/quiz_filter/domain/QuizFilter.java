@@ -23,25 +23,25 @@ public class QuizFilter extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private boolean isNetwork;
+    private Boolean isNetwork;
 
-    private boolean isDatabase;
+    private Boolean isDatabase;
 
     @Column(name = "is_os")
     @NotNull
-    private boolean isOS;
+    private Boolean isOS;
 
-    private boolean isDataStructure;
+    private Boolean isDataStructure;
 
-    private boolean isJava;
+    private Boolean isJava;
 
-    private boolean isSpring;
+    private Boolean isSpring;
 
     private int numOfProblem;
 
     @Builder
-    private QuizFilter(Member member, boolean isNetwork, boolean isDatabase, boolean isOS,
-                      boolean isDataStructure, boolean isJava, boolean isSpring, int numOfProblem) {
+    private QuizFilter(Member member, Boolean isNetwork, Boolean isDatabase, Boolean isOS,
+                       Boolean isDataStructure, Boolean isJava, Boolean isSpring, int numOfProblem) {
         this.member = member;
         this.isNetwork = isNetwork;
         this.isDatabase = isDatabase;
@@ -53,12 +53,12 @@ public class QuizFilter extends BaseTimeEntity {
     }
 
     public void update(QuizFilterUpdate quizFilterUpdate) {
-        this.isNetwork = quizFilterUpdate.isNetwork();
-        this.isDatabase = quizFilterUpdate.isDatabase();
-        this.isOS = quizFilterUpdate.isOperatingSystem();
-        this.isDataStructure = quizFilterUpdate.isDataStructure();
-        this.isJava = quizFilterUpdate.isJava();
-        this.isSpring = quizFilterUpdate.isSpring();
+        this.isNetwork = quizFilterUpdate.getIsNetwork();
+        this.isDatabase = quizFilterUpdate.getIsDatabase();
+        this.isOS = quizFilterUpdate.getIsOS();
+        this.isDataStructure = quizFilterUpdate.getIsDataStructure();
+        this.isJava = quizFilterUpdate.getIsJava();
+        this.isSpring = quizFilterUpdate.getIsSpring();
         this.numOfProblem = quizFilterUpdate.getNumOfProblem();
     }
 }

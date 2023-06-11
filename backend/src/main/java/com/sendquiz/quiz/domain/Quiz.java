@@ -41,11 +41,11 @@ public class Quiz extends BaseTimeEntity {
         this.subject = subject;
     }
 
-    public boolean filterQuiz(QuizFilterSearch quizFilterSearch) {
+    public Boolean filterQuiz(QuizFilterSearch quizFilterSearch) {
         return quizFilterSearch.filterQuiz(this);
     }
 
-    public boolean filterQuiz(QuizSearch quizSearch) {
+    public Boolean filterQuiz(QuizSearch quizSearch) {
         return quizSearch.filterQuiz(this);
     }
 }

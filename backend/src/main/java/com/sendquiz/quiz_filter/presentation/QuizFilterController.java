@@ -21,7 +21,7 @@ public class QuizFilterController {
 
     @PostMapping("/quizFilter")
     public ResponseEntity<Void> saveQuizFilter(@Login MemberSession memberSession,
-                                     @RequestBody QuizFilterSave quizFilterSave) {
+                                               @RequestBody QuizFilterSave quizFilterSave) {
         quizFilterCommand.save(quizFilterSave, memberSession);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
