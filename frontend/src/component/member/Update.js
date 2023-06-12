@@ -92,7 +92,7 @@ function Update() {
 
                                 <div className="d-flex text-center mt-4">
                                     <button type="button" className="btn btn-danger"
-                                            onClick={handleUpdateClick} disabled={isButtonDisabled}>>회원 수정</button>
+                                            onClick={handleUpdateClick} disabled={isButtonDisabled}>회원 수정</button>
                                     <Link to="/main" className="btn btn-success mx-3">
                                         홈으로
                                     </Link>

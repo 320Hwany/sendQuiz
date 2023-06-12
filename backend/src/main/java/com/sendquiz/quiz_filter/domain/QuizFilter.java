@@ -23,18 +23,23 @@ public class QuizFilter extends BaseTimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @NotNull
     private Boolean isNetwork;
 
+    @NotNull
     private Boolean isDatabase;
 
-    @Column(name = "is_os")
     @NotNull
+    @Column(name = "is_os")
     private Boolean isOS;
 
+    @NotNull
     private Boolean isDataStructure;
 
+    @NotNull
     private Boolean isJava;
 
+    @NotNull
     private Boolean isSpring;
 
     private int numOfProblem;

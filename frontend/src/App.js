@@ -13,6 +13,7 @@ import Update from "./component/member/Update";
 import FindPassword from "./component/member/FindPassword";
 import Suggestions from "./component/Suggestions";
 import QuizUpdate from "./component/quiz/QuizUpdate";
+import Quizzes from "./component/quiz/Quizzes";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/update" element={<Update />} />
                     <Route path="/find/password" element={<FindPassword />} />
                     <Route path="/suggestions" element={<Suggestions />} />
+                    <Route path="/quizzes" element={<Quizzes />} />
                 </Routes>
             </div>
         </Router>
