@@ -13,6 +13,7 @@ function Quizzes() {
     const [isJava, setIsJava] = useState(false);
     const [isSpring, setIsSpring] = useState(false);
     const [page, setPage] = useState(false);
+    const [totalPage, setTotalPage] = useState(false);
 
     const getQuizzes = async (e) => {
         e.preventDefault();
@@ -33,6 +34,7 @@ function Quizzes() {
                 withCredentials: true,
             });
             setQuizzes(response.data.quizzesPagingResponse);
+            setTotalPage(response.data.totalPage);
         } catch (err) {
             console.log(err.response.data.message);
             alert('퀴즈를 가져오지 못하였습니다');
@@ -47,20 +49,22 @@ function Quizzes() {
         setPage(newPage);
     };
 
-    const renderPageButtons = (data) => {
+    const renderPageButtons = () => {
         const buttons = [];
-        for (let i = 1; i <= data.totalPage; i++) {
+        for (let i = 1; i <= totalPage; i++) {
             buttons.push(
                 <Button
                     key={i}
                     variant={i === page ? 'success' : 'secondary'}
-                    onClick={() => changePage(i)}>
+                    onClick={() => changePage(i)}
+                    disabled={i === page}>
                     {i}
                 </Button>
             );
         }
         return buttons;
     };
+
 
     return (
         <Container>
