@@ -21,10 +21,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.sendquiz.global.constant.CommonConstant.QUIZ_CACHE;
 import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
-import static com.sendquiz.quiz.dto.response.QuizSearchResponse.toQuizResponse;
+import static com.sendquiz.quiz.dto.response.QuizPagingResponse.toQuizPagingResponse;
+import static com.sendquiz.quiz.dto.response.QuizSearchResponse.toQuizSearchResponse;
 import static java.util.Objects.requireNonNull;
 
 
@@ -82,23 +85,18 @@ public class QuizQuery {
 
     public List<QuizPagingResponse> findAllWithFilter(QuizSearch quizSearch) {
         List<Quiz> quizzes = findAll();
-        List<QuizSearchResponse> filterQuizzes = new ArrayList<>();
+        int startIndex = (quizSearch.getPage() - 1) * 10;
         List<QuizPagingResponse> pagingQuizzes = new ArrayList<>();
 
-        for (Quiz quiz : quizzes) {
-            if (quiz.filterQuiz(quizSearch)) {
-                filterQuizzes.add(toQuizResponse(quiz));
-            }
-        }
+        List<QuizSearchResponse> filterQuizzes = quizzes.stream()
+                .filter(quiz -> quiz.filterQuiz(quizSearch))
+                .map(QuizSearchResponse::toQuizSearchResponse)
+                .toList();
 
-        int startIndex = (quizSearch.getPage() - 1) * 10;
-        for (int i = startIndex; i < filterQuizzes.size(); i++) {
-            QuizSearchResponse quizSearchResponse = filterQuizzes.get(i);
-            pagingQuizzes.add(QuizPagingResponse.toQuizPagingResponse(quizSearchResponse, i));
-            if (pagingQuizzes.size() == 10) {
-                break;
-            }
-        }
+        IntStream.range(startIndex, filterQuizzes.size())
+                .mapToObj(i -> toQuizPagingResponse(filterQuizzes.get(i), i))
+                .limit(10)
+                .forEach(pagingQuizzes::add);
 
         return pagingQuizzes;
     }

@@ -10,6 +10,7 @@ import com.sendquiz.quiz.dto.request.QuizSave;
 import com.sendquiz.quiz.dto.request.QuizSearch;
 import com.sendquiz.quiz.dto.request.QuizUpdate;
 import com.sendquiz.quiz.dto.response.QuizPagingResponse;
+import com.sendquiz.quiz.dto.response.QuizzesResult;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,9 @@ public class QuizController {
     }
 
     @GetMapping("/quiz")
-    public ResponseEntity<List<QuizPagingResponse>> getQuizzes(@Login MemberSession memberSession,
-                                                               @ModelAttribute QuizSearch quizSearch) {
+    public QuizzesResult getQuizzes(@Login MemberSession memberSession,
+                                    @ModelAttribute QuizSearch quizSearch) {
         List<QuizPagingResponse> pagingQuizzesResponse = quizQuery.findAllWithFilter(quizSearch);
-        return ResponseEntity.ok(pagingQuizzesResponse);
+        return new QuizzesResult(pagingQuizzesResponse.size(), pagingQuizzesResponse);
     }
 }

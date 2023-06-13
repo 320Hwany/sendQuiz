@@ -12,6 +12,7 @@ function Quizzes() {
     const [isDataStructure, setIsDataStructure] = useState(false);
     const [isJava, setIsJava] = useState(false);
     const [isSpring, setIsSpring] = useState(false);
+    const [page, setPage] = useState(false);
 
     const getQuizzes = async (e) => {
         e.preventDefault();
@@ -24,22 +25,41 @@ function Quizzes() {
                     isDataStructure,
                     isJava,
                     isSpring,
+                    page
                 },
                 headers: {
                     Access_token: localStorage.getItem('Access_token'),
                 },
                 withCredentials: true,
             });
-            setQuizzes(response.data);
-            alert('저장에 성공했습니다');
+            setQuizzes(response.data.quizzesPagingResponse);
         } catch (err) {
             console.log(err.response.data.message);
-            alert('저장에 실패했습니다');
+            alert('퀴즈를 가져오지 못하였습니다');
         }
     };
 
     const toggleButton = (state, setState) => {
         setState(!state);
+    };
+
+    const changePage = (newPage) => {
+        setPage(newPage);
+    };
+
+    const renderPageButtons = (data) => {
+        const buttons = [];
+        for (let i = 1; i <= data.totalPage; i++) {
+            buttons.push(
+                <Button
+                    key={i}
+                    variant={i === page ? 'success' : 'secondary'}
+                    onClick={() => changePage(i)}>
+                    {i}
+                </Button>
+            );
+        }
+        return buttons;
     };
 
     return (
@@ -69,6 +89,9 @@ function Quizzes() {
                     onClick={() => toggleButton(isDataStructure, setIsDataStructure)}>
                     자료구조
                 </Button>
+            </div>
+
+            <div>
                 <Button
                     variant={isJava ? 'success' : 'secondary'}
                     onClick={() => toggleButton(isJava, setIsJava)}>
@@ -80,7 +103,9 @@ function Quizzes() {
                     스프링
                 </Button>
             </div>
-
+            <div>
+                {renderPageButtons()}
+            </div>
             <ul>
                 {quizzes.map((quiz) => (
                     <li key={quiz.number}>
@@ -91,7 +116,7 @@ function Quizzes() {
                 ))}
             </ul>
         </Container>
-    );
+);
 }
 
 export default Quizzes;

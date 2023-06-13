@@ -44,13 +44,14 @@ public class ScheduledTasks {
     }
 
     public void putCache() {
+        log.info("EIGHT_AM putCache");
         Cache cache = requireNonNull(cacheManager.getCache(QUIZ_CACHE));
         List<Quiz> quizList = cache.get(QUIZ_LIST, List.class);
 
         if (quizList == null) {
             quizList = quizRepository.findAll();
             cache.put(QUIZ_LIST, quizList);
-            log.info("EIGHT_AM putCache");
+            log.info("getQuizFrom Database put quizList");
         }
     }
 }

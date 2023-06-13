@@ -24,7 +24,7 @@ public class QuizSearchResponse {
         this.subject = subject;
     }
 
-    public static QuizSearchResponse toQuizResponse(Quiz quiz) {
+    public static QuizSearchResponse toQuizSearchResponse(Quiz quiz) {
         return QuizSearchResponse.builder()
                 .problem(quiz.getProblem())
                 .answer(quiz.getAnswer())
