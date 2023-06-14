@@ -27,22 +27,19 @@ public class QuizController {
     private final QuizQuery quizQuery;
 
     @PostMapping("/quiz")
-    public ResponseEntity<Void> saveQuiz(@AdminLogin AdminSession adminSession,
-                                         @RequestBody QuizSave quizSave) {
+    public ResponseEntity<Void> saveQuiz(@RequestBody QuizSave quizSave) {
         quizCommand.save(quizSave);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PatchMapping("/quiz")
-    public ResponseEntity<Void> updateQuiz(@AdminLogin AdminSession adminSession,
-                                           @RequestBody QuizUpdate quizUpdate) {
+    public ResponseEntity<Void> updateQuiz(@RequestBody QuizUpdate quizUpdate) {
         quizCommand.update(quizUpdate);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/quiz")
-    public QuizzesResult getQuizzes(@Login MemberSession memberSession,
-                                    @ModelAttribute QuizSearch quizSearch) {
+    public QuizzesResult getQuizzes(@ModelAttribute QuizSearch quizSearch) {
         List<QuizPagingResponse> pagingQuizzesResponse = quizQuery.findAllWithFilter(quizSearch);
         return new QuizzesResult(pagingQuizzesResponse.size(), pagingQuizzesResponse);
     }
