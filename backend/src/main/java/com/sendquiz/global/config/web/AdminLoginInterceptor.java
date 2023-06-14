@@ -1,6 +1,5 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.web;
 
-import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.jwt.domain.JwtRefreshToken;
 import com.sendquiz.jwt.exception.*;
 import com.sendquiz.jwt.repository.JwtRepository;
@@ -14,42 +13,34 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.MethodParameter;
-import org.springframework.web.bind.support.WebDataBinderFactory;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.method.support.ModelAndViewContainer;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
 import static com.sendquiz.global.constant.CommonConstant.*;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.AdminSession.toAdminSession;
-import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
+@Slf4j
 @RequiredArgsConstructor
-public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
+public class AdminLoginInterceptor implements HandlerInterceptor {
 
     private final MemberRepository memberRepository;
     private final JwtRepository jwtRepository;
 
     @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        boolean isAdminSessionType = parameter.getParameterType().equals(AdminSession.class);
-        boolean isAdminLoginAnnotation = parameter.hasParameterAnnotation(AdminLogin.class);
-        return isAdminSessionType && isAdminLoginAnnotation;
-    }
-
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
-        String accessJws = webRequest.getHeader(ACCESS_TOKEN);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String accessToken = request.getHeader(ACCESS_TOKEN);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        return getAdminSessionFromAccessJws(accessJws, decodedKey, webRequest);
+        AdminSession adminSession = getAdminSessionFromAccessJws(accessToken, decodedKey, request);
+        request.setAttribute(MEMBER_SESSION, adminSession);
+        return true;
     }
 
-    private AdminSession getAdminSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
+    private AdminSession getAdminSessionFromAccessJws(String jws, byte[] decodedKey, HttpServletRequest request) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
@@ -57,7 +48,6 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
             return toAdminSession(member);
 
         } catch (JwtException e) {
-            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
             return getAdminSessionFromRefreshJws(refreshJws, decodedKey);

@@ -59,7 +59,7 @@ public class MemberController {
 
     @PatchMapping("/member")
     public ResponseEntity<Void> updateMember(@Login MemberSession memberSession,
-                                       @RequestBody @Valid MemberUpdate memberUpdate) {
+                                             @RequestBody @Valid MemberUpdate memberUpdate) {
         memberCommand.update(memberSession, memberUpdate);
         return ResponseEntity.ok().build();
     }

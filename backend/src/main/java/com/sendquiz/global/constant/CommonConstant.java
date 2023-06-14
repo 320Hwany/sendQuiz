@@ -26,6 +26,8 @@ public class CommonConstant {
 
     public static final String REFRESH_TOKEN = "Refresh_token";
 
+    public static final String MEMBER_SESSION = "MemberSession";
+
     public static final String FROM_EMAIL_ADDRESS = "yhwjd99@gmail.com";
 
     public static final String ASIA_SEOUL = "Asia/Seoul";
@@ -39,6 +41,8 @@ public class CommonConstant {
     public static final String NINE_AM = "0 0 9 * * *";
 
     public static final String EIGHT_AM = "0 0 8 * * *";
+
+    public static final String SEVEN_AM = "0 0 7 * * *";
 
     public static final String QUIZ_CACHE = "quizCache";
 

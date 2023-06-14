@@ -1,53 +1,51 @@
-package com.sendquiz.global.config;
+package com.sendquiz.global.config.web;
 
-import com.sendquiz.global.annotation.Login;
 import com.sendquiz.jwt.domain.JwtRefreshToken;
-import com.sendquiz.jwt.exception.*;
+import com.sendquiz.jwt.exception.CookieExpiredException;
+import com.sendquiz.jwt.exception.JwsNotMatchException;
+import com.sendquiz.jwt.exception.RefreshTokenAuthenticationException;
+import com.sendquiz.jwt.exception.RefreshTokenNotMatchException;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
-import io.jsonwebtoken.*;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.core.MethodParameter;
-import org.springframework.web.bind.support.WebDataBinderFactory;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.method.support.ModelAndViewContainer;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.constant.CommonConstant.MEMBER_SESSION;
 import static com.sendquiz.global.constant.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
+public class LoginInterceptor implements HandlerInterceptor {
 
     private final MemberRepository memberRepository;
     private final JwtRepository jwtRepository;
 
     @Override
-    public boolean supportsParameter(MethodParameter parameter) {
-        boolean isMemberSessionType = parameter.getParameterType().equals(MemberSession.class);
-        boolean isLoginAnnotation = parameter.hasParameterAnnotation(Login.class);
-        return isMemberSessionType && isLoginAnnotation;
-    }
-
-    @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-                                  NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
-        String accessJws = webRequest.getHeader(ACCESS_TOKEN);
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        log.info("preHandle start");
+        String accessToken = request.getHeader(ACCESS_TOKEN);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        return getMemberSessionFromAccessJws(accessJws, decodedKey, webRequest);
+        MemberSession memberSession = getMemberSessionFromAccessJws(accessToken, decodedKey, request);
+        request.setAttribute(MEMBER_SESSION, memberSession);
+        return true;
     }
 
-    private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, NativeWebRequest webRequest) {
+    private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, HttpServletRequest request) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
@@ -56,7 +54,6 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
         } catch (JwtException e) {
             log.info("JwtException");
-            HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
             return getMemberSessionFromRefreshJws(refreshJws, decodedKey);

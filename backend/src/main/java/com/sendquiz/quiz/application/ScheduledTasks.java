@@ -32,17 +32,13 @@ public class ScheduledTasks {
         quizQuery.sendRandomQuizzes();
     }
 
-    @Scheduled(cron = EIGHT_AM)
-    public void updateCache() {
-        clearQuizCache();
-        putCache();
-    }
-
+    @Scheduled(cron = SEVEN_AM)
     @CacheEvict(value = QUIZ_CACHE, allEntries = true)
     public void clearQuizCache() {
         log.info("EIGHT_AM clearQuizCache");
     }
 
+    @Scheduled(cron = EIGHT_AM)
     public void putCache() {
         log.info("EIGHT_AM putCache");
         Cache cache = requireNonNull(cacheManager.getCache(QUIZ_CACHE));
