@@ -29,14 +29,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginInterceptor(memberRepository, jwtRepository))
-                .order(1)
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/signup", "/api/login", "/api/quiz/**");
-
         registry.addInterceptor(new AdminLoginInterceptor(memberRepository, jwtRepository))
                 .order(1)
-                .addPathPatterns("/api/email/**", "/api/quiz/**");
+                .addPathPatterns("/api/quiz/**");
+
+        registry.addInterceptor(new LoginInterceptor(memberRepository, jwtRepository))
+                .order(2)
+                .addPathPatterns("/api/**")
+                .excludePathPatterns("/api/signup", "/api/login", "/api/quiz/**");
     }
 
     @Override

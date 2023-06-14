@@ -48,6 +48,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
             return toAdminSession(member);
 
         } catch (JwtException e) {
+            log.info("AdminLoginInterceptor JwtException");
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
             return getAdminSessionFromRefreshJws(refreshJws, decodedKey);
@@ -61,6 +62,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
+            log.info("AdminLoginInterceptor ACCESS_TOKEN_AUTHENTICATION");
             throw new AccessTokenAuthenticationException();
         }
     }
@@ -68,6 +70,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
+            log.info("AdminLoginInterceptor CookieExpiredException");
             throw new CookieExpiredException();
         }
         return cookies;
@@ -88,6 +91,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
             if (jws.equals(jwtRefreshToken.getRefreshToken())) {
+                log.info("AdminLoginInterceptor getMemberSessionFromRefreshJws");
                 return toAdminSession(member);
             }
             throw new RefreshTokenNotMatchException();

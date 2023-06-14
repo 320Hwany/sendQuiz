@@ -37,7 +37,6 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        log.info("preHandle start");
         String accessToken = request.getHeader(ACCESS_TOKEN);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         MemberSession memberSession = getMemberSessionFromAccessJws(accessToken, decodedKey, request);
@@ -53,7 +52,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return toMemberSession(member, false);
 
         } catch (JwtException e) {
-            log.info("JwtException");
+            log.info("LoginInterceptor JwtException");
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
             return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
@@ -67,7 +66,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
-            log.info("ACCESS_TOKEN_AUTHENTICATION");
+            log.info("LoginInterceptor ACCESS_TOKEN_AUTHENTICATION");
             throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }
     }
@@ -75,7 +74,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            log.info("CookieExpiredException");
+            log.info("LoginInterceptor CookieExpiredException");
             throw new CookieExpiredException();
         }
         return cookies;
@@ -96,7 +95,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
             if (jws.equals(jwtRefreshToken.getRefreshToken())) {
-                log.info("getMemberSessionFromRefreshJws");
+                log.info("LoginInterceptor getMemberSessionFromRefreshJws");
                 return toMemberSession(member, true);
             }
             throw new RefreshTokenNotMatchException();
