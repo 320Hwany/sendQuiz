@@ -2,11 +2,11 @@ package com.sendquiz.certification.exception;
 
 import com.sendquiz.global.exception.NotFoundException;
 
-import static com.sendquiz.global.constant.ErrorMessageConstant.CACHE_NOT_FOUND_EXCEPTION;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.CACHE_NOT_FOUND_EXCEPTION;
 
 public class CacheNotFoundException extends NotFoundException {
 
-    public static final String MESSAGE = CACHE_NOT_FOUND_EXCEPTION;
+    public static final String MESSAGE = CACHE_NOT_FOUND_EXCEPTION.message;
 
     public CacheNotFoundException() {
         super(MESSAGE);

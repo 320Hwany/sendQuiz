@@ -7,9 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.net.http.HttpRequest;
-
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor

@@ -11,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.sendquiz.global.constant.ValidMessageConstant.*;
+import static com.sendquiz.global.eumtype.ValidMessageConstant.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

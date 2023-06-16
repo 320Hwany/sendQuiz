@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.sendquiz.global.constant.CommonConstant.MESSAGE_SUBJECT_TEST;
-import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.CommonConstant.MESSAGE_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT_TEST;
 
 @Getter
 @Service

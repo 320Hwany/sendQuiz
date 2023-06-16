@@ -2,7 +2,6 @@ package com.sendquiz.certification.application;
 
 import com.sendquiz.certification.exception.CacheNotFoundException;
 import com.sendquiz.util.AcceptanceTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import org.springframework.cache.CacheManager;
 
 import java.util.Objects;
 
-import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_CACHE;
+import static com.sendquiz.global.eumtype.CommonConstant.CERTIFICATION_CACHE;
 import static com.sendquiz.util.TestConstant.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;

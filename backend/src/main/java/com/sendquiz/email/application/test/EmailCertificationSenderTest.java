@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
 
 @RequiredArgsConstructor
 @Getter

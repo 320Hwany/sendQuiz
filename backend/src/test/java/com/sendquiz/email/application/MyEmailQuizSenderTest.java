@@ -9,7 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MyEmailQuizSenderTest {

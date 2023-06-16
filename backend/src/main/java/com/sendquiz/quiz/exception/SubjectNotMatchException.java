@@ -2,11 +2,11 @@ package com.sendquiz.quiz.exception;
 
 import com.sendquiz.global.exception.NotMatchException;
 
-import static com.sendquiz.global.constant.ErrorMessageConstant.SUBJECT_NOT_MATCH_MESSAGE;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
 
 public class SubjectNotMatchException extends NotMatchException {
 
-    private static final String MESSAGE = SUBJECT_NOT_MATCH_MESSAGE;
+    private static final String MESSAGE = SUBJECT_NOT_MATCH.message;
 
     public SubjectNotMatchException() {
         super(MESSAGE);

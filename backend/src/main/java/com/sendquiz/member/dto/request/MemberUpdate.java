@@ -6,8 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static com.sendquiz.global.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
-import static com.sendquiz.global.constant.ValidMessageConstant.PASSWORD_VALID_MESSAGE;
+import static com.sendquiz.global.eumtype.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
+import static com.sendquiz.global.eumtype.ValidMessageConstant.PASSWORD_VALID_MESSAGE;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

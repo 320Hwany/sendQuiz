@@ -1,37 +1,28 @@
 package com.sendquiz.quiz.application;
 
-import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.dto.request.QuizSearch;
 import com.sendquiz.quiz.dto.response.QuizPagingResponse;
 import com.sendquiz.quiz.repository.QuizRepository;
 import com.sendquiz.quiz_filter.dto.request.QuizFilterSearch;
-import com.sendquiz.quiz_filter.repository.QuizFilterRepository;
 import com.sendquiz.util.AcceptanceTest;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 @AcceptanceTest
 class QuizQueryTest {

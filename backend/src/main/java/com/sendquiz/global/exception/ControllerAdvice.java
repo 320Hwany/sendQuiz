@@ -9,8 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.sendquiz.global.constant.ErrorMessageConstant.EMAIL_NOT_FOUND_MESSAGE;
-import static com.sendquiz.global.constant.StatusCodeConstant.VALID_BAD_REQUEST_STATUS_CODE;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.EMAIL_NOT_FOUND;
+import static com.sendquiz.global.eumtype.StatusCodeConstant.VALID_BAD_REQUEST;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -19,7 +19,7 @@ public class ControllerAdvice {
     public ResponseEntity<MethodArgumentErrorResponse> methodArgumentNotValidException(
                                 MethodArgumentNotValidException e) {
         MethodArgumentErrorResponse errorResponse = MethodArgumentErrorResponse.builder()
-                .statusCode(VALID_BAD_REQUEST_STATUS_CODE)
+                .statusCode(VALID_BAD_REQUEST.statusCode)
                 .build();
 
         for (FieldError fieldError : e.getFieldErrors()) {
@@ -81,8 +81,8 @@ public class ControllerAdvice {
     @ExceptionHandler(MailSendException.class)
     public ResponseEntity<ErrorResponse> mailSendException(MailSendException e) {
         ErrorResponse errorResponse = ErrorResponse.builder()
-                .statusCode(VALID_BAD_REQUEST_STATUS_CODE)
-                .message(EMAIL_NOT_FOUND_MESSAGE)
+                .statusCode(VALID_BAD_REQUEST.statusCode)
+                .message(EMAIL_NOT_FOUND.message)
                 .build();
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);

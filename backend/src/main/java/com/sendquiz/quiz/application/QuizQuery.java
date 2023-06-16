@@ -23,8 +23,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 
-import static com.sendquiz.global.constant.CommonConstant.QUIZ_CACHE;
-import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
+import static com.sendquiz.global.eumtype.CommonConstant.QUIZ_CACHE;
+import static com.sendquiz.global.eumtype.CommonConstant.QUIZ_LIST;
 import static com.sendquiz.quiz.dto.response.QuizPagingResponse.toQuizPagingResponse;
 import static java.util.Objects.requireNonNull;
 

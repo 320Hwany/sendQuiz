@@ -1,10 +1,9 @@
-package com.sendquiz.global.constant;
+package com.sendquiz.global.eumtype;
 
 
-public class ValidMessageConstant {
+public enum ValidMessageConstant {
 
-    private ValidMessageConstant() {
-    }
+    VALID_MESSAGE_CONSTANT;
 
     public static final String EMAIL_VALID_MESSAGE = "이메일을 입력해주세요";
 

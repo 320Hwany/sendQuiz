@@ -7,8 +7,8 @@ import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
-import static com.sendquiz.global.constant.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,6 +59,6 @@ class QuizControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(ADMIN_AUTHENTICATION_MESSAGE));
+                .andExpect(jsonPath("$.message").value(ADMIN_AUTHENTICATION.message));
     }
 }

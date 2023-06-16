@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
 
 @RequiredArgsConstructor
 public class AdminArgumentResolver implements HandlerMethodArgumentResolver {

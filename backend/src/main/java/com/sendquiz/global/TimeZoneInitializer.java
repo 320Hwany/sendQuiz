@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.TimeZone;
 
-import static com.sendquiz.global.constant.CommonConstant.ASIA_SEOUL;
+import static com.sendquiz.global.eumtype.CommonConstant.ASIA_SEOUL;
 
 @Component
 public class TimeZoneInitializer {

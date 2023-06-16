@@ -15,7 +15,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
 

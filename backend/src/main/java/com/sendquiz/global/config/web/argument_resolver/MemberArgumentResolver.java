@@ -1,9 +1,7 @@
 package com.sendquiz.global.config.web.argument_resolver;
 
 import com.sendquiz.global.annotation.Login;
-import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.domain.MemberSession;
-import com.sendquiz.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +11,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import static com.sendquiz.global.constant.CommonConstant.MEMBER_SESSION;
+import static com.sendquiz.global.eumtype.CommonConstant.MEMBER_SESSION;
 
 @Slf4j
 @RequiredArgsConstructor

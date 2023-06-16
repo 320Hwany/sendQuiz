@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.constant.CommonConstant.MESSAGE_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.CommonConstant.MESSAGE_SUBJECT_TEST;
 
 @RequiredArgsConstructor
 @Getter

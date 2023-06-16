@@ -17,9 +17,9 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.List;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
-import static com.sendquiz.global.constant.CommonConstant.EMAIL_SUBJECT;
-import static com.sendquiz.global.constant.CommonConstant.QUIZ_LIST;
+import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT;
+import static com.sendquiz.global.eumtype.CommonConstant.QUIZ_LIST;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)

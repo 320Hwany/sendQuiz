@@ -1,10 +1,9 @@
-package com.sendquiz.global.constant;
+package com.sendquiz.global.eumtype;
 
 
-public class CommonConstant {
+public enum CommonConstant {
 
-    private CommonConstant() {
-    }
+    COMMON_CONSTANT;
 
     public static final String EMAIL_SUBJECT = "[SendQuiz - CS 면접 질문 리스트 제공 서비스]";
 

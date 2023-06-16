@@ -8,10 +8,10 @@ import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
-import static com.sendquiz.global.constant.CommonConstant.CERTIFICATION_CACHE;
-import static com.sendquiz.global.constant.ErrorMessageConstant.*;
-import static com.sendquiz.global.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
+import static com.sendquiz.global.eumtype.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.CommonConstant.CERTIFICATION_CACHE;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
 import static com.sendquiz.util.TestConstant.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -64,7 +64,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(CERTIFICATION_NOT_MATCH_MESSAGE));
+                .andExpect(jsonPath("$.message").value(CERTIFICATION_NOT_MATCH.message));
     }
 
     @Test
@@ -107,7 +107,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(MEMBER_DUPLICATION_MESSAGE));
+                .andExpect(jsonPath("$.message").value(MEMBER_DUPLICATION.message));
     }
 
     @Test
@@ -158,7 +158,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(MEMBER_NOT_MATCH_MESSAGE));
+                .andExpect(jsonPath("$.message").value(MEMBER_NOT_MATCH.message));
     }
 
     @Test
@@ -177,7 +177,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.message").value(MEMBER_NOT_FOUND_MESSAGE));
+                .andExpect(jsonPath("$.message").value(MEMBER_NOT_FOUND.message));
     }
 
     @Test
@@ -267,7 +267,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(PASSWORD_NOT_MATCH_MESSAGE));
+                .andExpect(jsonPath("$.message").value(PASSWORD_NOT_MATCH.message));
     }
 
     @Test
@@ -289,7 +289,7 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED_MESSAGE));
+                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED.message));
     }
 
     @Test
@@ -358,6 +358,6 @@ class MemberControllerTest extends ControllerTest {
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isUnauthorized())
-                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED_MESSAGE));
+                .andExpect(jsonPath("$.message").value(COOKIE_EXPIRED.message));
     }
 }

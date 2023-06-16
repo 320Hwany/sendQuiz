@@ -22,9 +22,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
-import static com.sendquiz.global.constant.CommonConstant.MEMBER_SESSION;
-import static com.sendquiz.global.constant.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
+import static com.sendquiz.global.eumtype.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.CommonConstant.MEMBER_SESSION;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
@@ -67,7 +67,7 @@ public class LoginInterceptor implements HandlerInterceptor {
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
             log.info("LoginInterceptor ACCESS_TOKEN_AUTHENTICATION");
-            throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
+            throw new JwtException(ACCESS_TOKEN_AUTHENTICATION.message);
         }
     }
 

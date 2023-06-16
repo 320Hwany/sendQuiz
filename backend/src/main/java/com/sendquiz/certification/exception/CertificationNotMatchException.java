@@ -2,11 +2,11 @@ package com.sendquiz.certification.exception;
 
 import com.sendquiz.global.exception.NotMatchException;
 
-import static com.sendquiz.global.constant.ErrorMessageConstant.CERTIFICATION_NOT_MATCH_MESSAGE;
+import static com.sendquiz.global.eumtype.ErrorMessageConstant.CERTIFICATION_NOT_MATCH;
 
 public class CertificationNotMatchException extends NotMatchException {
 
-    private static final String MESSAGE = CERTIFICATION_NOT_MATCH_MESSAGE;
+    private static final String MESSAGE = CERTIFICATION_NOT_MATCH.message;
 
     public CertificationNotMatchException() {
         super(MESSAGE);
