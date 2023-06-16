@@ -35,10 +35,10 @@ public class Quiz extends BaseTimeEntity {
         this.answer = answer;
     }
 
-    public void update(QuizUpdate quizUpdate, Subject subject) {
+    public void update(QuizUpdate quizUpdate) {
         this.problem = quizUpdate.getProblem();
         this.answer = quizUpdate.getAnswer();
-        this.subject = subject;
+        this.subject = quizUpdate.getSubject();
     }
 
     public Boolean filterQuiz(QuizFilterSearch quizFilterSearch) {

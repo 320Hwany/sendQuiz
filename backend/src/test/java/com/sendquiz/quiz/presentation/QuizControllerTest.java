@@ -1,5 +1,6 @@
 package com.sendquiz.quiz.presentation;
 
+import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.member.dto.request.MemberSignup;
 import com.sendquiz.quiz.dto.request.QuizSave;
 import com.sendquiz.util.ControllerTest;
@@ -22,7 +23,7 @@ class QuizControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         QuizSave quizSave = QuizSave.builder()
-                .subject("네트워크")
+                .subject(Subject.NETWORK)
                 .problem("퀴즈 문제")
                 .answer("퀴즈 정답")
                 .build();
@@ -45,7 +46,7 @@ class QuizControllerTest extends ControllerTest {
         String accessToken = getAccessToken(memberSignup);
 
         QuizSave quizSave = QuizSave.builder()
-                .subject("네트워크")
+                .subject(Subject.NETWORK)
                 .problem("퀴즈 문제")
                 .answer("퀴즈 정답")
                 .build();

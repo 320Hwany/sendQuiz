@@ -1,5 +1,6 @@
 package com.sendquiz.quiz.dto.request;
 
+import com.sendquiz.global.eumtype.Subject;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,17 +12,17 @@ public class QuizUpdate {
 
     private Long quizId;
 
-    private String subject;
-
     private String problem;
 
     private String answer;
 
+    private Subject subject;
+
     @Builder
-    public QuizUpdate(Long quizId, String subject, String problem, String answer) {
+    public QuizUpdate(Long quizId, String problem, String answer, Subject subject) {
         this.quizId = quizId;
-        this.subject = subject;
         this.problem = problem;
         this.answer = answer;
+        this.subject = subject;
     }
 }

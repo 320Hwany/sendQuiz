@@ -1,8 +1,6 @@
 package com.sendquiz.quiz.application;
 
-import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
-import com.sendquiz.quiz.exception.SubjectNotMatchException;
 import com.sendquiz.quiz.dto.request.QuizUpdate;
 import com.sendquiz.quiz.repository.QuizRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -14,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.sendquiz.global.eumtype.Subject.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -38,9 +35,9 @@ public class QuizCommandTest {
                 .build();
 
         QuizUpdate quizUpdate = QuizUpdate.builder()
-                .subject("네트워크")
                 .problem("수정후 문제")
                 .answer("수정후 답")
+                .subject(NETWORK)
                 .build();
 
         // stub
@@ -52,29 +49,5 @@ public class QuizCommandTest {
         // then
         assertThat(quiz).extracting("problem", "answer", "subject")
                 .contains("수정후 문제", "수정후 답", NETWORK);
-    }
-
-    @Test
-    @DisplayName("입력한 퀴즈 분야가 맞지 않으면 퀴즈를 수정할 수 없습니다")
-    void updateFailNotMatchSubject() {
-        // given
-        Quiz quiz = Quiz.builder()
-                .problem("수정전 문제")
-                .answer("수정전 답")
-                .subject(JAVA)
-                .build();
-
-        QuizUpdate quizUpdate = QuizUpdate.builder()
-                .subject("분야가 맞지 않음")
-                .problem("수정후 문제")
-                .answer("수정후 답")
-                .build();
-
-        // stub
-        when(quizRepository.getById(any())).thenReturn(quiz);
-
-        // then
-        assertThatThrownBy(() -> quizCommand.update(quizUpdate))
-                .isInstanceOf(SubjectNotMatchException.class);
     }
 }

@@ -60,10 +60,11 @@ class QuizTest {
         QuizUpdate quizUpdate = QuizUpdate.builder()
                 .problem("수정후 문제")
                 .answer("수정후 답")
+                .subject(Subject.NETWORK)
                 .build();
 
         // when
-        quiz.update(quizUpdate, Subject.NETWORK);
+        quiz.update(quizUpdate);
 
         // then
         assertThat(quiz).extracting("problem", "answer", "subject")

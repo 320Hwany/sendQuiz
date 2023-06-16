@@ -1,8 +1,6 @@
 package com.sendquiz.global.constant;
 
-import lombok.Getter;
 
-@Getter
 public class CommonConstant {
 
     private CommonConstant() {
@@ -11,8 +9,6 @@ public class CommonConstant {
     public static final String EMAIL_SUBJECT = "[SendQuiz - CS 면접 질문 리스트 제공 서비스]";
 
     public static final String EMAIL_SUBJECT_TEST = "테스트 이메일 제목";
-
-    public static final String CERTIFICATION_MESSAGE = "이메일 확인 인증 번호입니다 : ";
 
     public static final String MESSAGE_SUBJECT_TEST = "테스트 이메일 제목";
 
@@ -28,11 +24,7 @@ public class CommonConstant {
 
     public static final String MEMBER_SESSION = "MemberSession";
 
-    public static final String FROM_EMAIL_ADDRESS = "yhwjd99@gmail.com";
-
     public static final String ASIA_SEOUL = "Asia/Seoul";
-
-    public static final int ONE_DAY = 86400000;
 
     public static final long ONE_HOUR = 1000 * 60 * 60;
 

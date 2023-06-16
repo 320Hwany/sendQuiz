@@ -1,6 +1,5 @@
 package com.sendquiz.quiz.application;
 
-import com.sendquiz.global.eumtype.Subject;
 import com.sendquiz.quiz.domain.Quiz;
 import com.sendquiz.quiz.dto.request.QuizSave;
 import com.sendquiz.quiz.dto.request.QuizUpdate;
@@ -19,13 +18,11 @@ public class QuizCommand {
     private final QuizRepository quizRepository;
 
     public void save(QuizSave quizSave) {
-        Subject subject = Subject.fromValue(quizSave.getSubject());
-        quizRepository.save(quizSave.toEntity(subject));
+        quizRepository.save(quizSave.toEntity());
     }
 
     public void update(QuizUpdate quizUpdate) {
         Quiz quiz = quizRepository.getById(quizUpdate.getQuizId());
-        Subject subject = Subject.fromValue(quizUpdate.getSubject());
-        quiz.update(quizUpdate, subject);
+        quiz.update(quizUpdate);
     }
 }

@@ -1,9 +1,11 @@
-package com.sendquiz.global.config.web;
+package com.sendquiz.global.config.web.interceptor;
 
 import com.sendquiz.jwt.domain.JwtRefreshToken;
-import com.sendquiz.jwt.exception.*;
+import com.sendquiz.jwt.exception.CookieExpiredException;
+import com.sendquiz.jwt.exception.JwsNotMatchException;
+import com.sendquiz.jwt.exception.RefreshTokenAuthenticationException;
+import com.sendquiz.jwt.exception.RefreshTokenNotMatchException;
 import com.sendquiz.jwt.repository.JwtRepository;
-import com.sendquiz.member.domain.AdminSession;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.domain.MemberSession;
 import com.sendquiz.member.repository.MemberRepository;
@@ -20,13 +22,15 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.constant.CommonConstant.*;
+import static com.sendquiz.global.constant.CommonConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.constant.CommonConstant.MEMBER_SESSION;
+import static com.sendquiz.global.constant.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
-import static com.sendquiz.member.domain.AdminSession.toAdminSession;
+import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
 @Slf4j
 @RequiredArgsConstructor
-public class AdminLoginInterceptor implements HandlerInterceptor {
+public class LoginInterceptor implements HandlerInterceptor {
 
     private final MemberRepository memberRepository;
     private final JwtRepository jwtRepository;
@@ -35,23 +39,23 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         String accessToken = request.getHeader(ACCESS_TOKEN);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
-        AdminSession adminSession = getAdminSessionFromAccessJws(accessToken, decodedKey, request);
-        request.setAttribute(MEMBER_SESSION, adminSession);
+        MemberSession memberSession = getMemberSessionFromAccessJws(accessToken, decodedKey, request);
+        request.setAttribute(MEMBER_SESSION, memberSession);
         return true;
     }
 
-    private AdminSession getAdminSessionFromAccessJws(String jws, byte[] decodedKey, HttpServletRequest request) {
+    private MemberSession getMemberSessionFromAccessJws(String jws, byte[] decodedKey, HttpServletRequest request) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
-            return toAdminSession(member);
+            return toMemberSession(member, false);
 
         } catch (JwtException e) {
-            log.info("AdminLoginInterceptor JwtException");
+            log.info("LoginInterceptor JwtException");
             Cookie[] cookies = getCookies(request);
             String refreshJws = getRefreshJws(cookies);
-            return getAdminSessionFromRefreshJws(refreshJws, decodedKey);
+            return getMemberSessionFromRefreshJws(refreshJws, decodedKey);
         }
     }
 
@@ -62,15 +66,15 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
                     .build()
                     .parseClaimsJws(jws);
         } catch (IllegalArgumentException e) {
-            log.info("AdminLoginInterceptor ACCESS_TOKEN_AUTHENTICATION");
-            throw new AccessTokenAuthenticationException();
+            log.info("LoginInterceptor ACCESS_TOKEN_AUTHENTICATION");
+            throw new JwtException(ACCESS_TOKEN_AUTHENTICATION);
         }
     }
 
     private static Cookie[] getCookies(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            log.info("AdminLoginInterceptor CookieExpiredException");
+            log.info("LoginInterceptor CookieExpiredException");
             throw new CookieExpiredException();
         }
         return cookies;
@@ -84,15 +88,15 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
         return refreshJws;
     }
 
-    private AdminSession getAdminSessionFromRefreshJws(String jws, byte[] decodedKey) {
+    private MemberSession getMemberSessionFromRefreshJws(String jws, byte[] decodedKey) {
         try {
             Jws<Claims> claims = getClaims(jws, decodedKey);
             String memberId = claims.getBody().getSubject();
             Member member = memberRepository.getById(Long.valueOf(memberId));
             JwtRefreshToken jwtRefreshToken = jwtRepository.getByMemberId(Long.valueOf(memberId));
             if (jws.equals(jwtRefreshToken.getRefreshToken())) {
-                log.info("AdminLoginInterceptor getMemberSessionFromRefreshJws");
-                return toAdminSession(member);
+                log.info("LoginInterceptor getMemberSessionFromRefreshJws");
+                return toMemberSession(member, true);
             }
             throw new RefreshTokenNotMatchException();
         } catch (JwtException e) {

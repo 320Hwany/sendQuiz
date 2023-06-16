@@ -1,5 +1,9 @@
 package com.sendquiz.global.config.web;
 
+import com.sendquiz.global.config.web.argument_resolver.AdminArgumentResolver;
+import com.sendquiz.global.config.web.argument_resolver.MemberArgumentResolver;
+import com.sendquiz.global.config.web.interceptor.AdminLoginInterceptor;
+import com.sendquiz.global.config.web.interceptor.LoginInterceptor;
 import com.sendquiz.jwt.repository.JwtRepository;
 import com.sendquiz.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,7 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(new LoginInterceptor(memberRepository, jwtRepository))
                 .order(2)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/signup", "/api/login", "/api/quiz/**", "/api/email/**");
+                .excludePathPatterns("/api/signup", "/api/login", "/api/email/**");
     }
 
     @Override

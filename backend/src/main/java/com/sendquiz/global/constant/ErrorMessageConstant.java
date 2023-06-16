@@ -1,8 +1,6 @@
 package com.sendquiz.global.constant;
 
-import lombok.Getter;
 
-@Getter
 public class ErrorMessageConstant {
 
     private ErrorMessageConstant() {
@@ -33,8 +31,6 @@ public class ErrorMessageConstant {
     public static final String REFRESH_TOKEN_AUTHENTICATION = "RefreshToken이 없어 로그인할 수 없습니다";
 
     public static final String SUBJECT_NOT_MATCH_MESSAGE = "해당 과목에 대한 요청을 처리할 수 없습니다";
-
-    public static final String VALID_BAD_REQUEST_MESSAGE = "잘못된 요청입니다";
 
     public static final String EMAIL_NOT_FOUND_MESSAGE = "유효하지 않은 이메일 주소입니다";
 

@@ -1,8 +1,6 @@
 package com.sendquiz.global.constant;
 
-import lombok.Getter;
 
-@Getter
 public class ValidMessageConstant {
 
     private ValidMessageConstant() {

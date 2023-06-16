@@ -74,7 +74,7 @@ function Suggestions() {
 
                     <div className="d-flex text-center mt-4">
                         <button type="button" className="btn btn-success"
-                                onClick={saveSuggestions} disabled={isButtonDisabled}>>의견 보내기</button>
+                                onClick={saveSuggestions} disabled={isButtonDisabled}>의견 보내기</button>
                         <Link to="/main" className="btn btn-primary mx-3">
                             홈으로
                         </Link>

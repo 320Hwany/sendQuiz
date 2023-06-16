@@ -1,13 +1,8 @@
 package com.sendquiz.global.eumtype;
 
-import com.sendquiz.quiz.exception.SubjectNotMatchException;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import java.util.Arrays;
 
 @Getter
-@RequiredArgsConstructor
 public enum Subject {
 
     NETWORK("네트워크"),
@@ -19,10 +14,7 @@ public enum Subject {
 
     private final String value;
 
-    public static Subject fromValue(String value) {
-        return Arrays.stream(Subject.values())
-                .filter(subject -> subject.value.equals(value))
-                .findFirst()
-                .orElseThrow(SubjectNotMatchException::new);
+    Subject(String value) {
+        this.value = value;
     }
 }

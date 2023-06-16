@@ -1,4 +1,4 @@
-package com.sendquiz.global.config.web;
+package com.sendquiz.global.config.web.argument_resolver;
 
 import com.sendquiz.global.annotation.AdminLogin;
 import com.sendquiz.member.domain.AdminSession;

@@ -1,4 +1,4 @@
-package com.sendquiz.global.config.web;
+package com.sendquiz.global.config.web.argument_resolver;
 
 import com.sendquiz.global.annotation.Login;
 import com.sendquiz.jwt.repository.JwtRepository;
