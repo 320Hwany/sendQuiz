@@ -2,7 +2,7 @@ package com.sendquiz.jwt.exception;
 
 import com.sendquiz.global.exception.AuthenticationException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.*;
 
 public class CookieExpiredException extends AuthenticationException {
 

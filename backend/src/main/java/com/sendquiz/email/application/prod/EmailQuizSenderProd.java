@@ -2,6 +2,7 @@ package com.sendquiz.email.application.prod;
 
 import com.sendquiz.email.application.EmailQuizSender;
 import com.sendquiz.email.exception.EmailMessageException;
+import com.sendquiz.global.eumtype.constant.InfraConstant;
 import com.sendquiz.quiz.domain.Quiz;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -17,9 +18,9 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.List;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
-import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT;
-import static com.sendquiz.global.eumtype.CommonConstant.QUIZ_LIST;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.QUIZ_LIST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.EMAIL_SUBJECT;
+import static com.sendquiz.global.eumtype.constant.InfraConstant.*;
 
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -34,9 +35,9 @@ public class EmailQuizSenderProd implements EmailQuizSender {
     public void sendQuizzes(List<Quiz> randomQuizList, String toEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8.message);
             helper.setTo(toEmail);
-            helper.setSubject(EMAIL_SUBJECT);
+            helper.setSubject(EMAIL_SUBJECT.message);
             helper.setText(setContext(randomQuizList), true);
             mailSender.send(message);
             log.info("sendQuizList success");

@@ -7,7 +7,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.QUIZ_CACHE;
+import static com.sendquiz.global.eumtype.constant.TimeConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,7 +27,7 @@ public class ScheduledTasks {
     @Scheduled(cron = SEVEN_AM)
     @CacheEvict(value = QUIZ_CACHE, allEntries = true)
     public void clearQuizCache() {
-        log.info("EIGHT_AM clearQuizCache");
+        log.info("SEVEN_AM clearQuizCache");
     }
 
     @Scheduled(cron = EIGHT_AM)

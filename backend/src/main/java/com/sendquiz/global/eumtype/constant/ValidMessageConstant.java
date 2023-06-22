@@ -1,4 +1,4 @@
-package com.sendquiz.global.eumtype;
+package com.sendquiz.global.eumtype.constant;
 
 
 public enum ValidMessageConstant {

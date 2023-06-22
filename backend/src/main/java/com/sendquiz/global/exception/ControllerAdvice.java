@@ -9,8 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.EMAIL_NOT_FOUND;
-import static com.sendquiz.global.eumtype.StatusCodeConstant.VALID_BAD_REQUEST;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.EMAIL_NOT_FOUND;
+import static com.sendquiz.global.eumtype.constant.StatusCodeConstant.VALID_BAD_REQUEST;
 
 @RestControllerAdvice
 public class ControllerAdvice {

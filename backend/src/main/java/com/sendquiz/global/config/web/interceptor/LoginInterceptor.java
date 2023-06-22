@@ -22,9 +22,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.eumtype.CommonConstant.ACCESS_TOKEN;
-import static com.sendquiz.global.eumtype.CommonConstant.MEMBER_SESSION;
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.ACCESS_TOKEN_AUTHENTICATION;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.MEMBER_SESSION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.MemberSession.toMemberSession;
 
@@ -37,10 +37,10 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String accessToken = request.getHeader(ACCESS_TOKEN);
+        String accessToken = request.getHeader(ACCESS_TOKEN.message);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         MemberSession memberSession = getMemberSessionFromAccessJws(accessToken, decodedKey, request);
-        request.setAttribute(MEMBER_SESSION, memberSession);
+        request.setAttribute(MEMBER_SESSION.message, memberSession);
         return true;
     }
 

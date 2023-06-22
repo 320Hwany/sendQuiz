@@ -2,6 +2,8 @@ package com.sendquiz.email.application.prod;
 
 import com.sendquiz.email.application.EmailPasswordFind;
 import com.sendquiz.email.exception.EmailMessageException;
+import com.sendquiz.global.eumtype.constant.EmailConstant;
+import com.sendquiz.global.eumtype.constant.InfraConstant;
 import com.sendquiz.member.domain.Member;
 import com.sendquiz.member.repository.MemberRepository;
 import jakarta.mail.MessagingException;
@@ -19,7 +21,9 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.EMAIL_SUBJECT;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.TEMPORARY_PASSWORD;
+import static com.sendquiz.global.eumtype.constant.InfraConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -39,11 +43,11 @@ public class EmailPasswordFindProd implements EmailPasswordFind {
         Member member = memberRepository.getByEmail(toEmail);
         MimeMessage message = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8.message);
             String temporaryPassword = makeUUID();
             updateToTemporaryPassword(member, temporaryPassword);
             helper.setTo(toEmail);
-            helper.setSubject(EMAIL_SUBJECT);
+            helper.setSubject(EMAIL_SUBJECT.message);
             helper.setText(setContext(temporaryPassword), true);
             mailSender.send(message);
         } catch (MessagingException e) {
@@ -66,8 +70,8 @@ public class EmailPasswordFindProd implements EmailPasswordFind {
     @Override
     public String setContext(String temporaryPassword) {
         Context context = new Context();
-        context.setVariable(TEMPORARY_PASSWORD, temporaryPassword);
-        return templateEngine.process(TEMPORARY_PASSWORD, context);
+        context.setVariable(TEMPORARY_PASSWORD.message, temporaryPassword);
+        return templateEngine.process(TEMPORARY_PASSWORD.message, context);
     }
 }
 

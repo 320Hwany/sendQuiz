@@ -12,7 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.eumtype.CommonConstant.MESSAGE_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.MESSAGE_SUBJECT_TEST;
+
 
 @RequiredArgsConstructor
 @Getter
@@ -30,7 +31,7 @@ public class EmailPasswordFindTest implements EmailPasswordFind {
         Member member = memberRepository.getByEmail(toEmail);
         SimpleMailMessage message = new SimpleMailMessage();
         String temporaryPassword = makeUUID();
-        message.setSubject(MESSAGE_SUBJECT_TEST);
+        message.setSubject(MESSAGE_SUBJECT_TEST.message);
         updateToTemporaryPassword(member, temporaryPassword);
         String context = setContext(temporaryPassword);
         message.setText(context);

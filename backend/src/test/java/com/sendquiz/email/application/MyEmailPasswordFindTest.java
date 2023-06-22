@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import static com.sendquiz.global.eumtype.CommonConstant.MESSAGE_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.MESSAGE_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -49,7 +49,7 @@ class MyEmailPasswordFindTest {
         // then
         ThreadLocal<SimpleMailMessage> testMailSender = emailPasswordFindTest.getTestMailSender();
         SimpleMailMessage message = testMailSender.get();
-        assertThat(message.getSubject()).isEqualTo(MESSAGE_SUBJECT_TEST);
+        assertThat(message.getSubject()).isEqualTo(MESSAGE_SUBJECT_TEST.message);
         assertThat(member.getPassword()).isEqualTo("after update");
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.MEMBER_SESSION;
 
 @RequiredArgsConstructor
 public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
@@ -26,6 +26,6 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)  {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        return request.getAttribute(MEMBER_SESSION);
+        return request.getAttribute(MEMBER_SESSION.message);
     }
 }

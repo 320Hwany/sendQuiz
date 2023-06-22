@@ -2,8 +2,8 @@ package com.sendquiz.email.exception;
 
 import lombok.Getter;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
-import static com.sendquiz.global.eumtype.StatusCodeConstant.EMAIL_MESSAGE_EXCEPTION;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.constant.StatusCodeConstant.EMAIL_MESSAGE_EXCEPTION;
 
 @Getter
 public class EmailMessageException extends RuntimeException {

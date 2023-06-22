@@ -2,7 +2,7 @@ package com.sendquiz.member.exception;
 
 import com.sendquiz.global.exception.AuthenticationException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.ADMIN_AUTHENTICATION;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.ADMIN_AUTHENTICATION;
 
 public class AdminAuthenticationException extends AuthenticationException {
 

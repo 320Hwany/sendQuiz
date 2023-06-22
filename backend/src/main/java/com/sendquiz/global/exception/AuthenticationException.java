@@ -2,7 +2,7 @@ package com.sendquiz.global.exception;
 
 import lombok.Getter;
 
-import static com.sendquiz.global.eumtype.StatusCodeConstant.AUTHENTICATION;
+import static com.sendquiz.global.eumtype.constant.StatusCodeConstant.AUTHENTICATION;
 
 @Getter
 public abstract class AuthenticationException extends RuntimeException {

@@ -2,7 +2,7 @@ package com.sendquiz.member.exception;
 
 import com.sendquiz.global.exception.NotMatchException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.*;
 
 public class MemberNotMatchException extends NotMatchException {
 

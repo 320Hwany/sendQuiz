@@ -2,7 +2,7 @@ package com.sendquiz.member.exception;
 
 import com.sendquiz.global.exception.DuplicationException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.MEMBER_DUPLICATION;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.MEMBER_DUPLICATION;
 
 
 public class MemberDuplicationException extends DuplicationException {

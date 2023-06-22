@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
-import static com.sendquiz.global.eumtype.CommonConstant.CERTIFICATION_CACHE;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.CERTIFICATION_CACHE;
 
 
 @Slf4j

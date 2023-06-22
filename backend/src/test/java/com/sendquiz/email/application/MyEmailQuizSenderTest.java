@@ -9,7 +9,7 @@ import org.springframework.mail.SimpleMailMessage;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.EMAIL_SUBJECT_TEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class MyEmailQuizSenderTest {
@@ -32,7 +32,7 @@ public class MyEmailQuizSenderTest {
         // then
         ThreadLocal<SimpleMailMessage> testMailSender = emailQuizSenderTest.getTestMailSender();
         SimpleMailMessage message = testMailSender.get();
-        assertThat(message.getSubject()).isEqualTo(EMAIL_SUBJECT_TEST);
+        assertThat(message.getSubject()).isEqualTo(EMAIL_SUBJECT_TEST.message);
     }
 
     @Test

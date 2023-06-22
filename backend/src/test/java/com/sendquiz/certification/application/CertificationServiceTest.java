@@ -11,7 +11,7 @@ import org.springframework.cache.CacheManager;
 
 import java.util.Objects;
 
-import static com.sendquiz.global.eumtype.CommonConstant.CERTIFICATION_CACHE;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.CERTIFICATION_CACHE;
 import static com.sendquiz.util.TestConstant.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;

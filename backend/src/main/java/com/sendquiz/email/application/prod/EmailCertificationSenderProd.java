@@ -3,6 +3,7 @@ package com.sendquiz.email.application.prod;
 import com.sendquiz.certification.application.CertificationService;
 import com.sendquiz.email.application.EmailCertificationSender;
 import com.sendquiz.email.exception.EmailMessageException;
+import com.sendquiz.global.eumtype.constant.InfraConstant;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,8 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.*;
+import static com.sendquiz.global.eumtype.constant.InfraConstant.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,11 +33,11 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
     public void sendCertificationNum(String toEmail) {
         MimeMessage message = mailSender.createMimeMessage();
         try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8);
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, UTF_8.message);
             String certificationNum = makeUUID();
             certificationService.putCertificationNumberToCache(toEmail, certificationNum);
             helper.setTo(toEmail);
-            helper.setSubject(EMAIL_SUBJECT);
+            helper.setSubject(EMAIL_SUBJECT.message);
             helper.setText(setContext(certificationNum), true);
             mailSender.send(message);
         } catch (MessagingException e) {
@@ -50,8 +52,8 @@ public class EmailCertificationSenderProd implements EmailCertificationSender {
 
     public String setContext(String certificationNum) {
         Context context = new Context();
-        context.setVariable(CERTIFICATION_NUM, certificationNum);
-        return templateEngine.process(CERTIFICATION, context);
+        context.setVariable(CERTIFICATION_NUM.message, certificationNum);
+        return templateEngine.process(CERTIFICATION.message, context);
     }
 }
 

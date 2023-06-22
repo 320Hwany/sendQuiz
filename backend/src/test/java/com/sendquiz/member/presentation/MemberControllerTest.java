@@ -8,10 +8,10 @@ import com.sendquiz.util.ControllerTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.sendquiz.global.eumtype.CommonConstant.ACCESS_TOKEN;
-import static com.sendquiz.global.eumtype.CommonConstant.CERTIFICATION_CACHE;
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.*;
-import static com.sendquiz.global.eumtype.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.CERTIFICATION_CACHE;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.*;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.constant.ValidMessageConstant.NICKNAME_VALID_MESSAGE;
 import static com.sendquiz.util.TestConstant.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -191,7 +191,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(get("/api/member")
-                        .header(ACCESS_TOKEN, accessToken))
+                        .header(ACCESS_TOKEN.message, accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(memberSignup.getEmail()))
                 .andExpect(jsonPath("$.nickname").value(memberSignup.getNickname()));
@@ -219,7 +219,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(post("/api/logout")
-                        .header(ACCESS_TOKEN, accessToken))
+                        .header(ACCESS_TOKEN.message, accessToken))
                 .andExpect(status().isOk());
     }
 
@@ -240,7 +240,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(post("/api/withdrawal")
-                        .header(ACCESS_TOKEN, accessToken)
+                        .header(ACCESS_TOKEN.message, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk());
@@ -263,7 +263,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(post("/api/withdrawal")
-                        .header(ACCESS_TOKEN, accessToken)
+                        .header(ACCESS_TOKEN.message, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())
@@ -309,7 +309,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(patch("/api/member")
-                        .header(ACCESS_TOKEN, accessToken)
+                        .header(ACCESS_TOKEN.message, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isOk());
@@ -332,7 +332,7 @@ class MemberControllerTest extends ControllerTest {
 
         // expected
         mockMvc.perform(patch("/api/member")
-                        .header(ACCESS_TOKEN, accessToken)
+                        .header(ACCESS_TOKEN.message, accessToken)
                         .contentType(APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isBadRequest())

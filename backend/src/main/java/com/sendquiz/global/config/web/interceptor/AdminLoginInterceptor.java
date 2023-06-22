@@ -19,7 +19,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Base64;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.ACCESS_TOKEN;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.MEMBER_SESSION;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.domain.AdminSession.toAdminSession;
 
@@ -32,10 +33,10 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String accessToken = request.getHeader(ACCESS_TOKEN);
+        String accessToken = request.getHeader(ACCESS_TOKEN.message);
         byte[] decodedKey = Base64.getDecoder().decode(JWT_KEY);
         AdminSession adminSession = getAdminSessionFromAccessJws(accessToken, decodedKey, request);
-        request.setAttribute(MEMBER_SESSION, adminSession);
+        request.setAttribute(MEMBER_SESSION.message, adminSession);
         return true;
     }
 

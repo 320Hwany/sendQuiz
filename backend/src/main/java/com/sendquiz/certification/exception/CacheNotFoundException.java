@@ -2,7 +2,7 @@ package com.sendquiz.certification.exception;
 
 import com.sendquiz.global.exception.NotFoundException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.CACHE_NOT_FOUND_EXCEPTION;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.CACHE_NOT_FOUND_EXCEPTION;
 
 public class CacheNotFoundException extends NotFoundException {
 

@@ -19,7 +19,8 @@ import java.util.Objects;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.QUIZ_CACHE;
+import static com.sendquiz.global.eumtype.constant.CacheConstant.QUIZ_LIST;
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 import static org.assertj.core.api.Assertions.*;

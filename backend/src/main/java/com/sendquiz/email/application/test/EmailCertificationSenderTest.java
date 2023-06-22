@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.MESSAGE_SUBJECT_TEST;
 
 @RequiredArgsConstructor
 @Getter
@@ -29,7 +29,7 @@ public class EmailCertificationSenderTest implements EmailCertificationSender {
 
     @Override
     public String setContext(String certificationNum) {
-        return MESSAGE_SUBJECT_TEST;
+        return MESSAGE_SUBJECT_TEST.message;
     }
 
     public String makeUUID() {

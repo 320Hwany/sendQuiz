@@ -15,7 +15,9 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.UUID;
 
-import static com.sendquiz.global.eumtype.CommonConstant.*;
+import static com.sendquiz.global.eumtype.constant.TimeConstant.ONE_HOUR;
+import static com.sendquiz.global.eumtype.constant.TimeConstant.ONE_MONTH;
+import static com.sendquiz.global.eumtype.constant.SessionConstant.REFRESH_TOKEN;
 import static com.sendquiz.jwt.constant.JwtKey.JWT_KEY;
 import static com.sendquiz.member.dto.response.MemberResponse.toMemberResponse;
 
@@ -56,7 +58,7 @@ public class JwtService {
     }
 
     public static void makeCookie(HttpServletResponse response, String refreshToken) {
-        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN, refreshToken)
+        ResponseCookie cookie = ResponseCookie.from(REFRESH_TOKEN.message, refreshToken)
                 .maxAge(Duration.ofDays(30))
                 .httpOnly(true)
                 .secure(true)

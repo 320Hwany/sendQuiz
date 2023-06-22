@@ -2,7 +2,7 @@ package com.sendquiz.jwt.exception;
 
 import com.sendquiz.global.exception.NotMatchException;
 
-import static com.sendquiz.global.eumtype.ErrorMessageConstant.JWS_NOT_MATCH;
+import static com.sendquiz.global.eumtype.constant.ErrorMessageConstant.JWS_NOT_MATCH;
 
 public class JwsNotMatchException extends NotMatchException {
 

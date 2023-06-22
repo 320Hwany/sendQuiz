@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.sendquiz.global.eumtype.CommonConstant.MESSAGE_SUBJECT_TEST;
-import static com.sendquiz.global.eumtype.CommonConstant.EMAIL_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.EMAIL_SUBJECT_TEST;
+import static com.sendquiz.global.eumtype.constant.EmailConstant.MESSAGE_SUBJECT_TEST;
 
 @Getter
 @Service
@@ -21,7 +21,7 @@ public class EmailQuizSenderTest implements EmailQuizSender {
     public void sendQuizzes(List<Quiz> randomQuizList, String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
-        message.setSubject(EMAIL_SUBJECT_TEST);
+        message.setSubject(EMAIL_SUBJECT_TEST.message);
         String sb = setContext(randomQuizList);
         message.setText(String.valueOf(sb));
         testMailSender.set(message);
@@ -29,6 +29,6 @@ public class EmailQuizSenderTest implements EmailQuizSender {
 
     @Override
     public String setContext(List<Quiz> randomQuizList) {
-        return MESSAGE_SUBJECT_TEST;
+        return MESSAGE_SUBJECT_TEST.message;
     }
 }

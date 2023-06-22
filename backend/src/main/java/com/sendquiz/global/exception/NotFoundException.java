@@ -2,7 +2,7 @@ package com.sendquiz.global.exception;
 
 import lombok.Getter;
 
-import static com.sendquiz.global.eumtype.StatusCodeConstant.NOTFOUND;
+import static com.sendquiz.global.eumtype.constant.StatusCodeConstant.NOTFOUND;
 
 @Getter
 public abstract class NotFoundException extends RuntimeException{
